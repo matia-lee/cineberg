@@ -26,10 +26,10 @@ def get_embeddings_batch(texts, engine):
                 break 
             except openai.error.RateLimitError:
                 print("Rate limit reached, sleeping for 20 seconds...")
-                time.sleep(22)
+                time.sleep(20)
             except openai.error.OpenAIError as e:
                 print(f"An error occurred: {e}")
-                break
+                time.sleep(20)
     return embeddings
 
 

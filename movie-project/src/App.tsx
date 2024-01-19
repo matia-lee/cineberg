@@ -1,4 +1,3 @@
-import React from 'react';
 import MovieCard from './MovieCard';
 import { useState, useEffect } from 'react';
 import './App.css';
@@ -108,7 +107,7 @@ return(
       <div className = "container">
 
         {movies.map((movie) => (
-        <MovieCard key = {movie.id} movie={movie} />
+        <MovieCard key = {movie.id} movie={movie}/>
         ))}
 
       </div>
