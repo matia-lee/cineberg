@@ -78,41 +78,41 @@ id: number;
 
 const App = () => {
 
-// const [movies, setMovies] = useState([]);
-const [movies, setMovies] = useState<Movie[]>([]);
+  // const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
 
 
-useEffect(() => {
-  const api_key = process.env.REACT_APP_TMDB_KEY;
-  const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer ' + api_key
-  }};
+  useEffect(() => {
+    const api_key = process.env.REACT_APP_TMDB_KEY;
+    const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer ' + api_key
+    }};
 
-  fetch('https://api.themoviedb.org/3/trending/movie/week?language=en-US', options)
-    .then(response => response.json())
-    .then(data => {
-      setMovies(data.results);
-    })
-    .catch(err => console.error(err));
-}, []);
+    fetch('https://api.themoviedb.org/3/trending/movie/week?language=en-US', options)
+      .then(response => response.json())
+      .then(data => {
+        setMovies(data.results);
+      })
+      .catch(err => console.error(err));
+  }, []);
 
 
 
-return(
-  <div className = "app">
-    <h1 className = "main-text">Cineberg</h1>
-      <div className = "container">
+  return(
+    <div className = "app">
+      <h1 className = "main-text">Cineberg</h1>
+        <div className = "container">
 
-        {movies.map((movie) => (
-        <MovieCard key = {movie.id} movie={movie}/>
-        ))}
+          {movies.map((movie) => (
+          <MovieCard key = {movie.id} movie={movie}/>
+          ))}
 
-      </div>
-  </div>
-);
-}
+        </div>
+    </div>
+  );
+  }
 
 export default App;

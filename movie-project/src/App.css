@@ -43,6 +43,7 @@ body {
   
 
 .movie {
+  margin: 10px;
   width: 248px;
   height: 368px;
   /* width: 310px;
