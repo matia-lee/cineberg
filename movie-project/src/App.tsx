@@ -103,14 +103,27 @@ const App = () => {
 
   return(
     <div className = "app">
-      <h1 className = "main-text">Cineberg</h1>
-        <div className = "container">
+      <div className = "main-text">
+        <img 
+          src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
+          alt="Icon" 
+        />
+        <h1>
+          Cineberg
+        </h1>
+      </div>
 
+      <div className = "frame">
+        <div className = "subtitle">
+          <h2>Trending Movies: </h2>
+        </div>
+
+        <div className = "container">
           {movies.map((movie) => (
           <MovieCard key = {movie.id} movie={movie}/>
           ))}
-
         </div>
+      </div>
     </div>
   );
   }
