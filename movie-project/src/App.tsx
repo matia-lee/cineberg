@@ -4,14 +4,13 @@ import './App.css';
   
 
 interface Movie {
-id: number;
+  id: number;
 }
 
 const App = () => {
 
   // const [movies, setMovies] = useState([]);
   const [movies, setMovies] = useState<Movie[]>([]);
-
 
   useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -29,7 +28,6 @@ const App = () => {
       })
       .catch(err => console.error(err));
   }, []);
-
 
 
   return(

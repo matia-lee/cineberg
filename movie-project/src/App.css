@@ -3,23 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjord+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orelega+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fjord+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orelega+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
-  
-
 
 body {
-  /* background-color: #353634; */
   overflow-x: hidden;
   background-color: #212426;
-}
-
-.frame {
-  border-top-left-radius: 20px;
-  margin-top: 5rem;
-  background-color: #353634;
-  /* margin-right: auto; */
-  margin-left: auto;
-  width: 80%;
-  min-height: 100vh;
 }
 
 .main-text {
@@ -37,19 +24,20 @@ body {
 
 .main-text h1 {
   margin: 0;
-  /* text-align: center; */
-  /* letter-spacing: 3px; */
   margin-top: 11px;
   font-size: 30px;
   font-weight: 1000;
-  /* color: rgba(26, 132, 186, 1); */
   color: rgba(112, 181, 230, 1);
-  /* color: rgba(91, 143, 206, 1); */
-  /* position: relative; */
-  /* font-family: "DM Serif Display", serif; */
   font-family: "Roboto Slab", serif;
-  /* top: 20px; */
-  /* text-shadow: -3px -2px 1px rgba(105, 168, 208, 0.9); */
+}
+
+.frame {
+  border-top-left-radius: 20px;
+  margin-top: 5rem;
+  background-color: #353634;
+  margin-left: auto;
+  width: 80%;
+  min-height: 100vh;
 }
 
 .subtitle h2 {
@@ -59,8 +47,6 @@ body {
   font-family: "Roboto Slab", serif;
   font-weight: 1000;
   color: #69A8D0;
-  /* color: #1A84BA; */
-  /* color: #69A8D0; */
 }
 
 .container {
@@ -69,7 +55,6 @@ body {
   scroll-padding: 0 10px;
   scroll-snap-align: center;
   width: 100%;
-  /* margin-top: 5rem; */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -77,21 +62,11 @@ body {
   overflow-x: auto;
   -ms-overflow-style: none;  
   scrollbar-width: none;  
-  /* animation: 15s slide infinite linear; */
 }
 
 .container::-webkit-scrollbar {
   display: none;  
 }
-
-/* @keyframes slide {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%)
-  }
-} */
 
 .movie {
   scroll-snap-type: x mandatory;
@@ -111,8 +86,12 @@ body {
   box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
 }
 
-  
-.release-date {
+.movie:hover {
+  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05, 1.05);
+}
+
+.movie .release-date {
   font-weight: 600;
   position: absolute;
   width: 100%;
@@ -122,24 +101,26 @@ body {
   color: #69A8D0;
 }
 
-.movie:hover {
-  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
-  transform: scale(1.05, 1.05);
+.movie:hover .release-date {
+  opacity: 1;
 }
 
-.poster {
+.movie .poster {
   width: 100%;
   height: 100%;
 }
 
-.poster img {
+.movie .poster img {
   height: 100%;
   width: 100%;
 }
 
-  
+.movie:hover .poster {
+  height: 100%;
+  opacity: 0.3;
+}
 
-.title {
+.movie .title {
   z-index: 2;
   background-color: #44494b;
   padding: 16px 24px 24px 24px;
@@ -149,7 +130,7 @@ body {
   left: 0;
 }
 
-.title span {
+.movie .title span {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-size: 13px;
@@ -158,22 +139,23 @@ body {
   color: #B6B8B5;
 }
 
-.title h3 {
+.movie .title h3 {
   margin: 0;
   margin-top: 5px;
   font-family: "Roboto Slab", serif;
   color: rgba(112, 181, 230, 1);
 }
 
-.poster:hover {
-  height: 100%;
-  opacity: 0.3;
-}
-
-.title:hover {
+.movie .movie:hover .title {
   background-color: transparent;
 }
 
-.releae-date {
-  opacity: 1;
+.movie-flipped .container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed; 
+  width: 100vw;
+  height: 100vh;
+  background-color: aliceblue;
 }

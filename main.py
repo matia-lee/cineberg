@@ -17,7 +17,7 @@ movies_df['embedding'] = movies_df['embedding'].apply(eval).apply(np.array)
 
 cineberg_scale = input("Pick: \n1. Tip of the IceBerg shit \n2. Niche Shit \n3. Underground Shit \n Pick 1, 2, or 3: ")
 if cineberg_scale == "1":
-    popularity_threshold = [17,1000]
+    popularity_threshold = [17,100000]
 elif cineberg_scale == "2":
     popularity_threshold = [9,17]
 elif cineberg_scale == "3":
