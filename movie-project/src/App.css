@@ -49,7 +49,7 @@ body {
   color: #69A8D0;
 }
 
-.container {
+.container-movie {
   margin-left: 20px;
   scroll-snap-type: x mandatory;
   scroll-padding: 0 10px;
@@ -62,9 +62,10 @@ body {
   overflow-x: auto;
   -ms-overflow-style: none;  
   scrollbar-width: none;  
+  position: relative;
 }
 
-.container::-webkit-scrollbar {
+.container-movie::-webkit-scrollbar {
   display: none;  
 }
 
@@ -150,12 +151,14 @@ body {
   background-color: transparent;
 }
 
-.movie-flipped .container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed; 
-  width: 100vw;
-  height: 100vh;
-  background-color: aliceblue;
+.container-flipped .container{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 75%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background-color: white;
+  z-index: 100;
 }
