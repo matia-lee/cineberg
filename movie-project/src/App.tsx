@@ -81,15 +81,21 @@ const App = () => {
       </div>
 
       {flipped && (
-        <div className = "container-flipped">
-        {movies.map((movie) => (
-          <MovieCardFlipped 
-            key = {movie.id} 
-            movie={flipped}
-            genres={genres}
-          />
-        ))}
-        </div>
+        <>
+          <div className = "container-flipped">
+          {movies.map((movie) => (
+            <MovieCardFlipped 
+              key = {movie.id} 
+              movie={flipped}
+              genres={genres}
+            />
+          ))}
+          </div>
+
+          <button className = "exit">
+
+          </button>
+        </>
       )}
 
     </div>

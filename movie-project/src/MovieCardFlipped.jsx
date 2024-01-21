@@ -17,11 +17,13 @@ const MovieCardFlipped = ({ movie, genres }) => {
 
     return (
         <div className = "container">
+
             <div className = "title">
-                <h3>{movie.title}</h3>
+                <h2>{movie.title}</h2>
             </div>
 
             <div className = "overview">
+                <h3>Overview:</h3>
                 <p>{movie.overview}</p>
             </div>
 
@@ -33,12 +35,20 @@ const MovieCardFlipped = ({ movie, genres }) => {
                 />
             </div>
 
+            <div className = "flipped-poster">
+                <img
+                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                alt={movie.title}
+                style={{ width: '100%', height: '100%' }}
+                />
+            </div>
+
             <div className = "genre">
                 <h4>
                     {movie.genre_ids.map(
                         id => 
                             genres.find(genre => genre.id === id).name
-                        ).join(", ")
+                        ).join(" ")
                     }
                 </h4>
             </div>

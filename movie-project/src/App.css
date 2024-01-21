@@ -38,6 +38,7 @@ body {
   margin-left: auto;
   width: 80%;
   min-height: 100vh;
+  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 1);
 }
 
 .subtitle h2 {
@@ -129,6 +130,8 @@ body {
   bottom: 0;
   right: 0;
   left: 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .movie .title span {
@@ -149,16 +152,92 @@ body {
 
 .movie .movie:hover .title {
   background-color: transparent;
+  border-radius: 12px;
 }
 
-.container-flipped .container{
+.container-flipped .container {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 80%;
-  height: 75%;
+  width: 55%;
+  height: 90%;
   transform: translate(-50%, -50%);
   border-radius: 20px;
-  background-color: white;
   z-index: 100;
+  /* background-color: #B6B8B5; */
+  background-color: #44494b;
+  box-shadow: 
+    5px 5px 10px -10px rgba(0, 0, 0, 0.1),
+    -5px 5px 10px -10px rgba(0, 0, 0, 0.1);
+}
+
+.container-flipped .title {
+  color: rgba(112, 181, 230, 1);
+  position: absolute;
+  /* color: #1A84BA; */
+  /* color: #B6B8B5; */
+  display: flex;
+  margin-top: 17%;
+  left: calc(14% + 232.5px);
+  font-family: "Roboto Slab", serif;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  z-index: 10;
+}
+
+.container-flipped .title h2 {
+  text-shadow: -3px 3px 2px #1A84BA;
+  text-align: center;
+}
+
+.container-flipped .overview {
+  position: absolute;
+}
+
+.container-flipped .backdrop {
+  position: absolute;
+  top: 0;
+  text-align: center; 
+  width: 100%;
+  height: 60%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  z-index: 0;
+}
+
+.container-flipped .backdrop img {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  width: 100%;
+  height: 60%;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.container-flipped .flipped-poster {
+  position: absolute;
+  width: 232.5px;
+  height: 345px;
+  opacity: 1;
+  z-index: 10;
+  margin-left: 8%;
+  margin-top: 20%;
+  border-radius: 12px;
+  box-shadow: 10px 10px 15px 0px rgba(0, 0, 0, 0.4);
+}
+
+.container-flipped .flipped-poster img {
+  border-radius: 12px;
+}
+
+.container-flipped .genre {
+  position: absolute;
+}
+
+.container-flipped .ratings {
+  position: absolute;
+}
+
+.container-flipped .cineberg-rating {
+  position: absolute;
 }
