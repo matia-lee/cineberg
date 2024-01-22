@@ -10,7 +10,7 @@ interface Movie {
 
 const App = () => {
 
-  const [movies, setMovies] = useState<Movie[]>([])
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [flipped, setFlipped] = useState<Movie | null>(null);
   const [genres, setGenres] = useState([]);
 
@@ -52,6 +52,7 @@ const App = () => {
     .catch(err => console.error(err));
 
     }, []);
+  
 
 
   return(
