@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 
 const MovieCardFlipped = ({ movie, genres }) => {
     const [credits, setCredits] = useState([]);
+    const [tagline, setTagline] = useState([]);
+    // const [runtime, setRuntime] = useState([]);
     const [overviewPaddingTop, setOverviewPaddingTop] = useState('0px');
     const [creditsPaddingTop, setCreditsPaddingTop] = useState('0px');
     const titleRef = useRef(null);
@@ -10,7 +12,7 @@ const MovieCardFlipped = ({ movie, genres }) => {
     useEffect(() => {
         if (titleRef.current) {
             const titleHeight = titleRef.current.offsetHeight;
-            setOverviewPaddingTop(`${titleHeight + 130}px`);
+            setOverviewPaddingTop(`${titleHeight + 120}px`);
         }
     }, [movie]);
 
@@ -35,13 +37,29 @@ const MovieCardFlipped = ({ movie, genres }) => {
           fetch('https://api.themoviedb.org/3/movie/' + movie.id + '/credits?language=en-US', options)
             .then(response => response.json())
             .then(data => {
-                console.log(data.cast)
                 setCredits(data.cast.slice(0, 5));
             })
             .catch(err => console.error(err));
     }, [movie.id]);
 
-
+    useEffect(() => {
+        const api_key = process.env.REACT_APP_TMDB_KEY;
+        const options = {
+            method: 'GET',
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer ' + api_key
+            }
+          };
+          
+          fetch('https://api.themoviedb.org/3/movie/' + movie.id + '?language=en-US', options)
+            .then(response => response.json())
+            .then(data => {
+                setTagline(data.tagline);
+                // setRuntime(data.runtime);
+            })
+            .catch(err => console.error(err));
+    }, [movie.id]);
 
     let cinebergRating;
     const popularity = movie.popularity
@@ -61,8 +79,18 @@ const MovieCardFlipped = ({ movie, genres }) => {
     return (
         <div className = "container">
 
-            <div className = "title" ref={titleRef}>
-                <h2>{movie.title}</h2>
+            <div className = "title-runtime">
+                <div className = "title" ref={titleRef}>
+                    <h2>{movie.title}</h2>
+                    {/* <div className="runtime">
+                        <h6>{runtime}</h6>
+                        <p>mins</p>
+                    </div> */}
+                </div>
+            </div>
+
+            <div className="tagline">
+                <h3>{tagline}</h3>
             </div>
 
             <div className = "overview" style={{ marginTop: overviewPaddingTop }} >
@@ -88,11 +116,11 @@ const MovieCardFlipped = ({ movie, genres }) => {
 
             <div className = "genre">
                 <h4>
-                    {movie.genre_ids.map(
-                        id => 
-                            genres.find(genre => genre.id === id).name
-                        ).join(" ")
-                    }
+                    {movie.genre_ids.map(id => (
+                        <span class="genre-item">
+                            {genres.find(genre => genre.id === id).name}
+                        </span>
+                    ))}
                 </h4>
             </div>
 
