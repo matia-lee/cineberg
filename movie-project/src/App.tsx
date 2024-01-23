@@ -1,7 +1,8 @@
 import MovieCard from './MovieCard';
 import MovieCardFlipped from './MovieCardFlipped';
 import { useState, useEffect } from 'react';
-import './App.css';
+import './MovieCard.css';
+import './MovieCardFlipped.css';
   
 
 interface Movie {
@@ -60,7 +61,7 @@ const App = () => {
       <div className = "main-text">
         <img 
           src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
-          alt="Icon" 
+          alt="Cineberg-Icon" 
         />
         <h1>
           Cineberg
