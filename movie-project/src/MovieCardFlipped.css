@@ -210,12 +210,12 @@
   .container-flipped .cineberg-rating .cineberg-icon {
     width: 30px;
     height: auto;
-    filter: drop-shadow(-2.5px 3px 1px rgba(0, 0, 0, 0.2));
+    /* filter: drop-shadow(-2.5px 3px 1px rgba(0, 0, 0, 0.2)); */
   }
 
   .container-flipped .cineberg-rating .cineberg-scale {
     color: rgba(91, 143, 206, 1);
-    text-shadow: -1.5px 1.5px 2px rgba(147, 196, 221, 0.4);
+    /* text-shadow: -1.5px 1.5px 2px rgba(147, 196, 221, 0.4); */
     margin-right: 5px;
     margin-left: 2px;
   }
