@@ -135,6 +135,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
             <div className = "title-runtime">
                 <div className = "title" ref={titleRef}>
                     <h2>{movie.title}</h2>
+                    {/* <h3>({<p>{new Date(movie.release_date).getFullYear()}</p>})</h3> */}
                     {/* <div className="runtime">
                         <h6>{runtime}</h6>
                         <p>mins</p>

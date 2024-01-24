@@ -16,7 +16,7 @@ const MovieCard = ({ movie }) => {
         </div>
 
         <div className = "title">
-            <span>{movie.media_type}</span>
+            <span>{movie.media_type ? movie.media_type : "MOVIE"}</span>
             <h3>{movie.title}</h3>
         </div>     
     </div>

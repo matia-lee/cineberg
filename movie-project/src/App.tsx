@@ -11,7 +11,10 @@ interface Movie {
 
 const App = () => {
 
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState<Movie[]>([]);
+  const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([]);
+  const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
   const [flipped, setFlipped] = useState<Movie | null>(null);
   const [genres, setGenres] = useState([]);
 
@@ -27,10 +30,64 @@ const App = () => {
     fetch('https://api.themoviedb.org/3/trending/movie/week?language=en-US', options)
       .then(response => response.json())
       .then(data => {
-        setMovies(data.results);
+        setTrendingMovies(data.results);
       })
       .catch(err => console.error(err));
   }, []);
+
+  useEffect(() => {
+    const api_key = process.env.REACT_APP_TMDB_KEY;
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer ' + api_key
+      }
+    };
+    
+    fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
+      .then(response => response.json())
+      .then(data => {
+        setNowPlayingMovies(data.results);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    const api_key = process.env.REACT_APP_TMDB_KEY;
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer ' + api_key
+      }
+    };
+    
+    fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options)
+      .then(response => response.json())
+      .then(data => {
+        setUpcomingMovies(data.results);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    const api_key = process.env.REACT_APP_TMDB_KEY;
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer ' + api_key
+      }
+    };
+    
+    fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
+      .then(response => response.json())
+      .then(data => {
+        setTopRatedMovies(data.results);
+      })
+      .catch(err => console.error(err));
+  })
   
   const handleFlip = (movie : Movie | null) => {
     setFlipped(prevFlippedMovie => (prevFlippedMovie === movie ? null : movie))
@@ -74,7 +131,43 @@ const App = () => {
         </div>
 
         <div className = "container-movie">
-          {movies.map((movie) => (
+          {trendingMovies.map((movie) => (
+            <div key = {movie.id} onClick={() => handleFlip(movie)}>
+              <MovieCard movie={movie}/>
+            </div>
+          ))}
+        </div>
+
+        <div className = "subtitle">
+          <h2>Now Playing: </h2>
+        </div>
+
+        <div className = "container-movie">
+          {nowPlayingMovies.map((movie) => (
+            <div key = {movie.id} onClick={() => handleFlip(movie)}>
+              <MovieCard movie={movie}/>
+            </div>
+          ))}
+        </div>
+
+        <div className = "subtitle">
+          <h2>Upcoming Movies: </h2>
+        </div>
+
+        <div className = "container-movie">
+          {upcomingMovies.map((movie) => (
+            <div key = {movie.id} onClick={() => handleFlip(movie)}>
+              <MovieCard movie={movie}/>
+            </div>
+          ))}
+        </div>
+
+        <div className = "subtitle">
+          <h2>Top Rated Movies: </h2>
+        </div>
+
+        <div className = "container-movie">
+          {topRatedMovies.map((movie) => (
             <div key = {movie.id} onClick={() => handleFlip(movie)}>
               <MovieCard movie={movie}/>
             </div>
@@ -82,11 +175,12 @@ const App = () => {
         </div>
       </div>
 
+
       {flipped && (
         <>
           <div onClick={() => handleFlip(null)} className = "overlay"></div>
             <div className = "container-flipped">
-              {movies.map((movie) => (
+              {trendingMovies.map((movie) => (
                 <MovieCardFlipped 
                   key = {movie.id} 
                   movie={flipped}
