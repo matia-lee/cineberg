@@ -32,7 +32,7 @@ const App = () => {
       .catch(err => console.error(err));
   }, []);
   
-  const handleFlip = (movie : Movie) => {
+  const handleFlip = (movie : Movie | null) => {
     setFlipped(prevFlippedMovie => (prevFlippedMovie === movie ? null : movie))
   };
 
@@ -84,19 +84,17 @@ const App = () => {
 
       {flipped && (
         <>
-          <div className = "container-flipped">
-          {movies.map((movie) => (
-            <MovieCardFlipped 
-              key = {movie.id} 
-              movie={flipped}
-              genres={genres}
-            />
-          ))}
-          </div>
-
-          <button className = "exit">
-
-          </button>
+          <div onClick={() => handleFlip(null)} className = "overlay"></div>
+            <div className = "container-flipped">
+              {movies.map((movie) => (
+                <MovieCardFlipped 
+                  key = {movie.id} 
+                  movie={flipped}
+                  genres={genres}
+                  onFlip={handleFlip}
+                />
+              ))}
+            </div>
         </>
       )}
 

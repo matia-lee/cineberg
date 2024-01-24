@@ -1,3 +1,13 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 10; 
+}
+
 .container-flipped .container {
     position: fixed;
     top: 50%;
@@ -12,6 +22,21 @@
     box-shadow: 
       5px 5px 10px -10px rgba(0, 0, 0, 0.1),
       -5px 5px 10px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .container-flipped button {
+    position: absolute;
+    z-index: 10000000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: "Roboto Slab", serif;
+    margin-left: 94%;
+    margin-top: 11px;
   }
   
   .container-flipped .title-runtime {

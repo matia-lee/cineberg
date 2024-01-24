@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 
-const MovieCardFlipped = ({ movie, genres }) => {
+const MovieCardFlipped = ({ movie, genres, onFlip }) => {
     const [credits, setCredits] = useState([]);
     const [tagline, setTagline] = useState([]);
     // const [runtime, setRuntime] = useState([]);
@@ -13,6 +13,7 @@ const MovieCardFlipped = ({ movie, genres }) => {
     const ratingsRef = useRef(null);
     const taglineRef = useRef(null);
     const posterRef = useRef(null);
+
 
     useEffect(() => {
         if (titleRef.current) {
@@ -128,6 +129,8 @@ const MovieCardFlipped = ({ movie, genres }) => {
 
     return (
         <div className = "container">
+
+            {/* <button onClick={() => onFlip(null)} className="exit-button">X</button> */}
 
             <div className = "title-runtime">
                 <div className = "title" ref={titleRef}>
