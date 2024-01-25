@@ -112,15 +112,15 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
 
     let cinebergRating;
     const popularity = movie.popularity
-    if (popularity >= 0 && popularity <= 9)
+    if (popularity >= 0 && popularity < 6.9)
     {
         cinebergRating = "Underground"
     }
-    else if (popularity >= 10 && popularity <= 17)
+    else if (popularity >= 6.9 && popularity <= 31)
     {
         cinebergRating = "Niche"
     }
-    else if (popularity >= 18)
+    else if (popularity > 31)
     {
         cinebergRating = "Tip of the Iceberg"
     }
