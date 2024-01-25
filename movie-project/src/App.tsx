@@ -1,6 +1,6 @@
-import MovieCard from './MovieCard';
-import MovieCardFlipped from './MovieCardFlipped';
-import SearchPage from './SearchPage';
+import MovieCard from './components/MovieCard';
+import MovieCardFlipped from './components/MovieCardFlipped';
+import SearchPage from './components/SearchPage';
 import { useState, useEffect } from 'react';
 import './MovieCard.css';
 import './MovieCardFlipped.css';
