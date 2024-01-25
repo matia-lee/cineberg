@@ -1,9 +1,12 @@
 import MovieCard from './MovieCard';
 import MovieCardFlipped from './MovieCardFlipped';
+import SearchPage from './SearchPage';
 import { useState, useEffect } from 'react';
 import './MovieCard.css';
 import './MovieCardFlipped.css';
+import './Homepage.css'
   
+
 
 interface Movie {
   id: number;
@@ -18,6 +21,25 @@ const App = () => {
   // const [niche, setNiche] = useState<Movie[]>([]);
   const [flipped, setFlipped] = useState<Movie | null>(null);
   const [genres, setGenres] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [omdbMovies, setOmdbMovies] = useState([]);
+
+  useEffect(() => {
+      searchMovies("");
+    }, []);
+
+    const searchMovies = async (title: string) => {
+      if (title === "") {
+          setOmdbMovies([]);
+          return;
+      }
+      const omdb_key = process.env.REACT_APP_OMDB_KEY;
+      const API_URL = "http://www.omdbapi.com/?apikey=" + omdb_key
+      const response = await fetch(`${API_URL}&s=${title}`);
+      const data = await response.json();
+      console.log(data);
+      setOmdbMovies(data.Search);
+  };
 
   useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -138,15 +160,40 @@ const App = () => {
 
   return(
     <div className = "app">
-      <div className = "main-text">
-        <img 
-          src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
-          alt="Cineberg-Icon" 
+        <div className = "main-text">
+            <img 
+            src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
+            alt="Cineberg-Icon" 
+            />
+
+            <h1>
+            Cineberg
+            </h1>
+        </div>
+
+        <div className="search-button">
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search for movies"
         />
-        <h1>
-          Cineberg
-        </h1>
-      </div>
+
+        <button onClick={() => searchMovies(searchTerm)}></button>
+        {/* <img
+          src={SearchIcon}
+          alt="search"
+          onClick={() => searchMovies(searchTerm)}
+        /> */}
+        </div>
+
+        <div className="container-movie">
+          {omdbMovies.map((movie) => (
+            <div>
+              <SearchPage movie={movie} />
+            </div>
+            ))}
+        </div>
+
 
       <div className = "frame">
         <div className = "subtitle">

@@ -9,28 +9,6 @@ body {
   background-color: #212426;
 }
 
-.main-text {
-  display: flex;
-  align-items: horizontal;
-}
-
-.main-text img {
-  margin-top: 7px;
-  height: 50px;
-  width: 50px;
-  margin-left: 10px;
-  margin-right: 5px;
-}
-
-.main-text h1 {
-  margin: 0;
-  margin-top: 11px;
-  font-size: 30px;
-  font-weight: 1000;
-  color: rgba(112, 181, 230, 1);
-  font-family: "Roboto Slab", serif;
-}
-
 .frame {
   border-top-left-radius: 20px;
   margin-top: 5rem;
