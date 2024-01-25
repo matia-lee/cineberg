@@ -14,14 +14,20 @@
     left: 50%;
     width: 55%;
     height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
     transform: translate(-50%, -50%);
     border-radius: 20px;
-    z-index: 100;
+    z-index: 10000;
     /* background-color: #B6B8B5; */
     background-color: #44494b;
     box-shadow: 
       5px 5px 10px -10px rgba(0, 0, 0, 0.1),
       -5px 5px 10px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .container-flipped .container::-webkit-scrollbar {
+    display: none;  
   }
 
   .container-flipped button {

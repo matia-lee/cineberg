@@ -39,20 +39,6 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
         }
     }, [movie]);
 
-    // useLayoutEffect(() => {
-    //     console.log("Movie object updated:", movie);
-
-    //     if (taglineRef.current && posterRef.current) {
-    //         const taglineHeight = taglineRef.current.offsetHeight;
-    //         const posterHeight = posterRef.current.offsetHeight;
-    //         setGenresPaddingTop(`${taglineHeight + posterHeight + 120}px`)
-
-    //         console.log("Tagline Height:", taglineHeight);
-    //         console.log("Poster Height:", posterHeight);
-    //         console.log("Genres Padding Top:", genresPaddingTop);
-    //     }
-    // }, [movie]);
-
     useEffect(() => {
         const updatePaddingTop = () => {
             if (taglineRef.current && posterRef.current) {
@@ -130,12 +116,9 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
     return (
         <div className = "container">
 
-            {/* <button onClick={() => onFlip(null)} className="exit-button">X</button> */}
-
             <div className = "title-runtime">
                 <div className = "title" ref={titleRef}>
                     <h2>{movie.title}</h2>
-                    {/* <h3>({<p>{new Date(movie.release_date).getFullYear()}</p>})</h3> */}
                     {/* <div className="runtime">
                         <h6>{runtime}</h6>
                         <p>mins</p>
@@ -179,7 +162,6 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
             </div>
 
             <div className = "ratings" style={{ marginTop: ratingsPaddingTop }} ref={ratingsRef}>
-                {/* <h5>{movie.vote_average}</h5> */}
                 <div className="left-group">
                     <img 
                         className = "star-icon"
@@ -200,10 +182,6 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
                     <h5 className ="cineberg-iceberg"> {cinebergRating} </h5>
                 </div>
             </div>
-
-            {/* <div className = "cineberg-rating">
-                <h5>{cinebergRating}</h5>
-            </div> */}
 
             <div className="credits-container" style={{ marginTop: creditsPaddingTop }}>
                 {credits.map(person => (
