@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import SearchPage from './components/SearchPage';
 import './static/MovieCard.css';
@@ -39,29 +40,32 @@ const App = () => {
   // }, []);
   
 
-
   
 
 
   return(
-    <div className = "app">
-      <SearchPage/>
-      <Homepage/>
+    <BrowserRouter>
+      <div className = "app">
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <SearchPage />
+        </Routes>
       
 
 
-        {/* <div className = "subtitle">
-          <h2>Niche Sh*t: </h2>
-        </div>
+          {/* <div className = "subtitle">
+            <h2>Niche Sh*t: </h2>
+          </div>
 
-        <div className = "container-movie">
-          {niche.map((movie) => (
-            <div key = {movie.id} onClick={() => handleFlip(movie)}>
-              <MovieCard movie={movie}/>
-            </div>
-          ))}
-        </div> */}
-    </div>
+          <div className = "container-movie">
+            {niche.map((movie) => (
+              <div key = {movie.id} onClick={() => handleFlip(movie)}>
+                <MovieCard movie={movie}/>
+              </div>
+            ))}
+          </div> */}
+        </div>
+    </BrowserRouter>
   );
   }
 

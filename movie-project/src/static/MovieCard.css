@@ -72,13 +72,17 @@ body {
 }
 
 .movie .release-date {
-  font-weight: 600;
+  font-weight: 550;
   position: absolute;
   width: 100%;
   opacity: 0;
   left: 16px;
-  margin: 0;
   color: #69A8D0;
+  font-family: "Roboto Slab", serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin-left: 10px;
+  margin-top: -3px;
 }
 
 .movie:hover .release-date {

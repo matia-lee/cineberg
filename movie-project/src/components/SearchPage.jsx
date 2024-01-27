@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import MovieCardFlipped from './MovieCardFlipped';
 
+
 const SearchPage = () => {    
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [tmdbMovies, setTmdbMovies] = useState([]);
+    const [searchTitle, setSearchTitle] = useState([]);
+    // const [searchPerson, setSearchPerson] = useState([]);
     const [flipped, setFlipped] = useState(null);
     const [genres, setGenres] = useState([]);
 
@@ -14,7 +16,7 @@ const SearchPage = () => {
         
     const searchMovies = async (title) => {
         if (title === "") {
-            setTmdbMovies([]);
+            setSearchTitle([]);
             return;
         }
         const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -26,14 +28,38 @@ const SearchPage = () => {
             }
           };
           
-          fetch('https://api.themoviedb.org/3/search/movie?query=' + title + '&include_adult=false&language=en-US&page=1', options)
-            .then(response => response.json())
-            .then(data => {
-                const sortedResults = data.results.sort((a, b) => 
-                    b.vote_count - a.vote_count || b.popularity - a.popularity);
-                setTmdbMovies(sortedResults);
-            })
-            .catch(err => console.error(err));
+        //   const personUrl = 'https://api.themoviedb.org/3/search/person?query=' + title + '&include_adult=false&language=en-US&page=1'
+        //   const titleUrl = 'https://api.themoviedb.org/3/search/movie?query=' + title + '&include_adult=false&language=en-US&page=1'
+
+        //   Promise.all([
+        //   fetch(personUrl, options).then(response => response.json()),
+        //   fetch(titleUrl, options).then(response => response.json())
+        //   ])
+        //   .then(([data1, data2]) => {
+        //   setSearchTitle([...data1.results, ...data2.results]);
+        //   })
+
+
+
+        // fetch('https://api.themoviedb.org/3/search/person?query=' + title + '&include_adult=false&language=en-US&page=1', options)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setSearchTitle(data.known_for);
+        //     })
+        //     .catch(err => console.error(err));
+            
+
+
+
+
+        fetch('https://api.themoviedb.org/3/search/movie?query=' + title + '&include_adult=false&language=en-US&page=1', options)
+        .then(response => response.json())
+        .then(data => {
+            const sortedResults = data.results.sort((a, b) => 
+                b.vote_count - a.vote_count || b.popularity - a.popularity);
+            setSearchTitle(sortedResults);
+        })
+        .catch(err => console.error(err));
     }
 
     useEffect(() => {
@@ -73,16 +99,16 @@ const SearchPage = () => {
             placeholder="Search for movies"
             />
 
-            <button onClick={() => searchMovies(searchTerm)}></button>
-            {/* <img
-            src={SearchIcon}
+            {/* <button onClick={() => searchMovies(searchTerm)}></button> */}
+            <img
+            src="https://static.vecteezy.com/system/resources/previews/009/973/089/non_2x/magnifying-glass-sign-search-icon-free-png.png"
             alt="search"
             onClick={() => searchMovies(searchTerm)}
-            /> */}
+            />
         </div>
         
         <div className="container-movie">
-          {tmdbMovies.map((movie) => ( 
+          {searchTitle.map((movie) => ( 
             <div key = {movie.id} onClick={() => handleFlip(movie)} className = "movie">
                 <div className = "release-date">
                     <p>{movie.release_date}</p>
@@ -108,7 +134,7 @@ const SearchPage = () => {
             <>
                 <div onClick={() => handleFlip(null)} className = "overlay"></div>
                 <div className = "container-flipped">
-                    {tmdbMovies.map((movie) => (
+                    {searchTitle.map((movie) => (
                     <MovieCardFlipped 
                         key = {movie.id} 
                         movie={flipped}

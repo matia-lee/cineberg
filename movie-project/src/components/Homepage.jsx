@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MovieCard from './MovieCard';
 import MovieCardFlipped from './MovieCardFlipped';
 
-// interface Movie {
-//     id: number;
-//   }
 
 const Homepage = () => {
+
+    const navigate = useNavigate();
+
+    const navigateToHomepage = () => {
+      navigate('/');
+    };
 
     const [trendingMovies, setTrendingMovies] = useState([]);
     const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
@@ -115,15 +119,15 @@ const Homepage = () => {
 
     return (
         <>
-            <div className = "main-text">
-                <img 
-                src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
-                alt="Cineberg-Icon" 
-                />
+            <div className = "main-text" onClick={navigateToHomepage}>
+                    <img 
+                    src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
+                    alt="Cineberg-Icon" 
+                    />
 
-                <h1>
-                    Cineberg
-                </h1>
+                    <h1>
+                        Cineberg
+                    </h1>
             </div> 
 
             <div className = "frame">

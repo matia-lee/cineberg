@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 
 const MovieCardFlipped = ({ movie, genres, onFlip }) => {
+    
     const [credits, setCredits] = useState([]);
     const [tagline, setTagline] = useState([]);
     // const [runtime, setRuntime] = useState([]);
