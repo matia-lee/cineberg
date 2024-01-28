@@ -7,10 +7,6 @@ import './static/SearchPage.css'
   
 
 
-// interface Movie {
-//   id: number;
-// }
-
 const App = () => {
   // const [niche, setNiche] = useState<Movie[]>([]);
   
@@ -44,7 +40,7 @@ const App = () => {
 
   return(
       <div className = "app">
-          <SearchPage />
+          {/* <SearchPage /> */}
           <Homepage />
           
       

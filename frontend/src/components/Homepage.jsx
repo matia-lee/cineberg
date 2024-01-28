@@ -122,6 +122,20 @@ const Homepage = () => {
                     </h1>
             </div> 
 
+            <div className="search-button">
+                <input
+                // value={searchTerm}
+                // onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search for movies"
+                />
+
+                <img
+                src="https://static.vecteezy.com/system/resources/previews/009/973/089/non_2x/magnifying-glass-sign-search-icon-free-png.png"
+                alt="search"
+                // onClick={() => searchMovies(searchTerm)}
+                />
+            </div>
+
             <div className = "frame">
                 <div className = "subtitle">
                     <h2>Trending Movies: </h2>
