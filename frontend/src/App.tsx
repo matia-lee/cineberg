@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import SearchPage from './components/SearchPage';
 import './static/MovieCard.css';
@@ -5,8 +6,6 @@ import './static/MovieCardFlipped.css';
 import './static/Homepage.css'
 import './static/SearchPage.css'
   
-
-
 const App = () => {
   // const [niche, setNiche] = useState<Movie[]>([]);
   
@@ -39,9 +38,12 @@ const App = () => {
 
 
   return(
+    <Router>
       <div className = "app">
-          {/* <SearchPage /> */}
-          <Homepage />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/search" element={<SearchPage />} />
+        </Routes>
           
       
 
@@ -58,6 +60,7 @@ const App = () => {
           ))}
         </div> */}
       </div>
+    </Router>
   );
   }
 

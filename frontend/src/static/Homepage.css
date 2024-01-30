@@ -1,26 +1,94 @@
 .main-text {
-    display: flex;
-    align-items: horizontal;
-  }
-  
-  .main-text img {
-    margin-top: 7px;
-    height: 50px;
-    width: 50px;
-    margin-left: 10px;
-    margin-right: 5px;
-  }
-  
-  .main-text h1 {
-    margin: 0;
-    margin-top: 11px;
-    font-size: 30px;
-    font-weight: 1000;
-    color: rgba(112, 181, 230, 1);
-    font-family: "Roboto Slab", serif;
-  }
+  display: flex;
+  align-items: horizontal;
+  cursor: pointer;
+}
 
-  .no-scroll {
-    overflow: hidden;
-    height: 100%;
+.main-text img {
+  margin-top: 14px;
+  height: 50px;
+  width: 50px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.main-text h1 {
+  margin: 0;
+  margin-top: 11px;
+  font-size: 40px;
+  font-weight: 1000;
+  color: rgba(112, 181, 230, 1);
+  font-family: "Roboto Slab", serif;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
+.search-button {
+  position: absolute;
+  width: 37%;
+  height: 1%;
+  margin-left: 30%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1.75rem;
+  border-radius: 3rem;
+  background: #1f2123;
+  -webkit-box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
+  box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
+}
+  
+.search-button input {
+  flex: 1;
+  border: none;
+  font-size: 15px;
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+  padding-right: 1rem;
+  outline: none;
+  color: #B6B8B5;
+  background: #1f2123;
+  opacity: 0.7;
+}
+  
+.search-button img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.nav-bar {
+  /* margin-top: -1830px; */
+  margin-top: -1490px;
+  margin-left: 40px;
+  font-family: "Roboto Slab", serif;
+}
+
+.nav-bar h6 {
+  color: rgba(112, 181, 230, 1);
+  opacity: 0.7;
+  font-size: 21px;
+}
+
+.nav-bar ul {
+  margin-top: -25px;
+  margin-left: -20px;
+  font-weight: 700;
+}
+
+.nav-bar li {
+  margin-top: 20px;
+  margin-bottom: -5px;
+  font-size: 18px;
+  color: #9cc4d4;
+  opacity: 0.4;
+}
+
+.nav-bar .genres {
+  margin-top: 50px;
 }

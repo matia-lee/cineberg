@@ -11,12 +11,13 @@ body {
 
 .frame {
   border-top-left-radius: 20px;
-  margin-top: 5rem;
+  margin-top: 7rem;
   background-color: #353634;
   margin-left: auto;
-  width: 80%;
+  width: 77%;
   margin-bottom: -20px;
-  min-height: 223vh;
+  /* min-height: 223vh; */
+  min-height: 185vh;
   box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 1);
 }
 
@@ -30,7 +31,7 @@ body {
 }
 
 .container-movie {
-  margin-left: 20px;
+  margin-left: 50px;
   scroll-snap-type: x mandatory;
   scroll-padding: 0 10px;
   scroll-snap-align: center;

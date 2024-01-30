@@ -1,66 +1,53 @@
 import { useState, useEffect } from "react";
 import MovieCardFlipped from './MovieCardFlipped';
-
+import MovieCard from "./MovieCard";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SearchPage = () => {    
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [searchTitle, setSearchTitle] = useState([]);
-    // const [searchPerson, setSearchPerson] = useState([]);
+    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState(location.state?.searchTerm || '');
+    const [temporaryInput, setTemporaryInput] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const [flipped, setFlipped] = useState(null);
     const [genres, setGenres] = useState([]);
+    const navigate = useNavigate();
 
-    useEffect (() => {
-        searchMovies("");
-    }, []);
-        
-    const searchMovies = async (title) => {
-        if (title === "") {
-            setSearchTitle([]);
-            return;
-        }
-        const api_key = process.env.REACT_APP_TMDB_KEY;
-        const options = {
-            method: 'GET',
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Bearer ' + api_key
-            }
-          };
-          
-        //   const personUrl = 'https://api.themoviedb.org/3/search/person?query=' + title + '&include_adult=false&language=en-US&page=1'
-        //   const titleUrl = 'https://api.themoviedb.org/3/search/movie?query=' + title + '&include_adult=false&language=en-US&page=1'
-
-        //   Promise.all([
-        //   fetch(personUrl, options).then(response => response.json()),
-        //   fetch(titleUrl, options).then(response => response.json())
-        //   ])
-        //   .then(([data1, data2]) => {
-        //   setSearchTitle([...data1.results, ...data2.results]);
-        //   })
-
-
-
-        // fetch('https://api.themoviedb.org/3/search/person?query=' + title + '&include_adult=false&language=en-US&page=1', options)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setSearchTitle(data.known_for);
-        //     })
-        //     .catch(err => console.error(err));
-            
-
-
-
-
-        fetch('https://api.themoviedb.org/3/search/movie?query=' + title + '&include_adult=false&language=en-US&page=1', options)
-        .then(response => response.json())
-        .then(data => {
-            const sortedResults = data.results.sort((a, b) => 
-                b.vote_count - a.vote_count || b.popularity - a.popularity);
-            setSearchTitle(sortedResults);
-        })
-        .catch(err => console.error(err));
+    const handleIconClick = () => {
+        navigate('/');
     }
+
+    const handleSearchClick = () => {
+        setSearchTerm(temporaryInput);
+      };
+
+    const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+        setSearchTerm(temporaryInput);
+    }
+    };
+
+    useEffect(() => {
+        if (searchTerm) {
+            const api_key = process.env.REACT_APP_TMDB_KEY;
+            const options = {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer ' + api_key
+                }
+            };
+
+            fetch('https://api.themoviedb.org/3/search/movie?query=' + searchTerm + '&include_adult=false&language=en-US&page=1', options)
+                .then(response => response.json())
+                .then(data => {
+                    const sortedResults = data.results.sort((a, b) => 
+                        b.vote_count - a.vote_count || b.popularity - a.popularity);
+                    setSearchResults(sortedResults);
+                })
+                .catch(err => console.error(err));
+        }
+    }, [searchTerm]);
 
     useEffect(() => {
         const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -92,59 +79,62 @@ const SearchPage = () => {
 
     return (
     <>
-        <div className="search-button">
-            <input
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search for movies"
-            />
-
-            {/* <button onClick={() => searchMovies(searchTerm)}></button> */}
+        <div className = "main-text" onClick={handleIconClick}>
             <img
-            src="https://static.vecteezy.com/system/resources/previews/009/973/089/non_2x/magnifying-glass-sign-search-icon-free-png.png"
-            alt="search"
-            onClick={() => searchMovies(searchTerm)}
+                src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
+                alt="Cineberg-Icon" 
+            />
+
+            <h1>
+                Cineberg
+            </h1>
+        </div> 
+
+        <div className="search-button" onKeyDown={handleKeyDown}>
+            <input
+                value={temporaryInput}
+                onChange={(e) => setTemporaryInput(e.target.value)}
+                placeholder="Search for movies"
+            />
+
+            <img
+                src="https://static.vecteezy.com/system/resources/previews/009/973/089/non_2x/magnifying-glass-sign-search-icon-free-png.png"
+                alt="search"
+                onClick={handleSearchClick}
             />
         </div>
-        
-        <div className="container-movie">
-          {searchTitle.map((movie) => ( 
-            <div key = {movie.id} onClick={() => handleFlip(movie)} className = "movie">
-                <div className = "release-date">
-                    <p>{movie.release_date}</p>
-                </div>
 
-                <div className = "poster">
-                    <img
-                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                    alt={movie.title}
-                    style={{ width: '100%', height: '100%' }}
-                    />
-                </div>
-
-                <div className = "title">
-                    <span>{movie.media_type}</span>
-                    <h3>{movie.title}</h3>
-                </div>     
+        <div className="movie-search-frame">
+            <div className="subtitle">
+                <h2>
+                    Search Results for <span className="search-term">{searchTerm}</span> :
+                </h2>
             </div>
-            ))}
-        </div>
 
-        {flipped && (
-            <>
-                <div onClick={() => handleFlip(null)} className = "overlay"></div>
-                <div className = "container-flipped">
-                    {searchTitle.map((movie) => (
-                    <MovieCardFlipped 
-                        key = {movie.id} 
-                        movie={flipped}
-                        genres={genres}
-                        onFlip={handleFlip}
-                    />
-                    ))}
-                </div>
-            </>
-        )};
+            <div className="container-movie-search">
+                {searchResults.map((movie) => (
+                    <div key = {movie.id} onClick={() => handleFlip(movie)}>
+                        <MovieCard movie={movie}/>
+                    </div>
+                ))}
+            </div>
+
+            {flipped && (
+                <>
+                    <div onClick={() => handleFlip(null)} className = "overlay"></div>
+                    <div className = "container-flipped">
+                        {searchResults.map((movie) => (
+                        <MovieCardFlipped 
+                            key = {movie.id} 
+                            movie={flipped}
+                            genres={genres}
+                            onFlip={handleFlip}
+                        />
+                        ))}
+                    </div>
+                </>
+            )};
+        </div>       
     </>
     );
 }
