@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import MovieCardFlipped from './MovieCardFlipped';
 import MovieCard from "./MovieCard";
-import { useLocation, useNavigate } from 'react-router-dom';
+
 
 const SearchPage = () => {    
 
@@ -74,7 +75,7 @@ const SearchPage = () => {
         } else {
             document.body.classList.remove('no-scroll');
         }
-      };
+    };
 
 
     return (
@@ -104,14 +105,14 @@ const SearchPage = () => {
             />
         </div>
 
-        <div className="movie-search-frame">
+        <div className="movie-search-grid">
             <div className="subtitle">
                 <h2>
                     Search Results for <span className="search-term">{searchTerm}</span> :
                 </h2>
             </div>
 
-            <div className="container-movie-search">
+            <div className="container-movie-grid">
                 {searchResults.map((movie) => (
                     <div key = {movie.id} onClick={() => handleFlip(movie)}>
                         <MovieCard movie={movie}/>

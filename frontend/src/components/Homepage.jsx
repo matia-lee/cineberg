@@ -8,19 +8,22 @@ const Homepage = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const [upcomingMovies, setUpcomingMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [flipped, setFlipped] = useState(null);
   const [genres, setGenres] = useState([]);
 
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
+  const handleIconClick = () => {
+    navigate('/');
+  };
+
   const handleSearchClick = () => {
     navigate('/search', { state: { searchTerm } });
   };
 
-  const handleIconClick = () => {
-    navigate('/');
+  const handleNavigate = (path) => {
+    navigate(path);
   };
 
   const handleKeyDown = (event) => {
@@ -30,13 +33,13 @@ const Homepage = () => {
   };
 
   const handleFlip = (movie) => {
-      setFlipped(prevFlippedMovie => (prevFlippedMovie === movie ? null : movie))
-      if (movie) {
-          document.body.classList.add('no-scroll');
-      } else {
-          document.body.classList.remove('no-scroll');
-      }
-    };
+    setFlipped(prevFlippedMovie => (prevFlippedMovie === movie ? null : movie))
+    if (movie) {
+        document.body.classList.add('no-scroll');
+    } else {
+        document.body.classList.remove('no-scroll');
+    }
+  };
 
 useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -53,71 +56,21 @@ useEffect(() => {
         setTrendingMovies(data.results);
       })
       .catch(err => console.error(err));
-  }, []);
-    
-  useEffect(() => {
-    const api_key = process.env.REACT_APP_TMDB_KEY;
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer ' + api_key
-      }
-    };
-    
-    fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
-      .then(response => response.json())
-      .then(data => {
-        setNowPlayingMovies(data.results);
-      })
-      .catch(err => console.error(err));
-  }, []);
-    
-  useEffect(() => {
-    const api_key = process.env.REACT_APP_TMDB_KEY;
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer ' + api_key
-      }
-    };
-    
-    fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options)
-      .then(response => response.json())
-      .then(data => {
-        setUpcomingMovies(data.results);
-      })
-      .catch(err => console.error(err));
-  }, []);
-    
-  useEffect(() => {
-    const api_key = process.env.REACT_APP_TMDB_KEY;
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer ' + api_key
-      }
-    };
-    
-    fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
-      .then(response => response.json())
-      .then(data => {
-        setTopRatedMovies(data.results);
-      })
-      .catch(err => console.error(err));
-  })
 
-  useEffect(() => {
-    const api_key = process.env.REACT_APP_TMDB_KEY;
-    const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer ' + api_key
-    }};
-  
+    fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
+    .then(response => response.json())
+    .then(data => {
+      setNowPlayingMovies(data.results);
+    })
+    .catch(err => console.error(err));
+
+    fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options)
+    .then(response => response.json())
+    .then(data => {
+      setUpcomingMovies(data.results);
+    })
+    .catch(err => console.error(err));
+
     fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options)
     .then(response => response.json())
     .then(data => {
@@ -189,18 +142,6 @@ useEffect(() => {
             </div>
           ))}
         </div>
-
-        {/* <div className = "subtitle">
-          <h2>All Time Top Rated Movies: </h2>
-        </div>
-
-        <div className = "container-movie">
-          {topRatedMovies.map((movie) => (
-            <div key = {movie.id} onClick={() => handleFlip(movie)}>
-              <MovieCard movie={movie}/>
-            </div>
-          ))}
-        </div> */}
       </div>
 
       {flipped && (
@@ -224,35 +165,36 @@ useEffect(() => {
           Cineberg Features
         </h6>
         <ul style={{ listStyleType: 'none' }}>
-          <li>Movie Recommender</li>
-          <li>All Time Top Rated Movies</li>
-          <li>Tip of the Iceberg Movies</li>
-          <li>Niche Movies</li>
-          <li>Underground Movies</li>
+          <li onClick={() => handleNavigate('/recommender')}>Movie Recommender</li>
+          <li onClick={() => handleNavigate('/toprated')}>All Time Top Rated</li>
+          <li onClick={() => handleNavigate('/tipoficeberg')}>Tip of the Iceberg Movies</li>
+          <li onClick={() => handleNavigate('/niche')}>Niche Movies</li>
+          <li onClick={() => handleNavigate('/underground')}>Underground Movies</li>
           <li>Movie News</li>
         </ul>
         <h6 className="genres">
           Genres
         </h6>
         <ul style={{ listStyleType: 'none' }}>
-          <li>Action</li>
-          <li>Adventure</li>
-          <li>Animation</li>
-          <li>Comedy</li>
-          <li>Crime</li>
-          <li>Documentary</li>
-          <li>Drama</li>
-          <li>Family</li>
-          <li>Fantasy</li>
-          <li>History</li>
-          <li>Horror</li>
-          <li>Music</li>
-          <li>Mystery</li>
-          <li>Romance</li>
-          <li>Science Fiction</li>
-          <li>Thriller</li>
-          <li>War</li>
-          <li>Western</li>
+          <li onClick={() => handleNavigate('/action')}>Action</li>
+          <li onClick={() => handleNavigate('/adventure')}>Adventure</li>
+          <li onClick={() => handleNavigate('/animation')}>Animation</li>
+          <li onClick={() => handleNavigate('/comedy')}>Comedy</li>
+          <li onClick={() => handleNavigate('/crime')}>Crime</li>
+          <li onClick={() => handleNavigate('/documentary')}>Documentary</li>
+          <li onClick={() => handleNavigate('/drama')}>Drama</li>
+          <li onClick={() => handleNavigate('/family')}>Family</li>
+          <li onClick={() => handleNavigate('/fantasy')}>Fantasy</li>
+          <li onClick={() => handleNavigate('/history')}>History</li>
+          <li onClick={() => handleNavigate('/horror')}>Horror</li>
+          <li onClick={() => handleNavigate('/music')}>Music</li>
+          <li onClick={() => handleNavigate('/mystery')}>Mystery</li>
+          <li onClick={() => handleNavigate('/romance')}>Romance</li>
+          <li onClick={() => handleNavigate('/scifi')}>Science Fiction</li>
+          <li onClick={() => handleNavigate('/tvmovie')}>TV Movie</li>
+          <li onClick={() => handleNavigate('/thriller')}>Thriller</li>
+          <li onClick={() => handleNavigate('/war')}>War</li>
+          <li onClick={() => handleNavigate('/western')}>Western</li>
         </ul>
       </div>
     </>       

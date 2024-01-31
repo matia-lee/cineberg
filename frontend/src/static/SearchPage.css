@@ -1,4 +1,4 @@
-.movie-search-frame .subtitle .search-term {
+.movie-search-grid .subtitle .search-term {
   font-style: italic;
   color: rgba(91, 143, 206, 1);
   font-weight: 400;
@@ -9,7 +9,7 @@ body {
   background-color: #212426;
 }
 
-.movie-search-frame {
+.movie-search-grid {
   border-top-left-radius: 20px;
   margin-top: 7rem;
   background-color: #353634;
@@ -30,9 +30,9 @@ body {
   font-size: 30px;
 }
 
-.container-movie-search {
+.container-movie-grid {
   margin-top: 10px;
-  margin-left: 21px;
+  margin-left: 23px;
   width: 100%;
   align-items: center;
   position: relative;
@@ -41,7 +41,7 @@ body {
   grid-gap: 0px;
 }
 
-.container-movie-search .movie {
+.container-movie-grid .movie {
   flex-shrink: 0;
   margin: 10px;
   width: 248px;
@@ -56,12 +56,12 @@ body {
   box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
 }
 
-.container-movie-search .movie:hover {
+.container-movie-grid .movie:hover {
   box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
   transform: scale(1.05, 1.05);
 }
 
-.container-movie-search .movie .release-date {
+.container-movie-grid .movie .release-date {
   font-weight: 550;
   position: absolute;
   width: 100%;
@@ -75,26 +75,26 @@ body {
   margin-top: -3px;
 }
 
-.container-movie-search .movie:hover .release-date {
+.container-movie-grid .movie:hover .release-date {
   opacity: 1;
 }
 
-.container-movie-search .movie .poster {
+.container-movie-grid .movie .poster {
   width: 100%;
   height: 100%;
 }
 
-.container-movie-search .movie .poster img {
+.container-movie-grid .movie .poster img {
   height: 100%;
   width: 100%;
 }
 
-.container-movie-search .movie:hover .poster {
+.container-movie-grid .movie:hover .poster {
   height: 100%;
   opacity: 0.3;
 }
 
-.container-movie-search .movie .title {
+.container-movie-grid .movie .title {
   z-index: 2;
   background-color: #44494b;
   padding: 16px 24px 24px 24px;
@@ -104,7 +104,7 @@ body {
   left: 0;
 }
 
-.container-movie-search .movie .title span {
+.container-movie-grid .movie .title span {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-size: 13px;
@@ -113,14 +113,14 @@ body {
   color: #B6B8B5;
 }
 
-.container-movie-search .movie .title h3 {
+.container-movie-grid .movie .title h3 {
   margin: 0;
   margin-top: 5px;
   font-family: "Roboto Slab", serif;
   color: rgba(112, 181, 230, 1);
 }
 
-.container-movie-search .movie:hover .title {
+.container-movie-grid .movie:hover .title {
   background-color: transparent;
 }
 

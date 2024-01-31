@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 
-const MovieCardFlipped = ({ movie, genres, onFlip }) => {
+const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
 
     const [credits, setCredits] = useState([]);
     const [tagline, setTagline] = useState([]);
@@ -9,12 +9,22 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
     const [ratingsPaddingTop, setRatingsPaddingTop] =useState('0px');
     const [creditsPaddingTop, setCreditsPaddingTop] = useState('0px');
     const [genresPaddingTop, setGenresPaddingTop] = useState('0px');
+    // const [castFlipped, setCastFlipped] = useState(null);
     const titleRef = useRef(null);
     const overviewRef = useRef(null);
     const ratingsRef = useRef(null);
     const taglineRef = useRef(null);
     const posterRef = useRef(null);
 
+    // const handleCastFlip = (person) => {
+    //     setCastFlipped(prevFlippedCast => (prevFlippedCast === person ? null : person))
+    //     if (person) {
+    //         document.body.classList.add('no-scroll');
+    //     } else {
+    //         document.body.classList.remove('no-scroll');
+    //     }
+    // };
+  
 
     useEffect(() => {
         if (titleRef.current) {
@@ -76,19 +86,8 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
                 setCredits(data.cast.slice(0, 5));
             })
             .catch(err => console.error(err));
-    }, [movie.id]);
 
-    useEffect(() => {
-        const api_key = process.env.REACT_APP_TMDB_KEY;
-        const options = {
-            method: 'GET',
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Bearer ' + api_key
-            }
-          };
-          
-          fetch('https://api.themoviedb.org/3/movie/' + movie.id + '?language=en-US', options)
+            fetch('https://api.themoviedb.org/3/movie/' + movie.id + '?language=en-US', options)
             .then(response => response.json())
             .then(data => {
                 setTagline(data.tagline);
@@ -152,13 +151,21 @@ const MovieCardFlipped = ({ movie, genres, onFlip }) => {
                 />
             </div>
 
-            <div className="genre"  style={{ marginTop: genresPaddingTop }}>
+            <div className="genre" style={{ marginTop: genresPaddingTop }}>
                 <h4>
-                    {movie.genre_ids.map(id => (
-                        <span key={`${movie.id}-${id}`} className="genre-item">
-                            {genres.find(genre => genre.id === id).name}
-                        </span>
-                    ))}
+                    {movie.genres ? 
+                        movie.genres.map(genre => (
+                            <span key={`${movie.id}-${genre.id}`} className="genre-item">
+                                {genre.name}
+                            </span>
+                        ))
+                        :
+                        movie.genre_ids.map(id => (
+                            <span key={`${movie.id}-${id}`} className="genre-item">
+                                {genres.find(genre => genre.id === id).name}
+                            </span>
+                        ))
+                    }
                 </h4>
             </div>
 
