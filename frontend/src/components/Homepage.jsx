@@ -170,7 +170,6 @@ useEffect(() => {
           <li onClick={() => handleNavigate('/tipoficeberg')}>Tip of the Iceberg Movies</li>
           <li onClick={() => handleNavigate('/niche')}>Niche Movies</li>
           <li onClick={() => handleNavigate('/underground')}>Underground Movies</li>
-          <li>Movie News</li>
         </ul>
         <h6 className="genres">
           Genres

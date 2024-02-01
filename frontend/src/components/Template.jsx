@@ -9,6 +9,7 @@ const Template = ({ endpoint, subtitle }) => {
     const [flipped, setFlipped] = useState(null);
     const [genres, setGenres] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [page, setPage] = useState(1);
     const navigate = useNavigate();
 
     const handleIconClick = () => {
@@ -17,6 +18,10 @@ const Template = ({ endpoint, subtitle }) => {
 
     const handleSearchClick = () => {
         navigate('/search', { state: { searchTerm } });
+    };
+
+    const handlePageClick = (newPage) => {
+        setPage(newPage);
     };
 
     const handleKeyDown = (event) => {
@@ -55,13 +60,13 @@ const Template = ({ endpoint, subtitle }) => {
             })
             .catch(err => console.error(err));
 
-        fetch(`https://api.themoviedb.org/3${endpoint}`, options)
+        fetch(`https://api.themoviedb.org/3${endpoint}&page=${page}`, options)
             .then(response => response.json())
             .then(data => {
                 setMovies(data.results)
             })
             .catch(err => console.error(err));
-    }, [endpoint]);
+    }, [endpoint, page]);
 
     return (    
         <>
@@ -102,6 +107,14 @@ const Template = ({ endpoint, subtitle }) => {
                         </div>
                     ))}
                 </div>
+
+                <div className="footer">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+                        <span key={number} onClick={() => handlePageClick(number)} className={page === number ? 'current-page' : ''}>
+                            {number}
+                        </span>
+                    ))}
+                </div>
             </div>
 
             {flipped && (
@@ -118,7 +131,7 @@ const Template = ({ endpoint, subtitle }) => {
                         ))}
                     </div>
                 </>
-            )};
+            )}
 
             <div className = "template-nav-bar">
                 <h6 className = "template-cineberg-features">
@@ -131,7 +144,6 @@ const Template = ({ endpoint, subtitle }) => {
                     <li onClick={() => handleNavigate('/tipoficeberg')}>Tip of the Iceberg Movies</li>
                     <li onClick={() => handleNavigate('/niche')}>Niche Movies</li>
                     <li onClick={() => handleNavigate('/underground')}>Underground Movies</li>
-                    <li>Movie News</li>
                 </ul>
 
                 <h6 className="template-genres">

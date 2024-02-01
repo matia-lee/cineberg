@@ -15,7 +15,7 @@ def recommend_movies(user_input):
     movies_df = pd.read_csv('masterdf-updated.csv')
     movies_df['embedding'] = movies_df['embedding'].apply(eval).apply(np.array)
 
-    popularity_threshold = [17, 1000000]
+    popularity_threshold = [0, 1000000]
 
     # user_input = input('What type of movie would you like to see? ')
     user_input_vector = get_embedding(user_input, engine="text-embedding-ada-002")
