@@ -13,6 +13,10 @@ const SearchPage = () => {
     const [flipped, setFlipped] = useState(null);
     const [genres, setGenres] = useState([]);
     const navigate = useNavigate();
+  
+    const handleNavigate = (path) => {
+      navigate(path);
+    };
 
     const handleIconClick = () => {
         navigate('/');
@@ -134,8 +138,49 @@ const SearchPage = () => {
                         ))}
                     </div>
                 </>
-            )};
-        </div>       
+            )}
+        </div>
+
+        <div className = "searchpage-nav-bar">
+            <h6 className = "searchpage-cineberg-features">
+                Cineberg Features
+            </h6>
+
+            <ul style={{ listStyleType: 'none' }}>
+                <li onClick={() => handleNavigate('/recommender')}>Movie Recommender</li>
+                <li onClick={() => handleNavigate('/toprated')}>All Time Top Rated</li>
+                <li onClick={() => handleNavigate('/tipoficeberg')}>Tip of the Iceberg Movies</li>
+                <li onClick={() => handleNavigate('/niche')}>Niche Movies</li>
+                <li onClick={() => handleNavigate('/underground')}>Underground Movies</li>
+                <li>Movie News</li>
+            </ul>
+
+            <h6 className="searchpage-genres">
+                Genres
+            </h6>
+
+            <ul style={{ listStyleType: 'none' }}>
+                <li onClick={() => handleNavigate('/action')}>Action</li>
+                <li onClick={() => handleNavigate('/adventure')}>Adventure</li>
+                <li onClick={() => handleNavigate('/animation')}>Animation</li>
+                <li onClick={() => handleNavigate('/comedy')}>Comedy</li>
+                <li onClick={() => handleNavigate('/crime')}>Crime</li>
+                <li onClick={() => handleNavigate('/documentary')}>Documentary</li>
+                <li onClick={() => handleNavigate('/drama')}>Drama</li>
+                <li onClick={() => handleNavigate('/family')}>Family</li>
+                <li onClick={() => handleNavigate('/fantasy')}>Fantasy</li>
+                <li onClick={() => handleNavigate('/history')}>History</li>
+                <li onClick={() => handleNavigate('/horror')}>Horror</li>
+                <li onClick={() => handleNavigate('/music')}>Music</li>
+                <li onClick={() => handleNavigate('/mystery')}>Mystery</li>
+                <li onClick={() => handleNavigate('/romance')}>Romance</li>
+                <li onClick={() => handleNavigate('/scifi')}>Science Fiction</li>
+                <li onClick={() => handleNavigate('/tvmovie')}>TV Movie</li>
+                <li onClick={() => handleNavigate('/thriller')}>Thriller</li>
+                <li onClick={() => handleNavigate('/war')}>War</li>
+                <li onClick={() => handleNavigate('/western')}>Western</li>
+            </ul>
+        </div> 
     </>
     );
 }

@@ -158,7 +158,7 @@ useEffect(() => {
                 ))}
             </div>
         </>
-      )};
+      )}
 
       <div className = "nav-bar">
         <h6 className = "cineberg-features">

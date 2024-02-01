@@ -45,6 +45,29 @@ const MovieRecommender = () => {
         }
     };
 
+    const handleKeyDown = async (event) => {
+        if (event.key === "Enter") {
+            try {
+                const response = await fetch('http://localhost:5000/recommend_movies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ searchTerm }),
+                });
+                if (response.ok) {
+                    const movieIds = await response.json();
+                    setMovieIds(movieIds);
+                } else {
+                    console.error('Failed to fetch recommendations');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+    }
+
     useEffect(() => {
         const fetchMoviesDetails = async () => {
             if (movieIds.length > 0) {
@@ -121,7 +144,7 @@ const MovieRecommender = () => {
                 </div>
             </div>
 
-            <div className="recommendation-search-button">
+            <div className="recommendation-search-button" onKeyDown={handleKeyDown}>
                 <input 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -134,34 +157,41 @@ const MovieRecommender = () => {
                     onClick={handleSearchClick}
                 />
             </div>
-
-            {/* <div className = "subtitle">
-                <h2>Upcoming Movies: </h2>
-            </div> */}
-
-            <div className = "container-movie">
-                {recommendedMovies.map((movie) => (
-                    <div key = {movie.id} onClick={() => handleFlip(movie)}>
-                    <MovieCard movie={movie}/>
+            
+            {recommendedMovies.length > 0 && (
+                <div className="recommended-movies-frame">
+                    <div className="header">
+                        <h2>Movies Recommended 4 You {'<3'}:</h2>
                     </div>
-                ))}
-            </div>
 
-            {flipped && (
-                <>
-                <div onClick={() => handleFlip(null)} className = "overlay"></div>
-                    <div className = "container-flipped">
-                        {recommendedMovies.map((movieIds) => (
-                        <MovieCardFlipped 
-                            key = {movieIds.id} 
-                            movie={flipped}
-                            genres={genres}
-                            onFlip={handleFlip}
-                        />
+                    <div className="recommended-container-movie">
+                        {recommendedMovies.map((movie, index) => (
+                            <div key={index}>
+                                <h3 className="recommended-movie-title">{index  + 1}.</h3>
+                                <div onClick={() => handleFlip(movie)}>
+                                    <MovieCard movie={movie} />
+                                </div>
+                            </div>
                         ))}
                     </div>
-                </>
-            )};
+
+                    {flipped && (
+                        <>
+                        <div onClick={() => handleFlip(null)} className = "overlay"></div>
+                            <div className = "container-flipped">
+                                {recommendedMovies.map((movieIds) => (
+                                <MovieCardFlipped 
+                                    key = {movieIds.id} 
+                                    movie={flipped}
+                                    genres={genres}
+                                    onFlip={handleFlip}
+                                />
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </div>
+            )}
         </div>
     )
 };
