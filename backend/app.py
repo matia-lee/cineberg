@@ -12,7 +12,7 @@ load_dotenv(".env")
 openai.api_key = os.environ.get("OPEN_AI_KEY")
 
 def recommend_movies(user_input):
-    movies_df = pd.read_csv('masterdf-updated.csv')
+    movies_df = pd.read_csv('masterdf.csv')
     movies_df['embedding'] = movies_df['embedding'].apply(eval).apply(np.array)
 
     popularity_threshold = [0, 1000000]

@@ -3,7 +3,7 @@ import pandas as pd
 from pathlib import Path
 
 
-dir_path = Path("./embeddings_updated")
+dir_path = Path("./embeddings")
 
 master_df = pd.DataFrame()
 
@@ -15,4 +15,4 @@ for file_path in dir_path.iterdir():
         master_df = pd.concat([master_df, df])
 
 
-master_df.to_csv("masterdf-updated.csv")
+master_df.to_csv("masterdf.csv")

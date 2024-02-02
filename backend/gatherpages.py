@@ -11,25 +11,19 @@ load_dotenv(".env")
 openai.api_key = os.environ.get("OPEN_AI_KEY")
 
 application_token = os.environ.get("tmdb_key")
-# movie_pages_url = "https://api.themoviedb.org/3/movie/changes?page=1"
-# credits_url = "https://api.themoviedb.org/3/movie/movie_id/credits?language=en-US"
 
 
-# headers = {
-#     "accept": "application/json",
-#     "Authorization": "Bearer " + application_token
-# }
-
-# response = requests.get(movie_pages_url, headers=headers)
-# results = response.json()["results"]
+headers = {
+    "accept": "application/json",
+    "Authorization": "Bearer " + application_token
+}
 
 
 
 df = pd.DataFrame(columns=["id", "title", "genres", "overview", "release_date", "runtime", "review", "language", "popularity", "cast", "crew", "content to embed"])
 
-total_page = 20
-for page in range(20, total_page + 1):
-    # movie_pages_url = f"https://api.themoviedb.org/3/movie/changes?page={page}"
+total_page = 201
+for page in range(181, total_page + 1):
     movie_pages_url = f'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page={page}&sort_by=popularity.desc&vote_average.gte=5&vote_count.gte=1000&with_genres=28%20%7C%2012%20%7C%2016%20%7C%2035%20%7C%2080%20%7C%2099%20%7C%2018%20%7C%2010751%20%7C%2014%20%7C%2036%20%7C%2027%20%7C%2010402%20%7C%209648%20%7C%2010749%20%7C%20878%20%7C%2053%20%7C%2010752%20%7C%2037%20%7C%2010770'
     response = requests.get(movie_pages_url, headers=headers)
     results = response.json()["results"]
@@ -73,4 +67,4 @@ for page in range(20, total_page + 1):
         except:
             print("loading...")
 
-df.to_csv("updated_pages1-20.csv")
+df.to_csv("pages181-201.csv")

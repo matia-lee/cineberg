@@ -34,7 +34,7 @@ def get_embeddings_batch(texts, engine):
 
 
 
-movies_df = pd.read_csv("updated_pages61-83.csv")
+movies_df = pd.read_csv("pages181-201.csv")
 
 
 texts_to_embed = movies_df["content to embed"].tolist()
@@ -42,4 +42,4 @@ movies_df_embeddings = get_embeddings_batch(texts_to_embed, engine='text-embeddi
 movies_df['embedding'] = movies_df_embeddings
 
 
-movies_df.to_csv('embeddings_updated_pages61-83.csv')
+movies_df.to_csv('embeddings_pages181-201.csv')
