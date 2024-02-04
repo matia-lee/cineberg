@@ -9,17 +9,13 @@ const MovieRecommender = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [cinebergScale, setCinebergScale] = useState('');
+    const [selectedScaleLabel, setSelectedScaleLabel] = useState('Select Scale');
     const [movieIds, setMovieIds] = useState([]);
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     const [flipped, setFlipped] = useState(null);
     const [genres, setGenres] = useState([]);
     const [dropDown, setDropDown] = useState(false);
-    const [selectedScaleLabel, setSelectedScaleLabel] = useState('Select Scale');
-
-
-    const handleDropDown = () => {
-        setDropDown(!dropDown);
-    };
+    const [loading, setLoading] = useState(false);
 
     const handleIconClick = () => {
         navigate('/');
@@ -47,6 +43,7 @@ const MovieRecommender = () => {
 
     const handleSearchClick = async () => {
         try {
+            setLoading(true);
             const response = await fetch('http://localhost:5000/recommend_movies', {
                 method: 'POST',
                 headers: {
@@ -62,11 +59,14 @@ const MovieRecommender = () => {
             }
         } catch (error) {
             console.error('Error:', error);
+        } finally{
+            setLoading(false);
         }
     };
 
     const handleKeyDown = async (event) => {
         if (event.key === "Enter") {
+            setLoading(true);
             try {
                 const response = await fetch('http://localhost:5000/recommend_movies', {
                     method: 'POST',
@@ -83,6 +83,8 @@ const MovieRecommender = () => {
                 }
             } catch (error) {
                 console.error('Error:', error);
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -129,6 +131,10 @@ const MovieRecommender = () => {
         })
         .catch(err => console.error(err));
     }, [])
+
+    const handleDropDown = () => {
+        setDropDown(!dropDown);
+    };
 
     return(
         <div>
@@ -184,7 +190,18 @@ const MovieRecommender = () => {
                     />
                 </div>
             </div>
-            
+
+            {loading && (
+                <>
+                    <div className="loading">
+                        <div className="loading-dot"></div>
+                        <div className="loading-dot"></div>
+                        <div className="loading-dot"></div>
+                    </div>
+                    <p className="loading-text">Searching through the iceberg...</p>
+                </>
+            )}
+        
             {recommendedMovies.length > 0 && (
                 <div className="recommended-movies-frame">
                     <div className="header">
