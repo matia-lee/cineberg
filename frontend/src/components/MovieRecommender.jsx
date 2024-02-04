@@ -8,12 +8,32 @@ const MovieRecommender = () => {
 
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
+    const [cinebergScale, setCinebergScale] = useState('');
     const [movieIds, setMovieIds] = useState([]);
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     const [flipped, setFlipped] = useState(null);
     const [genres, setGenres] = useState([]);
+    const [dropDown, setDropDown] = useState(false);
+    const [selectedScaleLabel, setSelectedScaleLabel] = useState('Select Scale');
+
+
+    const handleDropDown = () => {
+        setDropDown(!dropDown);
+    };
+
     const handleIconClick = () => {
         navigate('/');
+    };
+
+    const handleCinebergScale = (scale) => {
+        setCinebergScale(scale);
+        const scaleLabels = {
+            '1': 'Tip of the Iceberg Movies',
+            '2': 'Niche Movies',
+            '3': 'Underground Movies',
+            '4': 'No Filter'
+        };
+        setSelectedScaleLabel(scaleLabels[scale] || 'Select Scale');
     };
 
     const handleFlip = (movie) => {
@@ -32,7 +52,7 @@ const MovieRecommender = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ searchTerm }),
+                body: JSON.stringify({ searchTerm, cinebergScale }),
             });
             if (response.ok) {
                 const movieIds = await response.json();
@@ -53,7 +73,7 @@ const MovieRecommender = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ searchTerm }),
+                    body: JSON.stringify({ searchTerm, cinebergScale }),
                 });
                 if (response.ok) {
                     const movieIds = await response.json();
@@ -127,35 +147,42 @@ const MovieRecommender = () => {
                 </h3>
             </div> 
 
-            <div className="paste-button">
-                <button className="button">
-                    <img 
-                        src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
-                        alt="Cineberg-Icon" 
-                    />
-                    <div className="triangle">
-                        ▼
-                    </div>
-                </button>
-                <div className="dropdown-content">
-                    <a href id="top">Tip of the Iceberg movies</a>
-                    <a href id="middle">Niche Movies</a>
-                    <a href id="bottom">Underground Movies</a>
+            <div className="search">
+                <div className="paste-button" onClick={handleDropDown}>
+                    <button className="button">
+                        <img 
+                            src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
+                            alt="Cineberg-Icon" 
+                        />
+                        <div className="selected-scale">{selectedScaleLabel}</div>
+                        <div className="triangle">
+                            ▼
+                        </div>
+                    </button>
+
+                    {dropDown && (
+                        <div className="dropdown-content">
+                            <button className="top" onClick={() => handleCinebergScale("1")}>Tip of the Iceberg Movies</button>
+                            <button className="middle" onClick={() => handleCinebergScale("2")}>Niche Movies</button>
+                            <button className="middle" onClick={() => handleCinebergScale("3")}>Underground Movies</button>
+                            <button className="bottom" onClick={() => handleCinebergScale("4")}>No Filter</button>
+                        </div>
+                    )}
                 </div>
-            </div>
 
-            <div className="recommendation-search-button" onKeyDown={handleKeyDown}>
-                <input 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="What type of movie would you like to see? :)"
-                />
+                <div className="recommendation-search-button" onKeyDown={handleKeyDown}>
+                    <input 
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="What type of movie would you like to see? :)"
+                    />
 
-                <img
-                    src="https://static.vecteezy.com/system/resources/previews/009/973/089/non_2x/magnifying-glass-sign-search-icon-free-png.png"
-                    alt="search"
-                    onClick={handleSearchClick}
-                />
+                    <img
+                        src="https://static.vecteezy.com/system/resources/previews/009/973/089/non_2x/magnifying-glass-sign-search-icon-free-png.png"
+                        alt="search"
+                        onClick={handleSearchClick}
+                    />
+                </div>
             </div>
             
             {recommendedMovies.length > 0 && (
