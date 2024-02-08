@@ -23,19 +23,19 @@ Everybody loves being able to put their friends onto new, undiscovered, and unde
 
 ### Installation Steps
 
-1.  Begin by cloning the repository:
-     `git clone https://github.com/matia-lee/cineberg.git`
+1.  Begin by cloning this repository:
+    `git clone https://github.com/matia-lee/cineberg.git`
 2.  Inside the "frontend" folder, create a `.env` file and include:
 
 ```dosini
-REACT_APP_TMDB_KEY="< insert tmdb api key >"
+REACT_APP_TMDB_KEY="<insert tmdb api key>"
 ```
 
 3.  Inside the "backend" folder, create another `.env` file and include:
 
 ```dosini
-tmdb_key="< insert tmdb api key >"
-OPEN_AI_KEY="< insert openai api key >"
+tmdb_key="<insert tmdb api key>"
+OPEN_AI_KEY="<insert openai api key>"
 ```
 
 4.  To Start go to terminal:
@@ -48,3 +48,4 @@ OPEN_AI_KEY="< insert openai api key >"
     npm start
     ```
 
+5. Enjoy!
