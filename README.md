@@ -2,8 +2,6 @@
 
 Includes everything from the tip of the iceberg throughout!
 
-![demo of nba gpt](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWU5Z3MwamZ0aGQ0ZGRsbnNqcWFxMng1Zm5mNm5wdWo5NHFxNGFpbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ik7cWpfj6hYDckgP5c/giphy.gif)
-
 ## Overview
 
 Lets be real...
