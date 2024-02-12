@@ -26,7 +26,7 @@ body {
   margin-left: 50px;
   font-family: "Roboto Slab", serif;
   font-weight: 1000;
-  color: #69A8D0;
+  color: #69a8d0;
   font-size: 30px;
 }
 
@@ -67,7 +67,7 @@ body {
   width: 100%;
   opacity: 0;
   left: 16px;
-  color: #69A8D0;
+  color: #69a8d0;
   font-family: "Roboto Slab", serif;
   font-size: 20px;
   letter-spacing: 3px;
@@ -110,7 +110,7 @@ body {
   font-size: 13px;
   letter-spacing: 2px;
   font-weight: 500;
-  color: #B6B8B5;
+  color: #b6b8b5;
 }
 
 .container-movie-grid .movie .title h3 {
@@ -126,7 +126,7 @@ body {
 
 .searchpage-nav-bar {
   position: absolute;
-  margin-top: -2009px;
+  margin-top: -2104px;
   margin-left: 40px;
   font-family: "Roboto Slab", serif;
   width: 300px;
