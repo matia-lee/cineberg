@@ -68,41 +68,26 @@ def process_input():
 
 
 
-@app.route('/news')
-def get_news():
+
+
+news_cache = []
+
+def scrape_news():
     options = Options()
     options.add_argument("--headless")
     service = Service(executable_path="./chromedriver")
     driver = webdriver.Chrome(service=service, options=options)
-    
+
+    articles_data = []
+
     try:
-        # driver.get(os.environ.get("website_url"))
-
-        # news_lists = driver.find_elements(By.CSS_SELECTOR, ".cards_cards-container__HiYvz")
-        # articles_data = []
-
-        # for item in news_lists:
-        #     titles = item.find_elements(By.CSS_SELECTOR, ".card_title__I1a3A")
-        #     clickables = item.find_elements(By.CSS_SELECTOR, ".card_image-content__GDM2z")
-
-        #     for title, clickable in zip(titles, clickables):
-        #         url = clickable.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
-        #         driver.get(url)
-        #         paragraphs_elements = driver.find_elements(By.CLASS_NAME, "article_article-content__3auQJ")
-        #         paragraphs_text = [p.text for p in paragraphs_elements]
-        #         article_content = " ".join(paragraphs_text)
-        #         articles_data.append({
-        #             "title": title.text,
-        #             "url": url,
-        #             "content": article_content
-        #         })
         driver.get(os.environ.get("website_url"))
 
         news_lists = driver.find_elements(By.CSS_SELECTOR, ".cards_cards-container__HiYvz")
 
         article_titles = []
         article_urls = []
-        articles_data = []
+        
 
         for item in news_lists:
             titles = item.find_elements(By.CSS_SELECTOR, ".card_title__I1a3A")
@@ -135,9 +120,15 @@ def get_news():
     finally:
         driver.quit()
 
-    return jsonify(articles_data)
+    global news_cache
+    news_cache = articles_data
 
+@app.route('/news')
+def get_news():
+    return jsonify(news_cache)
 
+scheduler.add_job(id="scheduled scraping", func=scrape_news, trigger="interval", hours=24)
 
 if __name__ == '__main__':
+    scrape_news()
     app.run(debug=True)
