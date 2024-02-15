@@ -1,5 +1,3 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -8,47 +6,64 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 from dotenv import load_dotenv
 
-service = Service(executable_path="./chromedriver")
-driver = webdriver.Chrome(service=service)
+news_cache = []
 
-load_dotenv(".env")
+def scrape_news():
+    service = Service(executable_path="./chromedriver")
+    driver = webdriver.Chrome(service=service)
 
-driver.get(os.environ.get("website_url"))
+    articles_data = []
 
-news_lists = driver.find_elements(By.CSS_SELECTOR, ".cards_cards-container__HiYvz")
+    try:
+        load_dotenv(".env")
+        driver.get(os.environ.get("website_url"))
 
-article_titles = []
-article_urls = []
-articles_data = []
+        news_lists = driver.find_elements(By.CSS_SELECTOR, ".cards_cards-container__HiYvz")
 
-for item in news_lists:
-    titles = item.find_elements(By.CSS_SELECTOR, ".card_title__I1a3A")
+        article_titles = []
+        article_urls = []
+        article_images = []
+        
+        
 
-    for title in titles:
-        article_titles.append(title.text)
+        for item in news_lists:
+            titles = item.find_elements(By.CSS_SELECTOR, ".card_title__I1a3A")
 
-    clickables = item.find_elements(By.CSS_SELECTOR, ".card_image-content__GDM2z")
+            for title in titles:
+                article_titles.append(title.text)
 
-    for clickable in clickables:
-        links = clickable.find_elements(By.CSS_SELECTOR, "a")
+            clickables = item.find_elements(By.CSS_SELECTOR, ".card_image-content__GDM2z")
 
-        for link in links:
-            url = link.get_attribute("href")
-            article_urls.append(url)
+            for clickable in clickables:
+                links = clickable.find_elements(By.CSS_SELECTOR, "a")
+                pictures = clickable.find_elements(By.CSS_SELECTOR, "img")
+
+                for link in links:
+                    url = link.get_attribute("href")
+                    article_urls.append(url)
+                for picture in pictures:
+                    image_url = picture.get_attribute("src")
+                    article_images.append(image_url)
 
 
-for i, url in enumerate(article_urls):
-    driver.get(url)
-    paragraphs_elements = driver.find_elements(By.CLASS_NAME, "article_article-content__3auQJ")
-    paragraphs_text = [p.text for p in paragraphs_elements]
-    article_content = " ".join(paragraphs_text)
-    articles_data.append({
-        "title": article_titles[i],
-        "url": url,
-        "content": article_content
-    })
-    
-driver.quit()
+        for i, url in enumerate(article_urls):
+            driver.get(url)
+            paragraphs_elements = driver.find_elements(By.CLASS_NAME, "article_article-content__3auQJ")
+            paragraphs_text = [p.text for p in paragraphs_elements]
+            article_content = " ".join(paragraphs_text)
+            articles_data.append({
+                "title": article_titles[i],
+                "url": url,
+                "content": article_content,
+                "images": article_images[i]
+            })
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        driver.quit()
 
-# for article in articles_data:
-#     print(article["title"], article["content"])
+    global news_cache
+    news_cache = articles_data
+    print(news_cache)
+
+scrape_news()

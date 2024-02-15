@@ -32,6 +32,7 @@ const MovieNews = () => {
           <div key={index}>
             <h3>{item.title}</h3>
             <h3>{item.content}</h3>
+            <img src={item.image} alt="movie news" />
           </div>
         ))}
       </div>

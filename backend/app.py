@@ -81,12 +81,15 @@ def scrape_news():
     articles_data = []
 
     try:
+        load_dotenv(".env")
         driver.get(os.environ.get("website_url"))
 
         news_lists = driver.find_elements(By.CSS_SELECTOR, ".cards_cards-container__HiYvz")
 
         article_titles = []
         article_urls = []
+        article_images = []
+        
         
 
         for item in news_lists:
@@ -99,10 +102,14 @@ def scrape_news():
 
             for clickable in clickables:
                 links = clickable.find_elements(By.CSS_SELECTOR, "a")
+                pictures = clickable.find_elements(By.CSS_SELECTOR, "img")
 
                 for link in links:
                     url = link.get_attribute("href")
                     article_urls.append(url)
+                for picture in pictures:
+                    image_url = picture.get_attribute("src")
+                    article_images.append(image_url)
 
 
         for i, url in enumerate(article_urls):
@@ -113,7 +120,8 @@ def scrape_news():
             articles_data.append({
                 "title": article_titles[i],
                 "url": url,
-                "content": article_content
+                "content": article_content,
+                "image": article_images[i]
             })
     except Exception as e:
         print(f"Error: {e}")
