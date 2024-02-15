@@ -6,8 +6,12 @@ import openai
 import os
 from openai.embeddings_utils import get_embedding
 from openai.embeddings_utils import cosine_similarity
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from flask_apscheduler import APScheduler
 from dotenv import load_dotenv
-
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -44,6 +48,9 @@ def recommend_movies(cineberg_scale, user_input):
 
 app = Flask(__name__)
 CORS(app)
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
 
 @app.route('/recommend_movies', methods=['POST'])
@@ -57,6 +64,79 @@ def process_input():
         return jsonify(recommended_movies_id)
     else:
         return jsonify({"error": "No search term provided"}), 400
+    
+
+
+
+@app.route('/news')
+def get_news():
+    options = Options()
+    options.add_argument("--headless")
+    service = Service(executable_path="./chromedriver")
+    driver = webdriver.Chrome(service=service, options=options)
+    
+    try:
+        # driver.get(os.environ.get("website_url"))
+
+        # news_lists = driver.find_elements(By.CSS_SELECTOR, ".cards_cards-container__HiYvz")
+        # articles_data = []
+
+        # for item in news_lists:
+        #     titles = item.find_elements(By.CSS_SELECTOR, ".card_title__I1a3A")
+        #     clickables = item.find_elements(By.CSS_SELECTOR, ".card_image-content__GDM2z")
+
+        #     for title, clickable in zip(titles, clickables):
+        #         url = clickable.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
+        #         driver.get(url)
+        #         paragraphs_elements = driver.find_elements(By.CLASS_NAME, "article_article-content__3auQJ")
+        #         paragraphs_text = [p.text for p in paragraphs_elements]
+        #         article_content = " ".join(paragraphs_text)
+        #         articles_data.append({
+        #             "title": title.text,
+        #             "url": url,
+        #             "content": article_content
+        #         })
+        driver.get(os.environ.get("website_url"))
+
+        news_lists = driver.find_elements(By.CSS_SELECTOR, ".cards_cards-container__HiYvz")
+
+        article_titles = []
+        article_urls = []
+        articles_data = []
+
+        for item in news_lists:
+            titles = item.find_elements(By.CSS_SELECTOR, ".card_title__I1a3A")
+
+            for title in titles:
+                article_titles.append(title.text)
+
+            clickables = item.find_elements(By.CSS_SELECTOR, ".card_image-content__GDM2z")
+
+            for clickable in clickables:
+                links = clickable.find_elements(By.CSS_SELECTOR, "a")
+
+                for link in links:
+                    url = link.get_attribute("href")
+                    article_urls.append(url)
+
+
+        for i, url in enumerate(article_urls):
+            driver.get(url)
+            paragraphs_elements = driver.find_elements(By.CLASS_NAME, "article_article-content__3auQJ")
+            paragraphs_text = [p.text for p in paragraphs_elements]
+            article_content = " ".join(paragraphs_text)
+            articles_data.append({
+                "title": article_titles[i],
+                "url": url,
+                "content": article_content
+            })
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        driver.quit()
+
+    return jsonify(articles_data)
+
 
 
 if __name__ == '__main__':

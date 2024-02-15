@@ -166,6 +166,7 @@ useEffect(() => {
         </h6>
         <ul style={{ listStyleType: 'none' }}>
           <li onClick={() => handleNavigate('/recommender')}>Movie Recommender</li>
+          <li onClick={() => handleNavigate('/news')}>Latest News</li>
           <li onClick={() => handleNavigate('/toprated')}>All Time Top Rated</li>
           <li onClick={() => handleNavigate('/tipoficeberg')}>Tip of the Iceberg Movies</li>
           <li onClick={() => handleNavigate('/niche')}>Niche Movies</li>

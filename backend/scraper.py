@@ -1,3 +1,5 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -48,5 +50,5 @@ for i, url in enumerate(article_urls):
     
 driver.quit()
 
-for article in articles_data:
-    print(article["title"], article["content"])
+# for article in articles_data:
+#     print(article["title"], article["content"])
