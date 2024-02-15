@@ -140,24 +140,15 @@ const Template = ({ endpoint, subtitle }) => {
         <h6 className="template-cineberg-features">Cineberg Features</h6>
 
         <ul style={{ listStyleType: "none" }}>
-          <li onClick={() => handleNavigate("/recommender")}>
-            Movie Recommender
-          </li>
+          <li onClick={() => handleNavigate("/recommender")}>Movie Recommender</li>
           <li onClick={() => handleNavigate("/news")}>Latest News</li>
-          <li onClick={() => handleNavigate("/toprated")}>
-            All Time Top Rated
-          </li>
-          <li onClick={() => handleNavigate("/tipoficeberg")}>
-            Tip of the Iceberg Movies
-          </li>
+          <li onClick={() => handleNavigate("/toprated")}>All Time Top Rated</li>
+          <li onClick={() => handleNavigate("/tipoficeberg")}>Tip of the Iceberg Movies</li>
           <li onClick={() => handleNavigate("/niche")}>Niche Movies</li>
-          <li onClick={() => handleNavigate("/underground")}>
-            Underground Movies
-          </li>
+          <li onClick={() => handleNavigate("/underground")}>Underground Movies</li>
         </ul>
 
         <h6 className="template-genres">Genres</h6>
-
         <ul style={{ listStyleType: "none" }}>
           <li onClick={() => handleNavigate("/action")}>Action</li>
           <li onClick={() => handleNavigate("/adventure")}>Adventure</li>
