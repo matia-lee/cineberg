@@ -37,7 +37,6 @@ const MovieNews = () => {
       <div className="news-container">
         {news.map((item, index) => (
           <div key={index} className="news-articles" onClick={() => handleArticleClick(item.title, item.content)}>
-            {/* <h3>{item.content}</h3> */}
             <img src={item.image} alt={item.title} />
             <div className="text-container">
               <h4>-Movie News-</h4>
