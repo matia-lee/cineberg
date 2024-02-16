@@ -81,13 +81,14 @@ useEffect(() => {
 
   return (
     <>
-      <div className = "main-text" onClick={handleIconClick}>
+      <div className = "main-text">
         <img 
           src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
           alt="Cineberg-Icon" 
+          onClick={handleIconClick}
         />
 
-        <h1>
+        <h1 onClick={handleIconClick}>
           Cineberg
         </h1>
       </div> 

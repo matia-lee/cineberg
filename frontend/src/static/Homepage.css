@@ -1,7 +1,6 @@
 .main-text {
   display: flex;
   align-items: horizontal;
-  cursor: pointer;
 }
 
 .main-text img {
@@ -10,6 +9,7 @@
   width: 50px;
   margin-left: 15px;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .main-text h1 {
@@ -19,6 +19,7 @@
   font-weight: 1000;
   color: rgba(112, 181, 230, 1);
   font-family: "Roboto Slab", serif;
+  cursor: pointer;
 }
 
 .no-scroll {

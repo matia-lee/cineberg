@@ -1,6 +1,6 @@
 .news-container {
   display: grid;
-  grid-template-columns: 2fr;
+  grid-template-columns: 1fr;
   grid-gap: 70px;
   padding: 70px;
   width: 1200px;
