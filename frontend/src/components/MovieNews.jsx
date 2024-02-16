@@ -26,6 +26,7 @@ const MovieNews = () => {
         />
 
         <h1 onClick={handleIconClick}>Cineberg</h1>
+        <h3>Latest News</h3>
       </div>
 
       <div className="news-container">
