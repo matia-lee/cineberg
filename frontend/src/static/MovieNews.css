@@ -13,11 +13,12 @@
   gap: 30px; 
   background-color: #353634;
   /* background-color: #1f2123; */
-  padding: 10px;
-  padding-left: 30px;
+  /* padding: 10px; */
+  /* padding-left: 30px; */
   padding-right: 30px;
   width: 900px;
-  height: 250px;
+  /* height: 250px; */
+  height: 227px;
   margin: auto;
   box-shadow: 10px 10px 5px #1f2123;
   cursor: pointer;
@@ -32,12 +33,14 @@
 .news-articles img {
   /* height: 230px; */
   box-shadow: 5px 5px 10px -10px rgba(0, 0, 0, 1);
-  width: 380px;
+  /* width: 380px; */
+  width: 400px;
 }
 
 .news-articles h1 {
   font-family: "Roboto Slab", serif;
-  font-size: 30px;
+  /* font-size: 30px; */
+  font-size: 25px;
   font-weight: 1000;
   color: rgba(112, 181, 230, 0.9);
   margin: 0px;
@@ -48,6 +51,7 @@
   color: rgba(59, 118, 191, 0.9);
   font-weight: 500;
   margin: 0px;
+  font-size: 14px;
 }
 
 .text-container {
