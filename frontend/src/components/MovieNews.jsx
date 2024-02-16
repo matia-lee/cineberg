@@ -27,12 +27,15 @@ const MovieNews = () => {
         <h1>Cineberg</h1>
       </div>
 
-      <div>
+      <div className="news-container">
         {news.map((item, index) => (
-          <div key={index}>
-            <h3>{item.title}</h3>
-            <h3>{item.content}</h3>
-            <img src={item.image} alt="movie news" />
+          <div key={index} className="news-articles">
+            {/* <h3>{item.content}</h3> */}
+            <img src={item.image} alt={item.title} />
+            <div className="text-container">
+              <h4>-Movie News-</h4>
+              <h1>{item.title}</h1>
+            </div>
           </div>
         ))}
       </div>
