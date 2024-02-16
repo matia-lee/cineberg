@@ -16,9 +16,9 @@ const MovieNews = () => {
     navigate("/");
   };
 
-  const handleArticleClick = (title, content) => {
+  const handleArticleClick = (title, content, image) => {
     const urlTitle = encodeURIComponent(title.toLowerCase().replace(/\s+/g, '-'));
-    navigate(`/article/${urlTitle}`, {state: {content: content}});
+    navigate(`/article/${urlTitle}`, {state: {title: title, content: content, image: image}});
   };
 
   return (
@@ -36,7 +36,7 @@ const MovieNews = () => {
 
       <div className="news-container">
         {news.map((item, index) => (
-          <div key={index} className="news-articles" onClick={() => handleArticleClick(item.title, item.content)}>
+          <div key={index} className="news-articles" onClick={() => handleArticleClick(item.title, item.content, item.image)}>
             <img src={item.image} alt={item.title} />
             <div className="text-container">
               <h4>-Movie News-</h4>

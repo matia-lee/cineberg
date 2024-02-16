@@ -48,9 +48,9 @@ def scrape_news():
 
         for i, url in enumerate(article_urls):
             driver.get(url)
-            paragraphs_elements = driver.find_elements(By.CLASS_NAME, "article_article-content__3auQJ")
+            paragraphs_elements = driver.find_elements(By.CLASS_NAME, "content_content__i0P3p")
             paragraphs_text = [p.text for p in paragraphs_elements]
-            article_content = " ".join(paragraphs_text)
+            article_content = "\n".join(paragraphs_text)
             articles_data.append({
                 "title": article_titles[i],
                 "url": url,

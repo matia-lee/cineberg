@@ -5,19 +5,32 @@ const ArticlePage = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const { content } = location.state;
+    const { title, content, image } = location.state;
 
     const handleBackClick = () => {
-        navigate("/news");
+        setTimeout(() => {
+            navigate("/news");
+        }, 125)
     };
 
     return (
-        <div>
+        <>
             <div className="back-button" onClick={handleBackClick}>
                 <span className="back-arrow">&lt;</span>
             </div>
-           <p>{content}</p>
-        </div>
+
+            <div className="article-content">
+                <img src={image} alt="movie news" />
+
+                <h1 className="article-content-title">
+                    {title}
+                </h1>
+                
+                {content.split("\n").map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                ))}
+            </div>
+        </>
     );
 };
 
