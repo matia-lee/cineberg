@@ -19,13 +19,18 @@ const ArticlePage = () => {
                 <span className="back-arrow">&lt;</span>
             </div>
 
-            <div className="article-content">
-                <img src={image} alt="movie news" />
+            <div className="title-container">
+                <div className="article-title">
+                    <p>Cineberg News</p>
+                    <h1>{title}</h1>
+                </div>
 
-                <h1 className="article-content-title">
-                    {title}
-                </h1>
-                
+                <div className="title-picture">
+                    <img src={image} alt="movie news" />
+                </div>
+            </div>       
+
+            <div className="article-paragraph">
                 {content.split("\n").map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                 ))}

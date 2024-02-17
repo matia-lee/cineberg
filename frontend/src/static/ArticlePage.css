@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fjord+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orelega+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 .back-button {
     border-radius: 50px;
     background-color: #B6B8B5;
@@ -8,12 +10,12 @@
     cursor: pointer;
     margin-top: 20px;
     margin-left: 20px;
-    box-shadow: 3px 2px 4px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 2px 4px 1px rgba(0, 0, 0, 0.5);
     transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .back-button:active {
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     transform: translateY(2px);
 }
 
@@ -23,4 +25,63 @@
     font-size: 35px;
     color: #353634;
     font-weight: 600;
+}
+
+.title-container {
+    display: flex;
+    justify-content: right;
+    background-color: #353634;
+    width: 1300px;
+    margin: auto;
+    margin-top: 50px;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 10px 10px 5px #1f2123;
+}
+
+.title-picture img {
+    width: 650px;
+    opacity: 1;
+}
+
+.article-title {
+    background-color: rgba(34, 36, 38, 1);
+    width: 580px;
+    height: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: -20px;
+    z-index: 10;
+    box-shadow: 5px 5px 5px #1f2123;
+}
+
+.article-title p {
+    font-family: "Roboto Slab", serif;
+    font-style: italic;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    margin-left: 3px;
+    color: rgba(59, 118, 191, 0.9);
+}
+
+.article-title h1 {
+    font-family: "Roboto Slab", serif;
+    color: rgba(112, 181, 230, 0.9);
+    margin-top: 0px;
+}
+
+.article-paragraph {
+    width: 700px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.article-paragraph p {
+    color: #B6B8B5;
+    font-family: "Roboto", sans-serif;
+    /* font-family: "Roboto Slab", serif; */
+    font-size: 20px;
 }
