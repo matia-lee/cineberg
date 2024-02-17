@@ -73,6 +73,35 @@
     margin-top: 0px;
 }
 
+.date {
+    margin-left: 115px;
+    margin-top: -8px;
+}
+
+.date h3 {
+    font-family: "Roboto Slab", serif;
+    font-size: 15px;
+}
+
+.date .label {
+    font-weight: 400;
+    color: #B6B8B5;
+    opacity: 0.6;
+    margin-right: 6px;
+}
+
+.date .details {
+    color: rgba(59, 118, 191, 0.9);
+    margin-right: 6px;
+}
+
+.date .dividor {
+    color: #353634;
+    margin-right: 3px;
+    font-weight: 1000;
+}
+
+
 .article-paragraph {
     width: 700px;
     margin: auto;
@@ -82,6 +111,5 @@
 .article-paragraph p {
     color: #B6B8B5;
     font-family: "Roboto", sans-serif;
-    /* font-family: "Roboto Slab", serif; */
     font-size: 20px;
 }

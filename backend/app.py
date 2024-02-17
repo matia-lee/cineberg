@@ -115,13 +115,19 @@ def scrape_news():
         for i, url in enumerate(article_urls):
             driver.get(url)
             paragraphs_elements = driver.find_elements(By.CLASS_NAME, "article_article-content__3auQJ")
+            credit_element = driver.find_element(By.CLASS_NAME, "authorDate_author__a0WHZ")
+            author_credits = credit_element.find_element(By.CLASS_NAME, "authorDate_author__name__1Xkpl").text
+            time_element = credit_element.find_element(By.TAG_NAME, "time")
+            date_credit = time_element.get_attribute("datetime")
             paragraphs_text = [p.text for p in paragraphs_elements]
             article_content = " ".join(paragraphs_text)
             articles_data.append({
                 "title": article_titles[i],
                 "url": url,
                 "content": article_content,
-                "image": article_images[i]
+                "image": article_images[i],
+                "author": author_credits,
+                "date": date_credit
             })
     except Exception as e:
         print(f"Error: {e}")
