@@ -1,8 +1,13 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 // import { getAnalytics } from "firebase/analytics";
 
+const api_key = process.env.firebase_api_key;
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAZJ7UukSEK-PW277Z7XKJ8HaHMlresiYE",
+  apiKey: api_key,
   authDomain: "cineberg-cad98.firebaseapp.com",
   projectId: "cineberg-cad98",
   storageBucket: "cineberg-cad98.appspot.com",
@@ -12,11 +17,11 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const database = firebaseApp.firestore();
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-const storage = firebase.storage();
+const database = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+const provider = new GoogleAuthProvider();
+const storage = getStorage(firebaseApp);
+
 // const analytics = getAnalytics(firebaseApp);
 
-export { auth, provider, storage };
-export default database;
+export { auth, provider, storage, database };

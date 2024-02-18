@@ -35,6 +35,16 @@
   border-radius: 4px;
   margin-left: 1350px;
   margin-top: -40px;
+  transition: all 0.2s ease 0s;
+  cursor: pointer;
+}
+
+.login:hover {
+  background-color: rgba(112, 181, 230, 1);
+}
+
+.login:hover h1 {
+  color: rgba(34, 36, 38, 1);
 }
 
 .login h1 {

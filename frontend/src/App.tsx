@@ -8,6 +8,7 @@ import Template from './components/Template';
 import './static/MovieCard.css';
 import './static/MovieCardFlipped.css';
 import './static/Homepage.css'
+import './static/LoginPage.css'
 import './static/SearchPage.css'
 import './static/MovieRecommender.css'
 import './static/MovieNews.css'
@@ -19,8 +20,8 @@ const App = () => {
     <Router>
       <div className = "app">
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/" element={<Homepage />}/>
+          <Route path="/search" element={<SearchPage />}/>
           <Route path="/recommender" element={<MovieRecommender />}/>
           <Route path="/news" element={<MovieNews />}/>
           <Route path="/article/:title" element={<ArticlePage />}/>

@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import { auth, provider } from '../firebase';
+// import { signInWithPopup } from "firebase/auth";
 import MovieCard from './MovieCard';
 import MovieCardFlipped from './MovieCardFlipped';
+import LoginPage from './LoginPage';
 
 
 const Homepage = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const [upcomingMovies, setUpcomingMovies] = useState([]);
-  const [flipped, setFlipped] = useState(null);
+  const [flipped, setFlipped] = useState(false);
   const [genres, setGenres] = useState([]);
+  const [showLoginPage, setShowLoginPage] = useState(false);
 
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,7 +45,9 @@ const Homepage = () => {
     }
   };
 
-useEffect(() => {
+  const handleLoginPage = () => setShowLoginPage(!showLoginPage);
+
+  useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
     const options = {
     method: 'GET',
@@ -79,6 +85,25 @@ useEffect(() => {
     .catch(err => console.error(err));
   }, []);
 
+  useEffect(() => {
+    if (showLoginPage) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [showLoginPage])
+
+  // const handleAuth = () => {
+  //   signInWithPopup(auth, provider).then((result) => {
+  //     const user = result.user;
+  //     console.log(user);
+  //   })
+  // };
+
   return (
     <>
       <div className = "main-text">
@@ -93,9 +118,14 @@ useEffect(() => {
         </h1>
       </div> 
 
-      <div className='login'>
+      <div className='login' onClick={handleLoginPage}>
         <h1>LOGIN</h1>
       </div>
+      {showLoginPage && (
+        <div className='login-overlay'>
+          <LoginPage />
+        </div>
+      )}
 
       <div className="search-button" onKeyDown={handleKeyDown}>
         <input
