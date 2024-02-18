@@ -93,6 +93,10 @@ useEffect(() => {
         </h1>
       </div> 
 
+      <div className='login'>
+        <h1>LOGIN</h1>
+      </div>
+
       <div className="search-button" onKeyDown={handleKeyDown}>
         <input
           value={searchTerm}

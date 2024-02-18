@@ -27,6 +27,26 @@
   height: 100%;
 }
 
+.login {
+  position: absolute;
+  background-color: rgba(34, 36, 38, 1);
+  padding: 5px 13px;
+  border: 1px solid rgba(112, 181, 230, 0.9);
+  border-radius: 4px;
+  margin-left: 1350px;
+  margin-top: -40px;
+}
+
+.login h1 {
+  letter-spacing: 1.5px;
+  color: rgba(112, 181, 230, 0.9);
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .search-button {
   position: absolute;
   width: 37%;
