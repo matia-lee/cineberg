@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fjord+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orelega+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 .login-overlay {
     position: fixed;
     top: 0;
@@ -17,5 +19,29 @@
     width: 550px;
     margin: auto;
     height: 700px;
-    border-radius: 20px;
+    /* border-radius: 0px; */
+    box-shadow: 
+        5px 0 10px rgba(0, 0, 0, 0.1),
+        -5px 0 10px rgba(0, 0, 0, 0.1),
+        0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.logo img {
+    width: 65px;
+}
+
+.logo h1 {
+    font-family: "Roboto Slab", serif;
+    letter-spacing: 3px;
+    font-weight: 1000;
+    font-size: 40px;
+    margin-top: -1px;
 }
