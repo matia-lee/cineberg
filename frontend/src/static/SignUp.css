@@ -119,7 +119,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin-top: 115px;
+  margin-top: 125px;
 }
 
 .error-message h6 {
