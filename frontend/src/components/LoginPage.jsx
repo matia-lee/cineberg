@@ -51,8 +51,8 @@ const LoginPage = () => {
       </div>
 
       <div className='email-login'>
-        <input className="email" type="text" placeholder='Email Address' onChange={(e) => setLoginEmail(e.target.value)}/>
-        <input className="password" type="text" placeholder='Password' onChange={(e) => setLoginPassword(e.target.value)}/>
+        <input className="email" type="email" placeholder='Email Address' onChange={(e) => setLoginEmail(e.target.value)}/>
+        <input className="password" type="password" placeholder='Password' onChange={(e) => setLoginPassword(e.target.value)}/>
       </div>
 
       <div className='create-account'>

@@ -34,7 +34,7 @@
   width: 150px;
   margin: auto;
   border-radius: 5px;
-  margin-top: 50px;
+  margin-top: 60px;
   transition: all 0.2s ease 0s;
   cursor: pointer;
 }
@@ -52,4 +52,97 @@
 
 .create-account-container .complete-signup:hover h3 {
   color: rgba(69, 73, 75, 1);
+}
+
+.email-signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 13px;
+}
+
+.email-signup .email {
+  margin-bottom: 10px;
+  border: solid 2px rgba(170, 172, 170, 0.5);
+  border-radius: 5px;
+  width: 280px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  height: 30px;
+  padding-left: 10px;
+  outline: none;
+}
+
+.email-signup .password {
+  border: solid 2px rgba(170, 172, 170, 0.5);
+  border-right: none;
+  border-radius: 5px 0px 0px 5px;
+  width: 251px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  height: 30px;
+  padding-left: 10px;
+  outline: none;
+}
+
+.email-signup .password-invalid {
+  border: solid 2px rgba(255, 127, 127, 1);
+  background-color: #ffc9bb;
+  outline: none;
+}
+
+.signup-password {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.signup-password .view-icon {
+  height: 32px;
+  border: solid 2px rgba(213, 213, 212, 1);
+  border-left: none;
+  border-radius: 0px 5px 5px 0px;
+  background-color: rgba(255, 255, 255, 1);
+  margin-left: -4px;
+}
+
+.signup-password .invalid-view-icon {
+  border: solid 2px rgba(255, 127, 127, 1);
+  border-left: none;
+  background-color: #ffc9bb;
+}
+
+.error-message {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-top: 115px;
+}
+
+.error-message h6 {
+  font-family: "Roboto", sans-serif;
+  color: #ff4122;
+  opacity: 0.8;
+  font-size: 13px;
+}
+
+.error-message-combined {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-top: 138px;
+  align-items: center;
+}
+
+.error-message-combined p {
+  margin-top: 0px;
+  margin-bottom: 3px;
+  font-family: "Roboto", sans-serif;
+  color: #ff4122;
+  opacity: 0.8;
+  font-size: 13px;
+  font-weight: 600;
 }
