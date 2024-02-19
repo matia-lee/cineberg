@@ -1,7 +1,13 @@
+import { useState } from 'react';
 import { auth, provider } from '../firebase';
 import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+
+  const navigate = useNavigate();
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
 
   const handleAuth = () => {
     signInWithPopup(auth, provider).then((result) => {
@@ -14,6 +20,14 @@ const LoginPage = () => {
         console.log('Error: ', error);
       }
     });
+  };
+
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
+
+  const login = () => {
+
   };
 
   return (
@@ -37,13 +51,13 @@ const LoginPage = () => {
       </div>
 
       <div className='email-login'>
-        <input className="email" type="text" placeholder='Email address' />
+        <input className="email" type="text" placeholder='Email Address' />
         <input className="password" type="text" placeholder='Password'/>
       </div>
 
       <div className='create-account'>
         <p>Don't have an account? </p>
-        <span className="sign-in-link">Create Account</span>
+        <span className="sign-in-link" onClick={handleSignUpClick}>Create Account</span>
       </div>
     </div>
   );
