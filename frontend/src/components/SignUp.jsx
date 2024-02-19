@@ -1,12 +1,22 @@
 import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
 
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const navigate = useNavigate();
 
-  const signup = () => {
-
+  const signup = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+      navigate("/");
+      console.log(user);
+    } catch (error) {
+      console.log("Registration error: ", error.message)
+    }
   };
 
   return (
@@ -23,11 +33,11 @@ const SignUp = () => {
       </div>
 
       <div className='email-login'>
-        <input className="email" type="text" placeholder='Email Address' />
-        <input className="password" type="text" placeholder='Create Password'/>
+        <input className="email" type="text" placeholder='Email Address' onChange={(e) => setSignUpEmail(e.target.value)}/>
+        <input className="password" type="text" placeholder='Create Password' onChange={(e) => setSignUpPassword(e.target.value)}/>
       </div>
 
-      <div className="complete-signup">
+      <div className="complete-signup" onClick={signup}>
         <h3>Sign Up</h3>
       </div>
     </div>
