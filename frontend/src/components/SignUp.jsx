@@ -15,7 +15,7 @@ const SignUp = () => {
   const signup = async () => {
     const passwordIsValid = signUpPassword.length >= 6;
     setValidPassword(passwordIsValid);
-    const emailIsValid = signUpEmail.length > 0;
+    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signUpEmail);
     setValidEmail(emailIsValid);
 
     if (!passwordIsValid || !emailIsValid) {
@@ -72,7 +72,7 @@ const SignUp = () => {
         </div>
 
         {!validPassword && validEmail && <div className="error-message"><h6>Password must be at least 6 characters</h6></div>}
-        
+
         {!validEmail && !validPassword && (
         <div className="error-message-combined">
           <p>Both email and password are invalid</p>
