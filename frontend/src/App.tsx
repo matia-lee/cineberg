@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage';
+import LoginPage from './components/LoginPage';
 import SearchPage from './components/SearchPage';
 import MovieRecommender from './components/MovieRecommender';
 import MovieNews from './components/MovieNews';
@@ -7,13 +8,14 @@ import ArticlePage from './components/ArticlePage';
 import Template from './components/Template';
 import './static/MovieCard.css';
 import './static/MovieCardFlipped.css';
-import './static/Homepage.css'
-import './static/LoginPage.css'
-import './static/SearchPage.css'
-import './static/MovieRecommender.css'
-import './static/MovieNews.css'
-import './static/ArticlePage.css'
-import './static/Template.css'
+import './static/Homepage.css';
+import './static/LoginPage.css';
+import './static/SignUp.css';
+import './static/SearchPage.css';
+import './static/MovieRecommender.css';
+import './static/MovieNews.css';
+import './static/ArticlePage.css';
+import './static/Template.css';
   
 const App = () => {
   return(
@@ -21,6 +23,7 @@ const App = () => {
       <div className = "app">
         <Routes>
           <Route path="/" element={<Homepage />}/>
+          <Route path="login" element={<LoginPage />}/>
           <Route path="/search" element={<SearchPage />}/>
           <Route path="/recommender" element={<MovieRecommender />}/>
           <Route path="/news" element={<MovieNews />}/>
