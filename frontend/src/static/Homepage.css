@@ -36,7 +36,7 @@
   border: 1px solid rgba(112, 181, 230, 0.9);
   border-radius: 4px;
   margin-left: 1350px;
-  margin-top: -40px;
+  margin-top: 20px;
   transition: all 0.2s ease 0s;
   cursor: pointer;
 }
@@ -57,6 +57,22 @@
   font-size: 20px;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.loggedin {
+  position: absolute;
+  margin-left: 1380px;
+  margin-top: 2px;
+  opacity: 0.8;
+}
+
+.loggedin-settings {
+  visibility: hidden;
+  transition: visibility 0.5s;
+}
+
+.loggedin:hover .loggedin-settings {
+  visibility: visible;
 }
 
 .search-button {

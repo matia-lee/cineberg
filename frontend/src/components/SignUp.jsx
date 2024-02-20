@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useAuth } from "./AuthContext"; 
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -11,6 +12,21 @@ const SignUp = () => {
   const [validEmail, setValidEmail] = useState(true);
   const [viewPassword, setViewPassword] = useState(false);
   const navigate = useNavigate();
+
+
+
+
+
+
+  const { signIn } = useAuth();
+
+
+
+
+
+
+
+
 
   const signup = async () => {
     const passwordIsValid = signUpPassword.length >= 6;
@@ -23,9 +39,17 @@ const SignUp = () => {
     } 
 
     try {
-      const user = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+      await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+
+
+
+
+      signIn(signUpEmail);
+
+
+
+
       navigate("/");
-      console.log(user);
     } catch (error) {
       console.log("Registration error: ", error.message)
     }

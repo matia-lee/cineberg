@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 import MovieCard from './MovieCard';
 import MovieCardFlipped from './MovieCardFlipped';
 
@@ -10,7 +11,22 @@ const Homepage = () => {
   const [flipped, setFlipped] = useState(false);
   const [genres, setGenres] = useState([]);
 
+
+  const [loginSettings, setLoginSettings] = useState(false);
+  const { userEmail, signOut } = useAuth();
+
+
   const navigate = useNavigate();
+
+
+
+  const handleLogoutClick = () => {
+    signOut();
+  };
+
+
+
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleIconClick = () => {
@@ -94,11 +110,33 @@ const Homepage = () => {
         <h1 onClick={handleIconClick}>
           Cineberg
         </h1>
+
+
+
+
+
+
+        {userEmail ? (
+          <div className='loggedin'>
+            {/* <h1>Logged in as: {userEmail}</h1>
+            <button onClick={handleLogoutClick}>Log Out</button> */}
+            <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="logged in icon" />
+            <span className='loggedin-settings'>hello world</span>
+          </div>
+        ) : (
+          <div className='login' onClick={handleLoginClick}>
+            <h1>LOGIN</h1>
+          </div>
+        )}
+
+
+
+
+
+
       </div> 
 
-      <div className='login' onClick={handleLoginClick}>
-        <h1>LOGIN</h1>
-      </div>
+
 
       <div className="search-button" onKeyDown={handleKeyDown}>
         <input
