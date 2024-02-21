@@ -1,55 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import pandas as pd
-import numpy as np
-import openai
-import os
-from openai.embeddings_utils import get_embedding
-from openai.embeddings_utils import cosine_similarity
+from flask_apscheduler import APScheduler
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from flask_apscheduler import APScheduler
+from main import recommend_movies
 from dotenv import load_dotenv
-import logging
-logging.basicConfig(level=logging.DEBUG)
+import os
 
 load_dotenv(".env")
-
-
-
-# for ML recommendation:
-
-openai.api_key = os.environ.get("OPEN_AI_KEY")
-
-def recommend_movies(cineberg_scale, user_input):
-    movies_df = pd.read_csv('masterdf.csv')
-    movies_df['embedding'] = movies_df['embedding'].apply(eval).apply(np.array)
-
-    logging.debug(f"Cineberg Scale: {cineberg_scale}")
-
-    if cineberg_scale == "1":
-        popularity_threshold = [31,100000]
-    elif cineberg_scale == "2":
-        popularity_threshold = [6.9,31]
-    elif cineberg_scale == "3":
-        popularity_threshold = [0,6.9]
-    elif cineberg_scale == "4":
-        popularity_threshold = [0, 1000000]
-
-    user_input_vector = get_embedding(user_input, engine="text-embedding-ada-002")
-
-    movies_df["similarities"] = movies_df['embedding'].apply(lambda x: cosine_similarity(x, user_input_vector))
-    filtered_movies_df = movies_df[(movies_df['popularity'] >= popularity_threshold[0]) & (movies_df['popularity'] < popularity_threshold[1])]
-
-    logging.debug(f"Filtered Movies Count: {filtered_movies_df.shape[0]}")  
-
-    recommended_movies = filtered_movies_df.sort_values("similarities", ascending=False).head(10)
-
-    recommended_movies_id = recommended_movies['id'].tolist()
-    return recommended_movies_id
-
 
 app = Flask(__name__)
 CORS(app)
@@ -58,6 +18,7 @@ scheduler.init_app(app)
 scheduler.start()
 
 
+# for recommending
 @app.route('/recommend_movies', methods=['POST'])
 def process_input():
     data = request.get_json()
@@ -69,14 +30,10 @@ def process_input():
         return jsonify(recommended_movies_id)
     else:
         return jsonify({"error": "No search term provided"}), 400
-    
-
 
 
 # for scraping:
-
 news_cache = []
-
 def scrape_news():
     options = Options()
     options.add_argument("--headless")
@@ -95,8 +52,6 @@ def scrape_news():
         article_urls = []
         article_images = []
         
-        
-
         for item in news_lists:
             titles = item.find_elements(By.CSS_SELECTOR, ".card_title__I1a3A")
 
@@ -151,12 +106,7 @@ scheduler.add_job(id="scheduled scraping", func=scrape_news, trigger="interval",
 
 
 
-
-
 # for database:
-
-
-
 
 
 
@@ -164,4 +114,3 @@ scheduler.add_job(id="scheduled scraping", func=scrape_news, trigger="interval",
 if __name__ == '__main__':
     scrape_news()
     app.run(debug=True)
-
