@@ -16,6 +16,11 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 load_dotenv(".env")
+
+
+
+# for ML recommendation:
+
 openai.api_key = os.environ.get("OPEN_AI_KEY")
 
 def recommend_movies(cineberg_scale, user_input):
@@ -68,7 +73,7 @@ def process_input():
 
 
 
-
+# for scraping:
 
 news_cache = []
 
@@ -143,6 +148,20 @@ def get_news():
 
 scheduler.add_job(id="scheduled scraping", func=scrape_news, trigger="interval", hours=24)
 
+
+
+
+
+
+# for database:
+
+
+
+
+
+
+
 if __name__ == '__main__':
     scrape_news()
     app.run(debug=True)
+
