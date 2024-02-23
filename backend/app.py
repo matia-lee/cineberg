@@ -5,8 +5,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from database import init_db, db_session
 from main import recommend_movies
+from models import User, Base
 from dotenv import load_dotenv
+from sqlalchemy.exc import IntegrityError
 import os
 
 load_dotenv(".env")
@@ -107,10 +110,23 @@ scheduler.add_job(id="scheduled scraping", func=scrape_news, trigger="interval",
 
 
 # for database:
-
-
-
+@app.route('/signup', methods=['POST'])
+def signup(): 
+    data = request.get_json()
+    try:
+        new_user = User(email=data['email'])
+        db_session.add(new_user)
+        db_session.commit()
+        return jsonify({"message": "User added successfully."}), 201
+    except IntegrityError:
+        db_session.rollback()
+        return jsonify({"message": "This email is already used."}), 409
+    
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
 
 if __name__ == '__main__':
     scrape_news()
+    init_db()
     app.run(debug=True)

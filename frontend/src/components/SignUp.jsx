@@ -41,8 +41,7 @@ const SignUp = () => {
     try {
       await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
 
-
-
+      await saveUserToDatabase({ signUpEmail })
 
       signIn(signUpEmail);
 
@@ -57,6 +56,25 @@ const SignUp = () => {
 
   const clickViewPassword = () => {
     setViewPassword(!viewPassword)
+  };
+
+  const saveUserToDatabase = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: signUpEmail })
+      });
+      if (response.ok) {
+        console.log("User saved to database")
+      } else {
+        console.log("Failed to save user to database")
+      }
+    } catch (error) {
+      console.error("Error saving user to database");
+    }
   };
 
   return (
