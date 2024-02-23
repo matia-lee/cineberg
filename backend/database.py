@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv(".env")
 
-DATABASE_URI = f"mysql+pymysql://{os.environ.get("db_user")}:{os.environ.get("db_password")}@localhost/MovieProject"
+# DATABASE_URI = f"mysql+pymysql://{os.environ.get('db_user')}:{os.environ.get('db_password')}@localhost/MovieProject"
+DATABASE_URI = f"mysql+pymysql://{os.environ.get('db_user')}:{os.environ.get('db_password')}@localhost/cineberg"
+
 
 engine = create_engine(DATABASE_URI)
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
