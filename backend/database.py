@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv(".env")
 
-# DATABASE_URI = f"mysql+pymysql://{os.environ.get('db_user')}:{os.environ.get('db_password')}@localhost/MovieProject"
 DATABASE_URI = f"mysql+pymysql://{os.environ.get('db_user')}:{os.environ.get('db_password')}@localhost/cineberg"
 
 

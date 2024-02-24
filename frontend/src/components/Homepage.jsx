@@ -121,7 +121,9 @@ const Homepage = () => {
             {/* <h1>Logged in as: {userEmail}</h1>
             <button onClick={handleLogoutClick}>Log Out</button> */}
             <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="logged in icon" />
-            <span className='loggedin-settings'>hello world</span>
+            <span className='loggedin-settings'>hello {userEmail}</span>
+            <button onClick={handleLogoutClick}>logout</button>
+
           </div>
         ) : (
           <div className='login' onClick={handleLoginClick}>

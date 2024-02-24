@@ -15,7 +15,8 @@ import os
 load_dotenv(".env")
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
+CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST", "OPTIONS"]}})
 scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
@@ -114,17 +115,24 @@ scheduler.add_job(id="scheduled scraping", func=scrape_news, trigger="interval",
 def signup(): 
     data = request.get_json()
     try:
-        new_user = User(email=data['email'])
+        new_user = User(username=data['username'], email=data['email'])
         db_session.add(new_user)
         db_session.commit()
         return jsonify({"message": "User added successfully."}), 201
-    except IntegrityError:
+    except IntegrityError as e:
         db_session.rollback()
-        return jsonify({"message": "This email is already used."}), 409
+        if 'email' in str(e.orig):
+            return jsonify({"message": "Email already in use"}), 409
+        elif 'username' in str(e.orig):
+            return jsonify({"message": "Username taken"}), 409
+        else:
+            return jsonify({"message": "Error occured"}), 409
     
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
+
+
 
 if __name__ == '__main__':
     scrape_news()

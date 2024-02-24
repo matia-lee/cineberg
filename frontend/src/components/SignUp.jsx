@@ -6,27 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
 
+  const [signUpUsername, setSignUpUsername] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
   const [validPassword, setValidPassword] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
+  const [sameValidUsername, setSameValidUsername] = useState(true);
+  const [sameValidEmail, setSameValidEmail] = useState(true);
+  const [sameEmailError, setSameEmailError] = useState("");
+  const [sameUsernameError, setSameUsernameError] = useState("");
   const [viewPassword, setViewPassword] = useState(false);
   const navigate = useNavigate();
-
-
-
-
-
-
   const { signIn } = useAuth();
-
-
-
-
-
-
-
-
 
   const signup = async () => {
     const passwordIsValid = signUpPassword.length >= 6;
@@ -39,18 +30,31 @@ const SignUp = () => {
     } 
 
     try {
+      const unique = await validateUniqueness(signUpEmail, signUpUsername);
+      if (!unique.ok) {
+        const dataError = await unique.json();
+        if (dataError.message.includes("Email")) {
+          setSameEmailError(dataError.message);
+          setSameValidEmail(false);
+        } else if (dataError.message.includes("Username")) {
+          setSameUsernameError(dataError.message);
+          setSameValidUsername(false);
+        }
+        return;
+      }
+    } catch (error) {
+      console.log("Error validating uniqueness", error);
+      return;
+    }
+
+    try {
       await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+      console.log("Signup data: ", signUpEmail, signUpPassword, signUpUsername);
 
-      await saveUserToDatabase({ signUpEmail })
-
-      signIn(signUpEmail);
-
-
-
-
+      await signIn(signUpEmail); //CHANGE THIS WHEN YOU CHANGE AUTH CONTEXT
       navigate("/");
     } catch (error) {
-      console.log("Registration error: ", error.message)
+      console.log("Signup error: ", error.message);
     }
   };
 
@@ -58,23 +62,14 @@ const SignUp = () => {
     setViewPassword(!viewPassword)
   };
 
-  const saveUserToDatabase = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: signUpEmail })
-      });
-      if (response.ok) {
-        console.log("User saved to database")
-      } else {
-        console.log("Failed to save user to database")
-      }
-    } catch (error) {
-      console.error("Error saving user to database");
-    }
+  const validateUniqueness = async (email, username) => {
+    return fetch("http://localhost:5000/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, username }),
+    });
   };
 
   return (
@@ -92,12 +87,20 @@ const SignUp = () => {
 
       <div className='email-signup'>
         <input 
-          className={`email ${!validEmail ? "password-invalid" : ""}`}
+          className="username"
+          type="text" 
+          placeholder="Create Username"
+          onChange={(e) => setSignUpUsername(e.target.value)}
+        />
+        {!sameValidUsername && <div className="error-message"><h6>{sameUsernameError}</h6></div>}
+        <input 
+          className={`email ${!validEmail || !sameValidEmail ? "password-invalid" : ""}`}
           type="email" 
           placeholder='Email Address' 
           onChange={(e) => setSignUpEmail(e.target.value)}
         />
         {!validEmail && validPassword && <div className="error-message"><h6>Invalid Email</h6></div>}
+        {!sameValidEmail && <div className="error-message"><h6>{sameEmailError}</h6></div>}
         <div className="signup-password">
           <input 
             className={`password ${!validPassword ? "password-invalid" : ""}`} 

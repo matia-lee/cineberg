@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { auth, provider } from '../firebase';
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -26,7 +26,7 @@ const LoginPage = () => {
     navigate("/signup");
   };
 
-  const login = () => {
+  const login = async () => {
     
   };
 
