@@ -25,6 +25,9 @@ const SignUp = () => {
     const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signUpEmail);
     setValidEmail(emailIsValid);
 
+    setSameValidEmail(sameValidEmail);
+    setSameValidUsername(sameValidUsername);
+
     if (!passwordIsValid || !emailIsValid) {
       return;
     } 
@@ -35,10 +38,10 @@ const SignUp = () => {
         const dataError = await unique.json();
         if (dataError.message.includes("Email")) {
           setSameEmailError(dataError.message);
-          setSameValidEmail(false);
+          setSameValidEmail(!sameValidEmail);
         } else if (dataError.message.includes("Username")) {
           setSameUsernameError(dataError.message);
-          setSameValidUsername(false);
+          setSameValidUsername(!sameValidUsername);
         }
         return;
       }
@@ -87,12 +90,12 @@ const SignUp = () => {
 
       <div className='email-signup'>
         <input 
-          className="username"
+          className={`username ${!sameValidUsername ? "password-invalid" : ""}`}
           type="text" 
           placeholder="Create Username"
           onChange={(e) => setSignUpUsername(e.target.value)}
         />
-        {!sameValidUsername && <div className="error-message"><h6>{sameUsernameError}</h6></div>}
+        {!sameValidUsername && sameValidEmail && <div className="error-message"><h6>{sameUsernameError}</h6></div>}
         <input 
           className={`email ${!validEmail || !sameValidEmail ? "password-invalid" : ""}`}
           type="email" 
@@ -100,7 +103,7 @@ const SignUp = () => {
           onChange={(e) => setSignUpEmail(e.target.value)}
         />
         {!validEmail && validPassword && <div className="error-message"><h6>Invalid Email</h6></div>}
-        {!sameValidEmail && <div className="error-message"><h6>{sameEmailError}</h6></div>}
+        {!sameValidEmail && sameValidUsername && <div className="error-message"><h6>{sameEmailError}</h6></div>}
         <div className="signup-password">
           <input 
             className={`password ${!validPassword ? "password-invalid" : ""}`} 
@@ -122,6 +125,12 @@ const SignUp = () => {
         <div className="error-message-combined">
           <p>Both email and password are invalid</p>
           <p>Password must be at least 6 characters</p>
+        </div>
+        )}
+        {!sameValidUsername && !sameValidEmail && (
+        <div className="error-message-combined">
+          <p>Username taken</p>
+          <p>Email already in use</p>
         </div>
         )}
       </div>

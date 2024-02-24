@@ -5,7 +5,7 @@
   background-color: #44494b;
   width: 500px;
   margin: auto;
-  height: 500px;
+  height: 550px;
   box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1), -5px 0 10px rgba(0, 0, 0, 0.1),
     0 5px 10px rgba(0, 0, 0, 0.1);
 }
@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 150px;
+  margin-top: 125px;
 }
 
 .create-account-container .create-account-title {
@@ -34,7 +34,7 @@
   width: 150px;
   margin: auto;
   border-radius: 5px;
-  margin-top: 60px;
+  margin-top: 65px;
   transition: all 0.2s ease 0s;
   cursor: pointer;
 }
@@ -60,6 +60,18 @@
   justify-content: center;
   align-items: center;
   margin-top: 13px;
+}
+
+.email-signup .username {
+  margin-bottom: 10px;
+  border: solid 2px rgba(170, 172, 170, 0.5);
+  border-radius: 5px;
+  width: 280px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  height: 30px;
+  padding-left: 10px;
+  outline: none;
 }
 
 .email-signup .email {
@@ -119,7 +131,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin-top: 125px;
+  margin-top: 165px;
 }
 
 .error-message h6 {
@@ -133,7 +145,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin-top: 138px;
+  margin-top: 185px;
   align-items: center;
 }
 
