@@ -1,28 +1,22 @@
 import { useEffect, useState, useRef } from "react";
+import WatchedIcon from "./WatchedIcon";
+import ThumbsUpIcon from "./ThumbsUpIcon";
+import ThumbsDownIcon from "./ThumbsDownIcon";
 
 const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   const [credits, setCredits] = useState([]);
   const [tagline, setTagline] = useState([]);
-  // const [runtime, setRuntime] = useState([]);
   const [overviewPaddingTop, setOverviewPaddingTop] = useState("0px");
   const [ratingsPaddingTop, setRatingsPaddingTop] = useState("0px");
   const [creditsPaddingTop, setCreditsPaddingTop] = useState("0px");
   const [genresPaddingTop, setGenresPaddingTop] = useState("0px");
-  // const [castFlipped, setCastFlipped] = useState(null);
+  const [interactionsPaddingTop, setInteractionsPaddingTop] = useState("0px");
   const titleRef = useRef(null);
   const overviewRef = useRef(null);
   const ratingsRef = useRef(null);
   const taglineRef = useRef(null);
   const posterRef = useRef(null);
-
-  // const handleCastFlip = (person) => {
-  //     setCastFlipped(prevFlippedCast => (prevFlippedCast === person ? null : person))
-  //     if (person) {
-  //         document.body.classList.add('no-scroll');
-  //     } else {
-  //         document.body.classList.remove('no-scroll');
-  //     }
-  // };
+  const genreRef = useRef(null);
 
   useEffect(() => {
     if (titleRef.current) {
@@ -73,6 +67,29 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   }, [movie]);
 
   useEffect(() => {
+    const updateInteractionsPaddingTop = () => {
+      if (posterRef.current && overviewRef.current && genreRef.current) {
+        const taglineHeight = taglineRef.current.offsetHeight;
+        const posterHeight = posterRef.current.offsetHeight;
+        const genreHeight = genreRef.current.offsetHeight;
+        setInteractionsPaddingTop(`${taglineHeight + posterHeight + genreHeight + 113}px`);
+      } else {
+        setInteractionsPaddingTop("70px");
+      }
+    };
+
+    updateInteractionsPaddingTop();
+
+    const taglineObserver = new MutationObserver(updateInteractionsPaddingTop);
+    if (taglineRef.current) {
+      taglineObserver.observe(taglineRef.current, {
+        childList: true,
+        subtree: true,
+      });
+    }
+  }, [movie]);
+
+  useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
     const options = {
       method: "GET",
@@ -101,7 +118,6 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
       .then((response) => response.json())
       .then((data) => {
         setTagline(data.tagline);
-        // setRuntime(data.runtime);
       })
       .catch((err) => console.error(err));
   }, [movie.id]);
@@ -123,10 +139,6 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
       <div className="title-runtime">
         <div className="title" ref={titleRef}>
           <h2>{movie.title}</h2>
-          {/* <div className="runtime">
-                        <h6>{runtime}</h6>
-                        <p>mins</p>
-                    </div> */}
         </div>
       </div>
 
@@ -155,7 +167,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
         />
       </div>
 
-      <div className="genre" style={{ marginTop: genresPaddingTop }}>
+      <div className="genre" style={{ marginTop: genresPaddingTop }} ref={genreRef}>
         <h4>
           {movie.genres
             ? movie.genres.map((genre) => (
@@ -219,6 +231,12 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="interactions" style={{ marginTop: interactionsPaddingTop }}>
+        <WatchedIcon />
+        <ThumbsUpIcon />
+        <ThumbsDownIcon />
       </div>
     </div>
   );
