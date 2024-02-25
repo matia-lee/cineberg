@@ -9,7 +9,12 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [viewPassword, setViewPassword] = useState(false);
   const { signIn } = useAuth();
+
+  const clickViewPassword = () => {
+    setViewPassword(!viewPassword)
+  };
 
   const handleAuth = () => {
     signInWithPopup(auth, provider).then((result) => {
@@ -67,15 +72,23 @@ const LoginPage = () => {
           placeholder='Email Address' 
           onChange={(e) => setLoginEmail(e.target.value)}
         />
-        <input 
-          className="password" 
-          type="password" 
-          placeholder='Password' 
-          onChange={(e) => setLoginPassword(e.target.value)}
-        />
-        <button onClick={login}>
-          LOGIN
-        </button>
+        <div className="signup-password">
+          <input 
+            className="password"
+            type={viewPassword ? "text" : "password"}
+            placeholder='Create Password' 
+            onChange={(e) => setLoginPassword(e.target.value)}
+          />
+          <img
+            className="view-icon"
+            src={viewPassword ? "https://static.thenounproject.com/png/5028199-200.png" : "https://static.thenounproject.com/png/777494-200.png"}
+            alt="view password" 
+            onClick={clickViewPassword}
+          />
+        </div>
+        <div onClick={login} className='confirm-login'>
+          <h3>Login</h3>
+        </div>
       </div>
 
       <div className='create-account'>

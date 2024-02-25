@@ -133,22 +133,40 @@
   padding-left: 10px;
 }
 
-.email-login .password {
+.email-login .signup-password .password {
   border: solid 2px rgba(170, 172, 170, 0.5);
-  border-radius: 5px;
-  width: 280px;
+  border-right: none;
+  border-radius: 5px 0px 0px 5px;
+  width: 251px;
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   height: 30px;
   padding-left: 10px;
+  outline: none;
 }
 
+.email-login .signup-password {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.email-login .signup-password .view-icon {
+  height: 32px;
+  border: solid 2px rgba(213, 213, 212, 1);
+  border-left: none;
+  border-radius: 0px 5px 5px 0px;
+  background-color: rgba(255, 255, 255, 1);
+  margin-left: -4px;
+}
 .create-account {
   display: flex;
   flex-direction: column;
   margin: auto;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 .create-account p {
@@ -170,4 +188,31 @@
   display: flex;
   justify-content: center;
   margin-top: -14px;
+}
+
+.email-login .confirm-login {
+  display: flex;
+  justify-content: center;
+  border: solid 2px rgba(112, 181, 230, 1);
+  width: 150px;
+  margin: auto;
+  border-radius: 5px;
+  margin-top: 15px;
+  transition: all 0.2s ease 0s;
+  cursor: pointer;
+}
+
+.email-login .confirm-login:hover {
+  background-color: rgba(112, 181, 230, 1);
+}
+
+.email-login .confirm-login h3 {
+  color: rgba(112, 181, 230, 1);
+  margin: 7px 0px;
+  font-family: "Roboto", sans-serif;
+  font-size: 19px;
+}
+
+.email-login .confirm-login:hover h3 {
+  color: rgba(69, 73, 75, 1);
 }
