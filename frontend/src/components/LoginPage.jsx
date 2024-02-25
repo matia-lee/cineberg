@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { auth, provider } from '../firebase';
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext'; 
 
 const LoginPage = () => {
 
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const { signIn } = useAuth();
 
   const handleAuth = () => {
     signInWithPopup(auth, provider).then((result) => {
@@ -27,7 +29,15 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    
+    try {
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      console.log("Login data: ", loginEmail, loginPassword);
+
+      await signIn(loginEmail, loginPassword); 
+      navigate("/");
+    } catch (error) {
+      console.log("Login error: ", error.message);
+    }
   };
 
   return (
@@ -51,8 +61,21 @@ const LoginPage = () => {
       </div>
 
       <div className='email-login'>
-        <input className="email" type="email" placeholder='Email Address' onChange={(e) => setLoginEmail(e.target.value)}/>
-        <input className="password" type="password" placeholder='Password' onChange={(e) => setLoginPassword(e.target.value)}/>
+        <input 
+          className="email" 
+          type="email" 
+          placeholder='Email Address' 
+          onChange={(e) => setLoginEmail(e.target.value)}
+        />
+        <input 
+          className="password" 
+          type="password" 
+          placeholder='Password' 
+          onChange={(e) => setLoginPassword(e.target.value)}
+        />
+        <button onClick={login}>
+          LOGIN
+        </button>
       </div>
 
       <div className='create-account'>

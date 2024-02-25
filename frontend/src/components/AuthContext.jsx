@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { auth } from "../firebase";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -9,23 +10,34 @@ export const AuthProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    console.log("AuthProvider userEmail state:", userEmail);
+  }, [userEmail]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserEmail(user.email);
       } else {
         setUserEmail(null);
       }
     });
-
     return () => unsubscribe();
   }, []);
 
-  const signIn = (email) => {
-    setUserEmail(email);
+  const signIn = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      console.error("Failed to sign in:", error);
+    }
   };
 
   const signOut = () => {
-    setUserEmail(false);
+    auth.signOut().then(() => {
+      setUserEmail(null); 
+    }).catch((error) => {
+      console.error("Error signing out:", error);
+    });
   };
 
   return (

@@ -12,8 +12,13 @@ const Homepage = () => {
   const [genres, setGenres] = useState([]);
 
 
-  const [loginSettings, setLoginSettings] = useState(false);
   const { userEmail, signOut } = useAuth();
+
+  useEffect(() => {
+    console.log("Current userEmail state in Homepage:", userEmail);
+    // This will log the userEmail state every time it changes,
+    // helping you understand if and when the userEmail updates.
+  }, [userEmail]);
 
 
   const navigate = useNavigate();
@@ -116,7 +121,7 @@ const Homepage = () => {
 
 
 
-        {userEmail ? (
+        {userEmail !== null ? (
           <div className='loggedin'>
             {/* <h1>Logged in as: {userEmail}</h1>
             <button onClick={handleLogoutClick}>Log Out</button> */}
