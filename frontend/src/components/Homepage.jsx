@@ -10,29 +10,17 @@ const Homepage = () => {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [flipped, setFlipped] = useState(false);
   const [genres, setGenres] = useState([]);
-
-
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
   const { userEmail, signOut } = useAuth();
 
   useEffect(() => {
     console.log("Current userEmail state in Homepage:", userEmail);
-    // This will log the userEmail state every time it changes,
-    // helping you understand if and when the userEmail updates.
   }, [userEmail]);
-
-
-  const navigate = useNavigate();
-
-
 
   const handleLogoutClick = () => {
     signOut();
   };
-
-
-
-
-  const [searchTerm, setSearchTerm] = useState('');
 
   const handleIconClick = () => {
     navigate('/');
@@ -54,6 +42,10 @@ const Homepage = () => {
 
   const handleLoginClick = () => {
     navigate('/login');
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profilepage');
   };
 
   const handleFlip = (movie) => {
@@ -116,34 +108,21 @@ const Homepage = () => {
           Cineberg
         </h1>
 
-
-
-
-
-
         {userEmail !== null ? (
           <div className='loggedin'>
-            {/* <h1>Logged in as: {userEmail}</h1>
-            <button onClick={handleLogoutClick}>Log Out</button> */}
-            <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="logged in icon" />
-            <span className='loggedin-settings'>hello {userEmail}</span>
+            <img 
+              src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" 
+              alt="logged in icon" 
+              onClick={handleProfileClick}
+            />
             <button onClick={handleLogoutClick}>logout</button>
-
           </div>
         ) : (
           <div className='login' onClick={handleLoginClick}>
             <h1>LOGIN</h1>
           </div>
         )}
-
-
-
-
-
-
       </div> 
-
-
 
       <div className="search-button" onKeyDown={handleKeyDown}>
         <input

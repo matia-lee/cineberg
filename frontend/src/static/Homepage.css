@@ -66,14 +66,14 @@
   opacity: 0.8;
 }
 
-.loggedin-settings {
+/* .loggedin-settings {
   visibility: hidden;
   transition: visibility 0.5s;
 }
 
 .loggedin:hover .loggedin-settings {
   visibility: visible;
-}
+} */
 
 .search-button {
   position: absolute;

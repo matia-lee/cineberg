@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './components/AuthContext'; 
 import Homepage from './components/Homepage';
 import LoginPage from './components/LoginPage';
+import ProfilePage from './components/ProfilePage';
 import SignUp from './components/SignUp';
 import SearchPage from './components/SearchPage';
 import MovieRecommender from './components/MovieRecommender';
@@ -12,6 +13,7 @@ import './static/MovieCard.css';
 import './static/MovieCardFlipped.css';
 import './static/Homepage.css';
 import './static/LoginPage.css';
+import './static/ProfilePage.css';
 import './static/SignUp.css';
 import './static/SearchPage.css';
 import './static/MovieRecommender.css';
@@ -26,7 +28,8 @@ const App = () => {
         <div className = "app">
           <Routes>
             <Route path="/" element={<Homepage />}/>
-            <Route path="login" element={<LoginPage />}/>
+            <Route path="/login" element={<LoginPage />}/>
+            <Route path="/profilepage" element={<ProfilePage />}/>
             <Route path="/signup" element={<SignUp />}/>
             <Route path="/search" element={<SearchPage />}/>
             <Route path="/recommender" element={<MovieRecommender />}/>
