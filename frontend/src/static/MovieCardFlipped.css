@@ -311,42 +311,63 @@
   margin-top: 6px;
   margin-bottom: -6px;
   margin-right: 18px;
+  cursor: pointer;
 }
 
 .watched-icon:hover path,
 .watched-icon:hover circle {
   stroke: #FFB35C;
   opacity: 0.7;
+  cursor: pointer;
 }
 
 .toggled-watched-icon {
   margin-top: 6px;
   margin-bottom: -6px;
   margin-right: 18px;
+  cursor: pointer;
 }
 
 .toggled-watched-icon path,
 .toggled-watched-icon circle {
   stroke: #FFB35C;
   opacity: 0.7;
+  cursor: pointer;
+}
+
+.thumbs-up-icon {
+  cursor: pointer;
 }
 
 .thumbs-up-icon:hover {
   fill: rgba(73, 224, 72, 0.7);
+  cursor: pointer;
 }
 
 .toggled-thumbs-up-icon {
   fill: rgba(73, 224, 72, 0.7);
+  cursor: pointer;
 }
 
 .thumbs-down-icon {
   margin-left: 18px;
   margin-top: 12px;
   margin-bottom: -12px;
+  cursor: pointer;
 }
 
 .thumbs-down-icon:hover {
   fill: #ff4122;
   opacity: 0.7;
+  cursor: pointer;
+}
+
+.toggled-thumbs-down-icon {
+  margin-left: 18px;
+  margin-top: 12px;
+  margin-bottom: -12px;
+  fill: #ff4122;
+  opacity: 0.7;
+  cursor: pointer;
 }
 

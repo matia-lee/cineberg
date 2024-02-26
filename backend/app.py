@@ -137,47 +137,98 @@ def signup():
         else:
             return jsonify({"message": "Error occured"}), 409
 
+# @app.route('/get_interactions', methods=['POST'])
+# def get_interactions():
+#     data = request.get_json()
+#     logging.debug(f"Received interaction data: {data}")
+#     username = data.get("username")
+#     movie_id = data.get("movie_id")
+#     interaction_type = data.get("interaction")
+
+#     if interaction_type not in InteractionType._value2member_map_:
+#         logging.warning(f"Invalid interaction type received: {interaction_type}")
+#         return jsonify({"error": "Invalid interaction type"}), 400
+
+#     existing_interaction = db_session.query(UserMovieInteraction).filter_by(username=username, movie_id=movie_id).first()
+
+#     if existing_interaction:
+#         if existing_interaction.interaction == interaction_type:
+#             try:
+#                 db_session.delete(existing_interaction)
+#                 db_session.commit()
+#                 return jsonify({"message": "Interaction toggled successfully"}), 200
+#             except Exception as e:
+#                 db_session.rollback()
+#                 return jsonify({"error": "Could not toggle interaction"}), 500
+#         elif existing_interaction.interaction != interaction_type:
+#             try:
+#                 if interaction_type == InteractionType.WATCHED.value:
+#                     if InteractionType.WATCHED.value in existing_interaction.interaction:
+#                         existing_interaction.interaction = existing_interaction.interaction.replace(f"+{InteractionType.WATCHED.value}", "")
+#                     else:
+#                         existing_interaction.interaction += f"+{InteractionType.WATCHED.value}"
+#                 else:
+#                     if interaction_type in existing_interaction.interaction:
+#                         existing_interaction.interaction = existing_interaction.interaction.replace(f"+{interaction_type}", "")
+#                     else:
+#                         existing_interaction.interaction += f"+{interaction_type}"
+                
+#                 db_session.commit()
+#                 return jsonify({"message": "Interaction updated successfully"}), 200
+#             except Exception as e:
+#                 db_session.rollback()
+#                 return jsonify({"error": "Could not update interaction"}), 500
+#     else:
+#         try:
+#             new_interaction = UserMovieInteraction(username=username, movie_id=movie_id, interaction=interaction_type)
+#             db_session.add(new_interaction)
+#             db_session.commit()
+#             return jsonify({"message": "New interaction added successfully"}), 201
+#         except Exception as e:
+#             db_session.rollback()
+#             return jsonify({"error": "Could not add interaction"}), 500
+
+#     return jsonify({"message": "Your request was received, but no specific action was taken. Please check your inputs and try again."}), 400
 @app.route('/get_interactions', methods=['POST'])
 def get_interactions():
     data = request.get_json()
-    logging.debug(f"Received interaction data: {data}")
     username = data.get("username")
     movie_id = data.get("movie_id")
     interaction_type = data.get("interaction")
 
     if interaction_type not in InteractionType._value2member_map_:
-        logging.warning(f"Invalid interaction type received: {interaction_type}")
         return jsonify({"error": "Invalid interaction type"}), 400
 
     existing_interaction = db_session.query(UserMovieInteraction).filter_by(username=username, movie_id=movie_id).first()
 
-    if existing_interaction:
-        if existing_interaction.interaction == interaction_type:
-            try:
+    def apply_interaction_rules(existing_interaction, interaction_type):
+        try:
+            current_interactions = existing_interaction.interaction.split("+") if existing_interaction else []
+
+            if interaction_type in current_interactions:
+                current_interactions.remove(interaction_type)
+            else:
+                if interaction_type in [InteractionType.THUMBS_UP.value, InteractionType.THUMBS_DOWN.value]:
+                    opposite_interaction = InteractionType.THUMBS_DOWN.value if interaction_type == InteractionType.THUMBS_UP.value else InteractionType.THUMBS_UP.value
+                    if opposite_interaction in current_interactions:
+                        return jsonify({"error": "Cannot combine thumbs up and thumbs down"}), 400
+                current_interactions.append(interaction_type)
+                if len(current_interactions) > 2 or (InteractionType.THUMBS_UP.value in current_interactions and InteractionType.THUMBS_DOWN.value in current_interactions):
+                    return jsonify({"error": "Invalid combination of interactions"}), 400
+
+            if current_interactions:
+                existing_interaction.interaction = "+".join(current_interactions)
+            else:
                 db_session.delete(existing_interaction)
-                db_session.commit()
-                return jsonify({"message": "Interaction toggled successfully"}), 200
-            except Exception as e:
-                db_session.rollback()
-                return jsonify({"error": "Could not toggle interaction"}), 500
-        elif existing_interaction.interaction != interaction_type:
-            try:
-                if interaction_type == InteractionType.WATCHED.value:
-                    if InteractionType.WATCHED.value in existing_interaction.interaction:
-                        existing_interaction.interaction = existing_interaction.interaction.replace(f"+{InteractionType.WATCHED.value}", "")
-                    else:
-                        existing_interaction.interaction += f"+{InteractionType.WATCHED.value}"
-                else:
-                    if interaction_type in existing_interaction.interaction:
-                        existing_interaction.interaction = existing_interaction.interaction.replace(f"+{interaction_type}", "")
-                    else:
-                        existing_interaction.interaction += f"+{interaction_type}"
-                
-                db_session.commit()
-                return jsonify({"message": "Interaction updated successfully"}), 200
-            except Exception as e:
-                db_session.rollback()
-                return jsonify({"error": "Could not update interaction"}), 500
+
+            db_session.commit()
+            return jsonify({"message": "Interaction updated successfully"}), 200
+        except Exception as e:
+            db_session.rollback()
+            return jsonify({"error": "Could not process interaction"}), 500
+
+    if existing_interaction:
+        return apply_interaction_rules(existing_interaction, interaction_type)
     else:
         try:
             new_interaction = UserMovieInteraction(username=username, movie_id=movie_id, interaction=interaction_type)
@@ -188,7 +239,6 @@ def get_interactions():
             db_session.rollback()
             return jsonify({"error": "Could not add interaction"}), 500
 
-    return jsonify({"message": "Your request was received, but no specific action was taken. Please check your inputs and try again."}), 400
 
 
 @app.teardown_appcontext

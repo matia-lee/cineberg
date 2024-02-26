@@ -1,6 +1,7 @@
-const ThumbsDownIcon = ({ color = "rgb(120,123,123)" }) => (
+const ThumbsDownIcon = ({ onClick, color = "rgb(120,123,123)", className }) => (
   <svg
-    className="thumbs-down-icon"
+  	onClick={onClick}
+    className={className}
     fill={color}
     height="40"
     width="40"

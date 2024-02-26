@@ -14,6 +14,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   const [interactionsPaddingTop, setInteractionsPaddingTop] = useState("0px");
   const [watchedClick, setWatchedClick] = useState(false);
   const [thumbsUpClick, setThumbsUpClick] = useState(false);
+  const [thumbsDownClick, setThumbsDownClick] = useState(false);
   const titleRef = useRef(null);
   const overviewRef = useRef(null);
   const ratingsRef = useRef(null);
@@ -62,6 +63,28 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
     if (response.ok) {
       console.log("Interaction recorded: ", data);
       setThumbsUpClick(prevState => !prevState)
+    } else {
+      console.error("Error recording interaction: ", data.error);
+    }
+  };
+
+  const handleThumbsDownClick = async () => {
+    const response = await fetch("http://localhost:5000/get_interactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: username,
+        movie_id: movie.id,
+        interaction: "thumbs_down"
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Interaction recorded: ", data);
+      setThumbsDownClick(prevState => !prevState)
     } else {
       console.error("Error recording interaction: ", data.error);
     }
@@ -291,7 +314,10 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
           className={thumbsUpClick ? "toggled-thumbs-up-icon" : "thumbs-up-icon"}
           onClick={handleThumbsUpClick}
         />
-        <ThumbsDownIcon />
+        <ThumbsDownIcon 
+          className={thumbsDownClick ? "toggled-thumbs-down-icon" : "thumbs-down-icon"}
+          onClick={handleThumbsDownClick}
+        />
       </div>
     </div>
   );
