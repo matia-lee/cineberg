@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from './AuthContext';
 import MovieCard from "./MovieCard";
 import MovieCardFlipped from "./MovieCardFlipped";
 
@@ -14,9 +15,22 @@ const MovieRecommender = () => {
   const [genres, setGenres] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { userEmail, signOut } = useAuth();
 
   const handleIconClick = () => {
     navigate("/");
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleLogoutClick = () => {
+    signOut();
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profilepage');
   };
 
   const handleCinebergScale = (scale) => {
@@ -151,6 +165,21 @@ const MovieRecommender = () => {
         <h1 onClick={handleIconClick}>Cineberg</h1>
 
         <h3>Movie Recommender</h3>
+
+        {userEmail !== null ? (
+          <div className='loggedin'>
+            <img 
+              src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" 
+              alt="logged in icon" 
+              onClick={handleProfileClick}
+            />
+            <button onClick={handleLogoutClick}>logout</button>
+          </div>
+        ) : (
+          <div className='login' onClick={handleLoginClick}>
+            <h1>LOGIN</h1>
+          </div>
+        )}
       </div>
 
       <div className="search">
