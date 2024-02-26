@@ -319,7 +319,23 @@
   opacity: 0.7;
 }
 
+.toggled-watched-icon {
+  margin-top: 6px;
+  margin-bottom: -6px;
+  margin-right: 18px;
+}
+
+.toggled-watched-icon path,
+.toggled-watched-icon circle {
+  stroke: #FFB35C;
+  opacity: 0.7;
+}
+
 .thumbs-up-icon:hover {
+  fill: rgba(73, 224, 72, 0.7);
+}
+
+.toggled-thumbs-up-icon {
   fill: rgba(73, 224, 72, 0.7);
 }
 

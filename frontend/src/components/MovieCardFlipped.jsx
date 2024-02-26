@@ -12,6 +12,8 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   const [creditsPaddingTop, setCreditsPaddingTop] = useState("0px");
   const [genresPaddingTop, setGenresPaddingTop] = useState("0px");
   const [interactionsPaddingTop, setInteractionsPaddingTop] = useState("0px");
+  const [watchedClick, setWatchedClick] = useState(false);
+  const [thumbsUpClick, setThumbsUpClick] = useState(false);
   const titleRef = useRef(null);
   const overviewRef = useRef(null);
   const ratingsRef = useRef(null);
@@ -19,6 +21,29 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   const posterRef = useRef(null);
   const genreRef = useRef(null);
   const { username } = useAuth();
+
+  const handleWatchedClick = async () => {
+    console.log("Watched Click: Sending request", { username, movie_id: movie.id });
+    const response = await fetch("http://localhost:5000/get_interactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: username,
+        movie_id: movie.id,
+        interaction: "watched"
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Interaction recorded: ", data);
+      setWatchedClick(prevState => !prevState)
+    } else {
+      console.error("Error recording interaction: ", data.error);
+    }
+  };
 
   const handleThumbsUpClick = async () => {
     const response = await fetch("http://localhost:5000/get_interactions", {
@@ -36,6 +61,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
     const data = await response.json();
     if (response.ok) {
       console.log("Interaction recorded: ", data);
+      setThumbsUpClick(prevState => !prevState)
     } else {
       console.error("Error recording interaction: ", data.error);
     }
@@ -257,8 +283,14 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
       </div>
 
       <div className="interactions" style={{ marginTop: interactionsPaddingTop }}>
-        <WatchedIcon />
-        <ThumbsUpIcon onClick={handleThumbsUpClick}/>
+        <WatchedIcon
+          className={watchedClick ? "toggled-watched-icon" : "watched-icon"}
+          onClick={handleWatchedClick}
+        />
+        <ThumbsUpIcon 
+          className={thumbsUpClick ? "toggled-thumbs-up-icon" : "thumbs-up-icon"}
+          onClick={handleThumbsUpClick}
+        />
         <ThumbsDownIcon />
       </div>
     </div>

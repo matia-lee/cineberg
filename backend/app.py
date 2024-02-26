@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 from sqlalchemy.exc import IntegrityError
 import os
 import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 load_dotenv(".env")
 
@@ -138,40 +139,57 @@ def signup():
 
 @app.route('/get_interactions', methods=['POST'])
 def get_interactions():
-    logging.info("Entered /get_interactions route")
     data = request.get_json()
-    logging.info(f"Received data: {data}")
+    logging.debug(f"Received interaction data: {data}")
     username = data.get("username")
     movie_id = data.get("movie_id")
     interaction_type = data.get("interaction")
 
     if interaction_type not in InteractionType._value2member_map_:
+        logging.warning(f"Invalid interaction type received: {interaction_type}")
         return jsonify({"error": "Invalid interaction type"}), 400
-    
+
     existing_interaction = db_session.query(UserMovieInteraction).filter_by(username=username, movie_id=movie_id).first()
 
     if existing_interaction:
-        if existing_interaction.interaction != interaction_type:
-            if {existing_interaction.interaction, interaction_type} <= {InteractionType.THUMBS_UP.value, InteractionType.THUMBS_DOWN.value}:
-                return jsonify ({"error": "Conflicted interactions not allowed"}), 400
-            elif InteractionType.WATCHED.value in {existing_interaction.interaction, interaction_type}:
-                existing_interaction.interaction += f"+{InteractionType.WATCHED.value}"
+        if existing_interaction.interaction == interaction_type:
+            try:
+                db_session.delete(existing_interaction)
+                db_session.commit()
+                return jsonify({"message": "Interaction toggled successfully"}), 200
+            except Exception as e:
+                db_session.rollback()
+                return jsonify({"error": "Could not toggle interaction"}), 500
+        elif existing_interaction.interaction != interaction_type:
+            try:
+                if interaction_type == InteractionType.WATCHED.value:
+                    if InteractionType.WATCHED.value in existing_interaction.interaction:
+                        existing_interaction.interaction = existing_interaction.interaction.replace(f"+{InteractionType.WATCHED.value}", "")
+                    else:
+                        existing_interaction.interaction += f"+{InteractionType.WATCHED.value}"
+                else:
+                    if interaction_type in existing_interaction.interaction:
+                        existing_interaction.interaction = existing_interaction.interaction.replace(f"+{interaction_type}", "")
+                    else:
+                        existing_interaction.interaction += f"+{interaction_type}"
+                
                 db_session.commit()
                 return jsonify({"message": "Interaction updated successfully"}), 200
-        else: 
-            return jsonify({"message": "Interaction already exists"}), 200
+            except Exception as e:
+                db_session.rollback()
+                return jsonify({"error": "Could not update interaction"}), 500
     else:
         try:
-            logging.info("Attempting to commit transaction")
             new_interaction = UserMovieInteraction(username=username, movie_id=movie_id, interaction=interaction_type)
             db_session.add(new_interaction)
             db_session.commit()
-            logging.info("Transaction committed successfully")
             return jsonify({"message": "New interaction added successfully"}), 201
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
             db_session.rollback()
             return jsonify({"error": "Could not add interaction"}), 500
+
+    return jsonify({"message": "Your request was received, but no specific action was taken. Please check your inputs and try again."}), 400
+
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
@@ -196,4 +214,5 @@ def getUsername():
 if __name__ == '__main__':
     scrape_news()
     init_db()
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(debug=False)

@@ -1,6 +1,7 @@
-const WatchedIcon = ({ color = 'rgb(120,123,123)', strokeWidth = '20px' }) => (
+const WatchedIcon = ({ onClick, color = 'rgb(120,123,123)', strokeWidth = '20px', className }) => (
   <svg 
-    className="watched-icon" 
+    onClick={onClick}
+    className={className}
     width="43" 
     height="43" 
     viewBox="0 0 512 512" 
