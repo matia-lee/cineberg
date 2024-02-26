@@ -91,6 +91,27 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   };
 
   useEffect(() => {
+    const fetchInteractionState = async () => {
+      const response = await fetch(`http://localhost:5000/get_interactions_state?username=${username}&movie_id=${movie.id}`, {
+        method: "GET",
+      });
+  
+      const data = await response.json();
+      if (response.ok && data.interaction) {
+        setWatchedClick(data.interaction.includes("watched"));
+        setThumbsUpClick(data.interaction.includes("thumbs_up"));
+        setThumbsDownClick(data.interaction.includes("thumbs_down"));
+      } else {
+        setWatchedClick(false);
+        setThumbsUpClick(false);
+        setThumbsDownClick(false);
+      }
+    };
+  
+    fetchInteractionState();
+  }, [username, movie.id]);
+
+  useEffect(() => {
     if (titleRef.current) {
       const titleHeight = titleRef.current.offsetHeight;
       setOverviewPaddingTop(`${titleHeight + 70}px`);
