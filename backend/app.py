@@ -7,10 +7,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from database import init_db, db_session
 from main import recommend_movies
-from models import User, Base
+from models import User, Base, Movie, UserMovieInteraction
+from enum import Enum, unique
 from dotenv import load_dotenv
 from sqlalchemy.exc import IntegrityError
 import os
+import logging
 
 load_dotenv(".env")
 
@@ -111,6 +113,12 @@ scheduler.add_job(id="scheduled scraping", func=scrape_news, trigger="interval",
 
 
 # for database:
+@unique
+class InteractionType(Enum):
+    THUMBS_UP = "thumbs_up"
+    THUMBS_DOWN = "thumbs_down"
+    WATCHED = "watched"
+
 @app.route('/signup', methods=['POST'])
 def signup(): 
     data = request.get_json()
@@ -127,10 +135,61 @@ def signup():
             return jsonify({"message": "Username taken"}), 409
         else:
             return jsonify({"message": "Error occured"}), 409
+
+@app.route('/get_interactions', methods=['POST'])
+def get_interactions():
+    logging.info("Entered /get_interactions route")
+    data = request.get_json()
+    logging.info(f"Received data: {data}")
+    username = data.get("username")
+    movie_id = data.get("movie_id")
+    interaction_type = data.get("interaction")
+
+    if interaction_type not in InteractionType._value2member_map_:
+        return jsonify({"error": "Invalid interaction type"}), 400
     
+    existing_interaction = db_session.query(UserMovieInteraction).filter_by(username=username, movie_id=movie_id).first()
+
+    if existing_interaction:
+        if existing_interaction.interaction != interaction_type:
+            if {existing_interaction.interaction, interaction_type} <= {InteractionType.THUMBS_UP.value, InteractionType.THUMBS_DOWN.value}:
+                return jsonify ({"error": "Conflicted interactions not allowed"}), 400
+            elif InteractionType.WATCHED.value in {existing_interaction.interaction, interaction_type}:
+                existing_interaction.interaction += f"+{InteractionType.WATCHED.value}"
+                db_session.commit()
+                return jsonify({"message": "Interaction updated successfully"}), 200
+        else: 
+            return jsonify({"message": "Interaction already exists"}), 200
+    else:
+        try:
+            logging.info("Attempting to commit transaction")
+            new_interaction = UserMovieInteraction(username=username, movie_id=movie_id, interaction=interaction_type)
+            db_session.add(new_interaction)
+            db_session.commit()
+            logging.info("Transaction committed successfully")
+            return jsonify({"message": "New interaction added successfully"}), 201
+        except Exception as e:
+            logging.error(f"An error occurred: {e}")
+            db_session.rollback()
+            return jsonify({"error": "Could not add interaction"}), 500
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
+
+@app.route('/getUsername', methods=['GET'])
+def getUsername():
+    email = request.args.get('email')
+    if not email:
+        return jsonify({"message": "Could not find email in database"}), 400
+    
+    user = db_session.query(User).filter_by(email=email).first()
+    if user:
+        return jsonify({"message": user.username}), 200
+    else:
+        return jsonify({"message": "User not found"}), 404
+
+
 
 
 

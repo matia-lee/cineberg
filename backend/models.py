@@ -16,13 +16,16 @@ class Movie(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(255), nullable=False)
     tmdb_id = Column(Integer, unique=True, nullable=False)
-    interactions = relationship('UserMovieInteraction', backref='movie', lazy=True)
+    # interactions = relationship('UserMovieInteraction', backref='movie', lazy=True)
 
 class UserMovieInteraction(Base):
     __tablename__ = 'user_movie_interaction'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    movie_id = Column(Integer, ForeignKey('movie.id'), nullable=False)
+    # user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    username = Column(String(80), ForeignKey('user.username'), nullable=False)
+    # movie_id = Column(Integer, ForeignKey('movie.id'), nullable=False)
+    movie_id = Column(Integer, nullable=False)
     interaction = Column(String(10), nullable=False)
     timestamp = Column(DateTime, default=func.current_timestamp())
-    __table_args__ = (UniqueConstraint('user_id', 'movie_id', 'interaction', name='unique_user_movie_interaction'),)
+    # __table_args__ = (UniqueConstraint('user_id', 'movie_id', 'interaction', name='unique_user_movie_interaction'),)
+    __table_args__ = (UniqueConstraint('username', 'movie_id', 'interaction', name='unique_user_movie_interaction'),)

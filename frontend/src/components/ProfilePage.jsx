@@ -1,7 +1,12 @@
+import { useAuth } from "./AuthContext";
+
 const ProfilePage = () => {
+
+  const { username } = useAuth();
+
   return (
-    <div className="test">
-      <h1>hello world</h1>
+    <div className="hello">
+      <h1>hello {username}</h1>
       <h3>john doe</h3>
     </div>
   );

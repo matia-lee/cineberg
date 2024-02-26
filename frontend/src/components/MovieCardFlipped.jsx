@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useAuth } from "./AuthContext";
 import WatchedIcon from "./WatchedIcon";
 import ThumbsUpIcon from "./ThumbsUpIcon";
 import ThumbsDownIcon from "./ThumbsDownIcon";
@@ -17,6 +18,28 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   const taglineRef = useRef(null);
   const posterRef = useRef(null);
   const genreRef = useRef(null);
+  const { username } = useAuth();
+
+  const handleThumbsUpClick = async () => {
+    const response = await fetch("http://localhost:5000/get_interactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: username,
+        movie_id: movie.id,
+        interaction: "thumbs_up"
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Interaction recorded: ", data);
+    } else {
+      console.error("Error recording interaction: ", data.error);
+    }
+  };
 
   useEffect(() => {
     if (titleRef.current) {
@@ -235,7 +258,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
 
       <div className="interactions" style={{ marginTop: interactionsPaddingTop }}>
         <WatchedIcon />
-        <ThumbsUpIcon />
+        <ThumbsUpIcon onClick={handleThumbsUpClick}/>
         <ThumbsDownIcon />
       </div>
     </div>
