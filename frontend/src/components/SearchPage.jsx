@@ -14,7 +14,7 @@ const SearchPage = () => {
   const [flipped, setFlipped] = useState(null);
   const [genres, setGenres] = useState([]);
   const navigate = useNavigate();
-  const { userEmail, signOut } = useAuth();
+  const { userEmail } = useAuth();
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -36,10 +36,6 @@ const SearchPage = () => {
 
   const handleLoginClick = () => {
     navigate('/login');
-  };
-
-  const handleLogoutClick = () => {
-    signOut();
   };
 
   const handleProfileClick = () => {
@@ -121,7 +117,6 @@ const SearchPage = () => {
               alt="logged in icon" 
               onClick={handleProfileClick}
             />
-            <button onClick={handleLogoutClick}>logout</button>
           </div>
         ) : (
           <div className='login' onClick={handleLoginClick}>

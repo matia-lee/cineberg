@@ -11,7 +11,7 @@ const Template = ({ endpoint, subtitle }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
-  const { userEmail, signOut } = useAuth();
+  const { userEmail } = useAuth();
 
   const handleIconClick = () => {
     navigate("/");
@@ -27,10 +27,6 @@ const Template = ({ endpoint, subtitle }) => {
 
   const handleLoginClick = () => {
     navigate('/login');
-  };
-
-  const handleLogoutClick = () => {
-    signOut();
   };
 
   const handleProfileClick = () => {
@@ -101,7 +97,6 @@ const Template = ({ endpoint, subtitle }) => {
               alt="logged in icon" 
               onClick={handleProfileClick}
             />
-            <button onClick={handleLogoutClick}>logout</button>
           </div>
         ) : (
           <div className='login' onClick={handleLoginClick}>

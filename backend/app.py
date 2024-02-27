@@ -217,6 +217,12 @@ def getUsername():
         return jsonify({"message": user.username}), 200
     else:
         return jsonify({"message": "User not found"}), 404
+    
+@app.route('/get_watched_movie_ids', methods=['GET'])
+def get_watched_movie_ids():
+    results = db_session.query(UserMovieInteraction.movie_id).filter(UserMovieInteraction.interaction.like('%watched%')).distinct().all()
+    watched_movie_ids = [result.movie_id for result in results]
+    return jsonify(watched_movie_ids)
 
 
 
