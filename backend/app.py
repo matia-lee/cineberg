@@ -12,8 +12,6 @@ from enum import Enum, unique
 from dotenv import load_dotenv
 from sqlalchemy.exc import IntegrityError
 import os
-import logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 load_dotenv(".env")
 
@@ -218,10 +216,16 @@ def getUsername():
     else:
         return jsonify({"message": "User not found"}), 404
     
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+    
 @app.route('/get_watched_movie_ids', methods=['GET'])
 def get_watched_movie_ids():
-    results = db_session.query(UserMovieInteraction.movie_id).filter(UserMovieInteraction.interaction.like('%watched%')).distinct().all()
+    username = request.args.get('username')
+    logging.debug(f"Received request for username: {username}")
+    results = db_session.query(UserMovieInteraction.movie_id).filter(UserMovieInteraction.interaction.like('%watched%'), UserMovieInteraction.username == username).distinct().all()
     watched_movie_ids = [result.movie_id for result in results]
+    logging.debug(f"Fetched watched movie IDs for {username}: {watched_movie_ids}")
     return jsonify(watched_movie_ids)
 
 

@@ -42,11 +42,11 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:5000/get_watched_movie_ids')
+    fetch(`http://localhost:5000/get_watched_movie_ids?username=${encodeURIComponent(username)}`)
       .then ((response) => response.json())
       .then ((data) => setMovieIds(data))
       .catch ((error) => console.log("Error fetching watched ids: ", error));
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
