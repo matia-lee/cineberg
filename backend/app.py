@@ -230,7 +230,12 @@ def get_liked_movie_ids():
     liked_movie_ids = [result.movie_id for result in results]
     return jsonify(liked_movie_ids)
 
-
+@app.route('/get_disliked_movie_ids', methods=['GET'])
+def get_disliked_movie_ids():
+    username = request.args.get('username')
+    results = db_session.query(UserMovieInteraction.movie_id).filter(UserMovieInteraction.interaction.like('%thumbs_down%'), UserMovieInteraction.username == username).distinct().all()
+    disliked_movie_ids = [result.movie_id for result in results]
+    return jsonify(disliked_movie_ids)
 
 
 
