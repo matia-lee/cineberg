@@ -14,6 +14,18 @@ const ProfilePage = () => {
     signOut();
     navigate('/');
   };
+  
+  const handleWatchedClick = () => {
+    navigate('/profilewatchedmovies');
+  };
+
+  const handleLikedClick = () => {
+    navigate('/profilelikedmovies');
+  };
+
+  const handleDislikedClick = () => {
+    navigate('/profiledislikedmovies');
+  };
 
   return (
     <div>
@@ -38,9 +50,9 @@ const ProfilePage = () => {
           Welcome <span className="username">{username}</span>!
         </h1>
         <ul style={{ listStyleType: 'none' }}>
-          <li>Watched Movies</li>
-          <li>Liked Movies</li>
-          <li>Disliked Movies</li>
+          <li onClick={handleWatchedClick}>Watched Movies</li>
+          <li onClick={handleLikedClick}>Liked Movies</li>
+          <li onClick={handleDislikedClick}>Disliked Movies</li>
         </ul>
       </div>
 

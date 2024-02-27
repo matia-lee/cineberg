@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 .news-container {
   display: grid;
@@ -12,7 +12,7 @@
 .news-articles {
   display: flex;
   align-items: center;
-  gap: 30px; 
+  gap: 30px;
   background-color: #353634;
   padding-right: 30px;
   width: 900px;
