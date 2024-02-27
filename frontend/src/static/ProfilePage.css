@@ -1,4 +1,82 @@
-.test {
-  display: flex;
-  justify-content: center;
+.logout {
+  position: absolute;
+  background-color: rgba(34, 36, 38, 1);
+  padding: 5px 13px;
+  border: 1px solid rgba(112, 181, 230, 0.9);
+  border-radius: 4px;
+  margin-left: 1330px;
+  margin-top: -40px;
+  transition: all 0.2s ease 0s;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background-color: rgba(112, 181, 230, 1);
+}
+
+.logout:hover h1 {
+  color: rgba(34, 36, 38, 1);
+}
+
+.logout h1 {
+  letter-spacing: 1.5px;
+  color: rgba(112, 181, 230, 0.9);
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.menu {
+  position: absolute;
+  margin-left: 40px;
+  font-family: "Montserrat", sans-serif;
+  width: 300px;
+  margin-top: 160px;
+}
+
+.menu .username {
+  color: rgba(59, 118, 191, 1);
+  font-style: italic;
+  margin-right: 5px;
+}
+
+.menu h1 {
+  color: rgba(112, 181, 230, 0.9);
+  font-size: 25px;
+}
+
+.menu ul {
+  margin-left: 0px;
+  font-weight: 700;
+}
+
+.menu li {
+  margin-top: 40px;
+  margin-bottom: -5px;
+  font-size: 20px;
+  color: #9cc4d4;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.menu li:hover {
+  margin-top: 40px;
+  margin-bottom: -5px;
+  font-size: 20px;
+  color: rgb(244,243,239);
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.profile-frame {
+  border-top-left-radius: 20px;
+  margin-top: 7rem;
+  background-color: #353634;
+  margin-left: auto;
+  width: 77%;
+  margin-bottom: -20px;
+  min-height: 135vh;
+  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 1);
 }

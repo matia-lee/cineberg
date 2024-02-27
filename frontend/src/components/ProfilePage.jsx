@@ -29,11 +29,24 @@ const ProfilePage = () => {
         </h1>
       </div> 
 
-      <div className="menu">
-        Hi, {username}!
+      <div className='logout' onClick={handleLogoutClick}>
+        <h1>LOGOUT</h1>
       </div>
 
-      <button onClick={handleLogoutClick}>logout</button>
+      <div className="menu">
+        <h1>
+          Welcome <span className="username">{username}</span>!
+        </h1>
+        <ul style={{ listStyleType: 'none' }}>
+          <li>Watched Movies</li>
+          <li>Liked Movies</li>
+          <li>Disliked Movies</li>
+        </ul>
+      </div>
+
+      <div className="profile-frame">
+
+      </div>
     </div>
   );
 };
