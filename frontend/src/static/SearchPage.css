@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .movie-search-grid .subtitle .search-term {
   font-style: italic;
   color: rgba(91, 143, 206, 1);
@@ -20,7 +22,7 @@ body {
   box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 1);
 }
 
-.subtitle h2 {
+/* .subtitle h2 {
   padding-top: 35px;
   margin-bottom: 20px;
   margin-left: 50px;
@@ -28,6 +30,17 @@ body {
   font-weight: 1000;
   color: #69a8d0;
   font-size: 30px;
+} */
+
+.subtitle h2 {
+  padding-top: 35px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 650;
+  color: #69a8d0;
+  font-size: 32px;
+  letter-spacing: 0px;
 }
 
 .container-movie-grid {
@@ -61,7 +74,7 @@ body {
   transform: scale(1.05, 1.05);
 }
 
-.container-movie-grid .movie .release-date {
+/* .container-movie-grid .movie .release-date {
   font-weight: 550;
   position: absolute;
   width: 100%;
@@ -69,6 +82,20 @@ body {
   left: 16px;
   color: #69a8d0;
   font-family: "Roboto Slab", serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin-left: 10px;
+  margin-top: -3px;
+} */
+
+.container-movie-grid .movie .release-date {
+  font-weight: 550;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  left: 16px;
+  color: #69a8d0;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   letter-spacing: 3px;
   margin-left: 10px;
@@ -104,31 +131,56 @@ body {
   left: 0;
 }
 
-.container-movie-grid .movie .title span {
+/* .container-movie-grid .movie .title span {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-size: 13px;
   letter-spacing: 2px;
   font-weight: 500;
   color: #b6b8b5;
+} */
+
+.container-movie-grid .movie .title span {
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #b6b8b5;
 }
 
-.container-movie-grid .movie .title h3 {
+/* .container-movie-grid .movie .title h3 {
   margin: 0;
   margin-top: 5px;
   font-family: "Roboto Slab", serif;
   color: rgba(112, 181, 230, 1);
+} */
+
+.container-movie-grid .movie .title h3 {
+  margin: 0;
+  margin-top: 5px;
+  font-family: "Montserrat", sans-serif;
+  color: rgba(112, 181, 230, 1);
+  font-weight: 600;
 }
 
 .container-movie-grid .movie:hover .title {
   background-color: transparent;
 }
 
-.searchpage-nav-bar {
+/* .searchpage-nav-bar {
   position: absolute;
   margin-top: -2105px;
   margin-left: 40px;
   font-family: "Roboto Slab", serif;
+  width: 300px;
+} */
+
+.searchpage-nav-bar {
+  position: absolute;
+  margin-top: -2105px;
+  margin-left: 40px;
+  font-family: "Montserrat", sans-serif;
   width: 300px;
 }
 
@@ -150,6 +202,14 @@ body {
   font-size: 18px;
   color: #9cc4d4;
   opacity: 0.4;
+  cursor: pointer;
+}
+
+.searchpage-nav-bar li:hover {
+  margin-top: 20px;
+  margin-bottom: -5px;
+  font-size: 18px;
+  color: rgb(244,243,239);
   cursor: pointer;
 }
 

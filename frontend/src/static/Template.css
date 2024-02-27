@@ -1,8 +1,18 @@
-.template-nav-bar {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* .template-nav-bar {
   position: absolute;
   margin-top: -2105px;
   margin-left: 40px;
   font-family: "Roboto Slab", serif;
+  width: 300px;
+} */
+
+.template-nav-bar {
+  position: absolute;
+  margin-top: -2105px;
+  margin-left: 40px;
+  font-family: "Montserrat", sans-serif;
   width: 300px;
 }
 
@@ -27,14 +37,30 @@
   cursor: pointer;
 }
 
+.template-nav-bar li:hover {
+  margin-top: 20px;
+  margin-bottom: -5px;
+  font-size: 18px;
+  color: rgb(244,243,239);
+  cursor: pointer;
+}
+
 .template-nav-bar .genres {
   margin-top: 50px;
 }
 
-.footer {
+/* .footer {
   margin-top: 35px;
   margin-left: 390px;
   font-family: "Roboto Slab", serif;
+  color: #5f7c98;
+  opacity: 0.8;
+} */
+
+.footer {
+  margin-top: 35px;
+  margin-left: 360px;
+  font-family: "Montserrat", sans-serif;
   color: #5f7c98;
   opacity: 0.8;
 }

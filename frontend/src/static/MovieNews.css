@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .news-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -31,16 +33,32 @@
   width: 400px;
 }
 
-.news-articles h1 {
+/* .news-articles h1 {
   font-family: "Roboto Slab", serif;
   font-size: 25px;
   font-weight: 1000;
   color: rgba(112, 181, 230, 0.9);
   margin: 0px;
+} */
+
+.news-articles h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  color: rgba(112, 181, 230, 0.9);
+  margin: 0px;
 }
 
-.news-articles h4 {
+/* .news-articles h4 {
   font-family: "Roboto Slab", serif;
+  color: rgba(59, 118, 191, 0.9);
+  font-weight: 500;
+  margin: 0px;
+  font-size: 14px;
+} */
+
+.news-articles h4 {
+  font-family: "Montserrat", sans-serif;
   color: rgba(59, 118, 191, 0.9);
   font-weight: 500;
   margin: 0px;

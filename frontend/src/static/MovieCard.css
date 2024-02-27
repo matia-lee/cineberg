@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
   overflow-x: hidden;
@@ -17,14 +18,14 @@ body {
   box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 1);
 }
 
-.subtitle h2 {
+/* .subtitle h2 {
   padding-top: 17px;
   margin-bottom:0 ;
   margin-left: 30px;
   font-family: "Roboto Slab", serif;
   font-weight: 1000;
   color: #69A8D0;
-}
+} */
 
 .container-movie {
   margin-left: 50px;
@@ -69,7 +70,7 @@ body {
   transform: scale(1.05, 1.05);
 }
 
-.movie .release-date {
+/* .movie .release-date {
   font-weight: 550;
   position: absolute;
   width: 100%;
@@ -77,6 +78,20 @@ body {
   left: 16px;
   color: #69A8D0;
   font-family: "Roboto Slab", serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin-left: 10px;
+  margin-top: -3px;
+} */
+
+.movie .release-date {
+  font-weight: 550;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  left: 16px;
+  color: #69A8D0;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   letter-spacing: 3px;
   margin-left: 10px;
@@ -112,20 +127,37 @@ body {
   left: 0;
 }
 
-.movie .title span {
+/* .movie .title span {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-size: 13px;
   letter-spacing: 2px;
   font-weight: 500;
   color: #B6B8B5;
+} */
+
+.movie .title span {
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #B6B8B5;
 }
 
-.movie .title h3 {
+/* .movie .title h3 {
   margin: 0;
   margin-top: 5px;
   font-family: "Roboto Slab", serif;
   color: rgba(112, 181, 230, 1);
+} */
+
+.movie .title h3 {
+  margin: 0;
+  margin-top: 5px;
+  font-family: "Montserrat", sans-serif;
+  color: rgba(112, 181, 230, 1);
+  font-weight: 600;
 }
 
 .movie:hover .title {

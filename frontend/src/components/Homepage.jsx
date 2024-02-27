@@ -12,15 +12,11 @@ const Homepage = () => {
   const [genres, setGenres] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const { userEmail, signOut } = useAuth();
+  const { userEmail } = useAuth();
 
   useEffect(() => {
     console.log("Current userEmail state in Homepage:", userEmail);
   }, [userEmail]);
-
-  const handleLogoutClick = () => {
-    signOut();
-  };
 
   const handleIconClick = () => {
     navigate('/');
@@ -115,7 +111,6 @@ const Homepage = () => {
               alt="logged in icon" 
               onClick={handleProfileClick}
             />
-            <button onClick={handleLogoutClick}>logout</button>
           </div>
         ) : (
           <div className='login' onClick={handleLoginClick}>

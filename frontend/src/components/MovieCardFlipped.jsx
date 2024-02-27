@@ -114,7 +114,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
   useEffect(() => {
     if (titleRef.current) {
       const titleHeight = titleRef.current.offsetHeight;
-      setOverviewPaddingTop(`${titleHeight + 70}px`);
+      setOverviewPaddingTop(`${titleHeight + 120}px`);
     }
   }, [movie]);
 
@@ -122,7 +122,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
     if (titleRef.current && overviewRef.current) {
       const titleHeight = titleRef.current.offsetHeight;
       const overviewHeight = overviewRef.current.offsetHeight;
-      setRatingsPaddingTop(`${titleHeight + overviewHeight + 125}px`);
+      setRatingsPaddingTop(`${titleHeight + overviewHeight + 175}px`);
     }
   }, [movie]);
 
@@ -132,7 +132,7 @@ const MovieCardFlipped = ({ movie, genres, onFlip, movieIds }) => {
       const overviewHeight = overviewRef.current.offsetHeight;
       const ratingsHeight = ratingsRef.current.offsetHeight;
       setCreditsPaddingTop(
-        `${titleHeight + overviewHeight + ratingsHeight + 130}px`
+        `${titleHeight + overviewHeight + ratingsHeight + 180}px`
       );
     }
   }, [movie]);
