@@ -8,9 +8,8 @@ const ProfilePage = () => {
   const [movieIds, setMovieIds] = useState([]);
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [flipped, setFlipped] = useState(null);
-  const { username, signOut } = useAuth();
   const [genres, setGenres] = useState([]);
-
+  const { username, signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleIconClick = () => {
@@ -122,20 +121,6 @@ const ProfilePage = () => {
           <li onClick={handleDislikedClick}>Disliked Movies</li>
         </ul>
       </div>
-
-      {/* <div className="profile-frame">
-        <div className="subtitle">
-          <h2>Watched Movies: </h2>
-        </div>
-
-        <div className="container-movie">
-          {trendingMovies.map((movie) => (
-              <div key = {movie.id} onClick={() => handleFlip(movie)}>
-                <MovieCard movie={movie}/>
-              </div>
-            ))}
-        </div>
-      </div> */}
 
       <div className="movie-search-grid">
         <div className="subtitle">

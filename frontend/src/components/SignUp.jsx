@@ -54,7 +54,7 @@ const SignUp = () => {
       await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
       console.log("Signup data: ", signUpEmail, signUpPassword, signUpUsername);
 
-      await signIn(signUpEmail, signUpPassword); //CHANGE THIS WHEN YOU CHANGE AUTH CONTEXT
+      await signIn(signUpEmail, signUpPassword);
       navigate("/");
     } catch (error) {
       console.log("Signup error: ", error.message);

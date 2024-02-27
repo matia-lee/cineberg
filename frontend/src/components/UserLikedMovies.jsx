@@ -1,9 +1,15 @@
 import { useAuth } from "./AuthContext";
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import MovieCardFlipped from "./MovieCardFlipped";
+import MovieCard from "./MovieCard";
 
 const UserLikedMovies = () => {
+  const [movieIds, setMovieIds] = useState([]);
+  const [likedMovies, setLikedMovies] = useState([]);
+  const [flipped, setFlipped] = useState(null);
+  const [genres, setGenres] = useState([]);
   const { username, signOut } = useAuth();
-
   const navigate = useNavigate();
 
   const handleIconClick = () => {
@@ -19,13 +25,79 @@ const UserLikedMovies = () => {
     navigate('/profilepage');
   };
 
-  const handleLikedClick = () => {
-    navigate('/profilelikedmovies');
-  };
+  // const handleLikedClick = () => {
+  //   navigate('/profilelikedmovies');
+  // };
 
   const handleDislikedClick = () => {
     navigate('/profiledislikedmovies');
   };
+
+  const handleFlip = (movie) => {
+    setFlipped((prevFlippedMovie) =>
+      prevFlippedMovie === movie ? null : movie
+    );
+    if (movie) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  };
+
+  useEffect (() => {
+    fetch(`http://localhost:5000/get_liked_movie_ids?username=${encodeURIComponent(username)}`)
+      .then((response) => response.json())
+      .then((data) => setMovieIds(data))
+      .catch ((error) => console.log("Error fetching liked ids: ", error));
+  }, [username]);
+
+  useEffect (() => {
+    const api_key = process.env.REACT_APP_TMDB_KEY;
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + api_key,
+      },
+    };
+
+    if (movieIds.length > 0) {
+      const fetchMovieDetails = async () => {
+        const movieDetailsPromises = movieIds.map(id => 
+          fetch("https://api.themoviedb.org/3/movie/" + id + "?language=en-US", options)
+            .then(response => {
+              return response.json();
+            })
+        );
+
+        try {
+          const movies = await Promise.all(movieDetailsPromises);
+          setLikedMovies(movies);
+        } catch (error) {
+          console.error("Error fetching liked movie details: ", error);
+        }
+      };
+      fetchMovieDetails();
+    }
+  }, [movieIds]);
+
+  useEffect(() => {
+    const api_key = process.env.REACT_APP_TMDB_KEY;
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + api_key,
+      },
+    };
+
+    fetch("https://api.themoviedb.org/3/genre/movie/list?language=en", options)
+      .then((response) => response.json())
+      .then((data) => {
+        setGenres(data.genres);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div>
@@ -51,23 +123,38 @@ const UserLikedMovies = () => {
         </h1>
         <ul style={{ listStyleType: 'none' }}>
           <li onClick={handleWatchedClick}>Watched Movies</li>
-          <li onClick={handleLikedClick}>Liked Movies</li>
+          <li>Liked Movies</li>
           <li onClick={handleDislikedClick}>Disliked Movies</li>
         </ul>
       </div>
-
-      <div className="profile-frame">
+      <div className="movie-search-grid">
         <div className="subtitle">
-            <h2>Liked Movies: </h2>
-          </div>
+          <h2>Liked Movies:</h2>
+        </div>
 
-          <div className="container-movie">
-            {/* {trendingMovies.map((movie) => (
-                <div key = {movie.id} onClick={() => handleFlip(movie)}>
-                  <MovieCard movie={movie}/>
-                </div>
-              ))} */}
-          </div>
+        <div className="container-movie-grid">
+          {likedMovies.map((movie) => (
+            <div key={movie.id} onClick={() => handleFlip(movie)}>
+              <MovieCard movie={movie} />
+            </div>
+          ))}
+        </div>
+
+        {flipped && (
+          <>
+            <div onClick={() => handleFlip(null)} className="overlay"></div>
+            <div className="container-flipped">
+              {likedMovies.map((movie) => (
+                <MovieCardFlipped
+                  key={movie.id}
+                  movie={flipped}
+                  genres={genres}
+                  onFlip={handleFlip}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
