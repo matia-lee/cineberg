@@ -130,7 +130,7 @@ const UserDislikedMovies = () => {
 
       <div className="movie-search-grid">
         <div className="subtitle">
-          <h2>Liked Movies:</h2>
+          <h2>Disliked Movies:</h2>
         </div>
 
         <div className="container-movie-grid">

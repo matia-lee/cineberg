@@ -7,10 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from database import init_db, db_session
 from main import recommend_movies
-from models import User, Base, Movie, UserMovieInteraction
+from gather_liked_movies import get_liked_movies
+# from embed_liked_movies import embed_liked_movies
+from models import User, Base, UserMovieInteraction, UserLikedMovies
 from enum import Enum, unique
 from dotenv import load_dotenv
 from sqlalchemy.exc import IntegrityError
+from celeryconfig import celery_app 
 import os
 
 load_dotenv(".env")
@@ -147,18 +150,36 @@ def get_interactions():
 
     existing_interaction = db_session.query(UserMovieInteraction).filter_by(username=username, movie_id=movie_id).first()
 
+    def add_to_liked_movies(username, movie_id):
+        exists = db_session.query(UserLikedMovies.id).filter_by(username=username, movie_id=movie_id).first() is not None
+        if not exists:
+            try:
+                new_liked_movie = UserLikedMovies(username=username, movie_id=movie_id)
+                db_session.add(new_liked_movie)
+                db_session.commit()
+                # get_liked_movies(username, movie_id)
+                get_liked_movies.apply_async(args=[username, movie_id], countdown=60)
+                # embed_liked_movies()
+            except IntegrityError:
+                db_session.rollback()
+
     def apply_interaction_rules(existing_interaction, interaction_type):
         try:
             current_interactions = existing_interaction.interaction.split("+") if existing_interaction else []
 
             if interaction_type in current_interactions:
                 current_interactions.remove(interaction_type)
+                liked_movie = db_session.query(UserLikedMovies).filter_by(username=username, movie_id=movie_id).first()
+                if liked_movie:
+                    db_session.delete(liked_movie)
             else:
                 if interaction_type in [InteractionType.THUMBS_UP.value, InteractionType.THUMBS_DOWN.value]:
                     opposite_interaction = InteractionType.THUMBS_DOWN.value if interaction_type == InteractionType.THUMBS_UP.value else InteractionType.THUMBS_UP.value
                     if opposite_interaction in current_interactions:
                         return jsonify({"error": "Cannot combine thumbs up and thumbs down"}), 400
                 current_interactions.append(interaction_type)
+                if interaction_type == InteractionType.THUMBS_UP.value:
+                    add_to_liked_movies(username, movie_id)
                 if len(current_interactions) > 2 or (InteractionType.THUMBS_UP.value in current_interactions and InteractionType.THUMBS_DOWN.value in current_interactions):
                     return jsonify({"error": "Invalid combination of interactions"}), 400
 
@@ -179,6 +200,9 @@ def get_interactions():
         try:
             new_interaction = UserMovieInteraction(username=username, movie_id=movie_id, interaction=interaction_type)
             db_session.add(new_interaction)
+            db_session.commit()
+            if interaction_type == InteractionType.THUMBS_UP.value:
+                add_to_liked_movies(username, movie_id)
             db_session.commit()
             return jsonify({"message": "New interaction added successfully"}), 201
         except Exception as e:
@@ -236,7 +260,6 @@ def get_disliked_movie_ids():
     results = db_session.query(UserMovieInteraction.movie_id).filter(UserMovieInteraction.interaction.like('%thumbs_down%'), UserMovieInteraction.username == username).distinct().all()
     disliked_movie_ids = [result.movie_id for result in results]
     return jsonify(disliked_movie_ids)
-
 
 
 if __name__ == '__main__':

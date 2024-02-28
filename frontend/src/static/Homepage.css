@@ -183,3 +183,12 @@
 .nav-bar .genres {
   margin-top: 50px;
 }
+
+.secret-switch {
+  position: absolute;
+  opacity: 0.4;
+  width: 50px;
+  margin-top: -50px;
+  margin-left: 20px;
+  cursor: pointer;
+}
