@@ -1,6 +1,6 @@
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MovieCardFlipped from "./MovieCardFlipped";
 import MovieCard from "./MovieCard";
 
@@ -9,7 +9,10 @@ const ProfilePage = () => {
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [flipped, setFlipped] = useState(null);
   const [genres, setGenres] = useState([]);
+  const [containerViewHeight, setContainerViewHeight] = useState("78.5vh")
   const { username, signOut } = useAuth();
+  const movieRef = useRef(null);
+  const containerRef = useRef(null);
   const navigate = useNavigate();
 
   const handleIconClick = () => {
@@ -43,6 +46,13 @@ const ProfilePage = () => {
       document.body.classList.remove("no-scroll");
     }
   };
+
+  useEffect(() => {
+    if (movieRef.current) {
+      const containerHeight = containerRef.current.offsetHeight;
+      setContainerViewHeight(`${containerHeight + 30}px`);
+    }
+  }, [watchedMovies]);
 
   useEffect(() => {
     fetch(`http://localhost:5000/get_watched_movie_ids?username=${encodeURIComponent(username)}`)
@@ -127,12 +137,12 @@ const ProfilePage = () => {
         </ul>
       </div>
 
-      <div className="movie-search-grid">
+      <div className="movie-user-grid" style={{ minHeight: containerViewHeight }}>
         <div className="subtitle">
           <h2>Watched Movies:</h2>
         </div>
 
-        <div className="container-movie-grid">
+        <div className="container-user-grid" ref={containerRef}>
           {watchedMovies.map((movie) => (
             <div key={movie.id} onClick={() => handleFlip(movie)}>
               <MovieCard movie={movie} />
