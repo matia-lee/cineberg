@@ -29,9 +29,9 @@ const UserDislikedMovies = () => {
     navigate('/profilelikedmovies');
   };
 
-  // const handleDislikedClick = () => {
-  //   navigate('/profiledislikedmovies');
-  // };
+  const handleRecommendedMovies = () => {
+    navigate('/recommendedmovies');
+  };
 
   const handleFlip = (movie) => {
     setFlipped((prevFlippedMovie) =>
@@ -125,6 +125,7 @@ const UserDislikedMovies = () => {
           <li onClick={handleWatchedClick}>Watched Movies</li>
           <li onClick={handleLikedClick}>Liked Movies</li>
           <li>Disliked Movies</li>
+          <li onClick={handleRecommendedMovies}>Movies For You</li>
         </ul>
       </div>
 

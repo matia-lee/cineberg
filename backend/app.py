@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from database import init_db, db_session
 from main import recommend_movies
 from gather_liked_movies import get_liked_movies
-# from embed_liked_movies import embed_liked_movies
+from embed_liked_movies import aggregate_liked_embeddings
 from models import User, Base, UserMovieInteraction, UserLikedMovies
 from enum import Enum, unique
 from dotenv import load_dotenv
@@ -157,9 +157,7 @@ def get_interactions():
                 new_liked_movie = UserLikedMovies(username=username, movie_id=movie_id)
                 db_session.add(new_liked_movie)
                 db_session.commit()
-                # get_liked_movies(username, movie_id)
-                get_liked_movies.apply_async(args=[username, movie_id], countdown=60)
-                # embed_liked_movies()
+                get_liked_movies.apply_async(args=[username, movie_id], countdown=10)
             except IntegrityError:
                 db_session.rollback()
 
@@ -260,6 +258,18 @@ def get_disliked_movie_ids():
     results = db_session.query(UserMovieInteraction.movie_id).filter(UserMovieInteraction.interaction.like('%thumbs_down%'), UserMovieInteraction.username == username).distinct().all()
     disliked_movie_ids = [result.movie_id for result in results]
     return jsonify(disliked_movie_ids)
+
+@app.route('/recommended_liked_movies', methods=['GET'])
+def recommended_liked_movies():
+    username = request.args.get('username')
+    if not username:
+        return jsonify({"error": "username not found"}), 400
+    
+    try:
+        recommend_movie_ids = aggregate_liked_embeddings(username)
+        return jsonify(recommend_movie_ids)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':

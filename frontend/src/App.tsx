@@ -6,6 +6,7 @@ import ProfilePage from './components/ProfilePage';
 import UserWatchedMovies from './components/UserWatchedMovies';
 import UserLikedMovies from './components/UserLikedMovies';
 import UserDislikedMovies from './components/UserDislikedMovies';
+import RecommendedMovies from './components/RecommendedMovies';
 import SignUp from './components/SignUp';
 import SearchPage from './components/SearchPage';
 import MovieRecommender from './components/MovieRecommender';
@@ -20,6 +21,7 @@ import './static/ProfilePage.css';
 import './static/UserWatchedMovies.css';
 import './static/UserLikedMovies.css';
 import './static/UserDislikedMovies.css';
+import './static/RecommendedMovies.css';
 import './static/SignUp.css';
 import './static/SearchPage.css';
 import './static/MovieRecommender.css';
@@ -39,6 +41,7 @@ const App = () => {
             <Route path="/profilewatchedmovies" element={<UserWatchedMovies />} />
             <Route path="/profilelikedmovies" element={<UserLikedMovies />} />
             <Route path="/profiledislikedmovies" element={<UserDislikedMovies />} />
+            <Route path="/recommendedmovies" element={<RecommendedMovies />} />
             <Route path="/signup" element={<SignUp />}/>
             <Route path="/search" element={<SearchPage />}/>
             <Route path="/recommender" element={<MovieRecommender />}/>

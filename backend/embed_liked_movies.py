@@ -1,5 +1,8 @@
 from models import UserLikedMovies
 from database import db_session
+import pandas as pd
+import numpy as np
+from openai.embeddings_utils import get_embedding, cosine_similarity
 import os
 import openai
 import time
@@ -8,33 +11,23 @@ import json
 
 load_dotenv(".env")
 
-def embed_liked_movies ():
-    def get_embeddings_batch(texts, engine):
-        embeddings = []
-        BATCH_SIZE = 2048
-        for i in range(0, len(texts), BATCH_SIZE):
-            batch = texts[i:i + BATCH_SIZE]
-            while True:
-                try:
-                    response = openai.Embedding.create(input=batch, engine=engine)
-                    batch_embeddings = [item["embedding"] for item in response["data"]]
-                    embeddings.extend(batch_embeddings)
-                    break 
-                except openai.error.RateLimitError:
-                    print("Rate limit reached, sleeping for 20 seconds...")
-                    time.sleep(20)
-                except openai.error.OpenAIError as e:
-                    print(f"An error occurred: {e}")
-                    time.sleep(20)
-        return embeddings
+def aggregate_liked_embeddings (username):
 
-    openai.api_key = os.environ.get("OPEN_AI_KEY")
+    user_liked_movies = db_session.query(UserLikedMovies).filter_by(username=username).all()
+    
+    embeddings = []
+    for movie in user_liked_movies:
+        if movie.embedded_content:
+            embedding = json.loads(movie.embedded_content)
+            embeddings.append(embedding)
 
-    texts_to_embed = [movie.content_to_embed for movie in db_session.query(UserLikedMovies).all()]
-    movies_df_embeddings = get_embeddings_batch(texts_to_embed, engine='text-embedding-ada-002')
+    movies_df = pd.read_csv('masterdf.csv')
+    movies_df['embedding'] = movies_df['embedding'].apply(eval).apply(np.array)
+    
+    aggregated_embedding = [sum(x) / len(embeddings) for x in zip(*embeddings)]
+    movies_df["similarities"] = movies_df['embedding'].apply(lambda x: cosine_similarity(x, aggregated_embedding))
+    filtered_movies_df = movies_df[(movies_df['popularity'] >= 6.9)]
+    recommended_movies = filtered_movies_df.sort_values("similarities", ascending=False).head(20)
+    recommended_movies_id = recommended_movies['id'].tolist()
 
-    for index, movie in enumerate(db_session.query(UserLikedMovies).all()):
-        movie.embedded_content = json.dumps(movies_df_embeddings[index])  
-        db_session.add(movie)
-
-    db_session.commit()
+    return recommended_movies_id

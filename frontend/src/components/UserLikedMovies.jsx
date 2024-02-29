@@ -25,9 +25,9 @@ const UserLikedMovies = () => {
     navigate('/profilepage');
   };
 
-  // const handleLikedClick = () => {
-  //   navigate('/profilelikedmovies');
-  // };
+  const handleRecommendedMovies = () => {
+    navigate('/recommendedmovies');
+  };
 
   const handleDislikedClick = () => {
     navigate('/profiledislikedmovies');
@@ -50,6 +50,22 @@ const UserLikedMovies = () => {
       .then((data) => setMovieIds(data))
       .catch ((error) => console.log("Error fetching liked ids: ", error));
   }, [username]);
+
+
+
+
+  useEffect (() => {
+    fetch(`http://localhost:5000/recommended_liked_movies?username=${encodeURIComponent(username)}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch ((error) => console.log("Error fetching recommended ids: ", error));
+  }, [username]);
+
+
+
+
 
   useEffect (() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -125,6 +141,7 @@ const UserLikedMovies = () => {
           <li onClick={handleWatchedClick}>Watched Movies</li>
           <li>Liked Movies</li>
           <li onClick={handleDislikedClick}>Disliked Movies</li>
+          <li onClick={handleRecommendedMovies}>Movies For You</li>
         </ul>
       </div>
       <div className="movie-search-grid">

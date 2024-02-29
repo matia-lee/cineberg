@@ -1,36 +1,36 @@
 import { useAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import MovieCardFlipped from "./MovieCardFlipped";
 import MovieCard from "./MovieCard";
 
-const ProfilePage = () => {
-  const [movieIds, setMovieIds] = useState([]);
-  const [watchedMovies, setWatchedMovies] = useState([]);
+const RecommendedMovies = () => {
+  const [recommendedMovieIds, setRecommendedMovieIds] = useState([]);
+  const [recommendedMovies, setRecommendedMovies] = useState([]);
   const [flipped, setFlipped] = useState(null);
   const [genres, setGenres] = useState([]);
   const { username, signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleIconClick = () => {
-    navigate("/");
+    navigate('/');
   };
 
   const handleLogoutClick = () => {
     signOut();
-    navigate("/");
+    navigate('/');
+  };
+
+  const handleWatchedClick = () => {
+    navigate('/profilepage');
   };
 
   const handleLikedClick = () => {
-    navigate("/profilelikedmovies");
+    navigate('/profilelikedmovies');
   };
 
   const handleDislikedClick = () => {
-    navigate("/profiledislikedmovies");
-  };
-
-  const handleRecommendedMovies = () => {
-    navigate('/recommendedmovies');
+    navigate('/profiledislikedmovies');
   };
 
   const handleFlip = (movie) => {
@@ -44,14 +44,17 @@ const ProfilePage = () => {
     }
   };
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/get_watched_movie_ids?username=${encodeURIComponent(username)}`)
-      .then ((response) => response.json())
-      .then ((data) => setMovieIds(data))
-      .catch ((error) => console.log("Error fetching watched ids: ", error));
+  useEffect (() => {
+    fetch(`http://localhost:5000/recommended_liked_movies?username=${encodeURIComponent(username)}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setRecommendedMovieIds(data);
+        console.log(data);
+      })
+      .catch ((error) => console.log("Error fetching recommended ids: ", error));
   }, [username]);
 
-  useEffect(() => {
+  useEffect (() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
     const options = {
       method: "GET",
@@ -61,25 +64,25 @@ const ProfilePage = () => {
       },
     };
 
-    if (movieIds.length > 0) {
+    if (recommendedMovieIds.length > 0) {
       const fetchMovieDetails = async () => {
-        const movieDetailsPromises = movieIds.map(id =>
+        const movieDetailsPromises = recommendedMovieIds.map(id => 
           fetch("https://api.themoviedb.org/3/movie/" + id + "?language=en-US", options)
             .then(response => {
               return response.json();
             })
         );
-  
+
         try {
           const movies = await Promise.all(movieDetailsPromises);
-          setWatchedMovies(movies);
+          setRecommendedMovies(movies);
         } catch (error) {
-          console.error("Error fetching movie details: ", error);
+          console.error("Error fetching liked movie details: ", error);
         }
       };
       fetchMovieDetails();
     }
-  }, [movieIds])
+  }, [recommendedMovieIds]);
 
   useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -101,17 +104,19 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <div className="main-text">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png"
-          alt="Cineberg-Icon"
+      <div className = "main-text">
+        <img 
+          src="https://cdn-icons-png.flaticon.com/512/1997/1997412.png" 
+          alt="Cineberg-Icon" 
           onClick={handleIconClick}
         />
 
-        <h1 onClick={handleIconClick}>Cineberg</h1>
-      </div>
+        <h1 onClick={handleIconClick}>
+          Cineberg
+        </h1>
+      </div> 
 
-      <div className="logout" onClick={handleLogoutClick}>
+      <div className='logout' onClick={handleLogoutClick}>
         <h1>LOGOUT</h1>
       </div>
 
@@ -119,21 +124,20 @@ const ProfilePage = () => {
         <h1>
           Welcome <span className="username">{username}</span>!
         </h1>
-        <ul style={{ listStyleType: "none" }}>
-          <li>Watched Movies</li>
+        <ul style={{ listStyleType: 'none' }}>
+          <li onClick={handleWatchedClick}>Watched Movies</li>
           <li onClick={handleLikedClick}>Liked Movies</li>
           <li onClick={handleDislikedClick}>Disliked Movies</li>
-          <li onClick={handleRecommendedMovies}>Movies For You</li>
+          <li>Movies For You:</li>
         </ul>
       </div>
-
       <div className="movie-search-grid">
         <div className="subtitle">
-          <h2>Watched Movies:</h2>
+          <h2>Based on the Movies You've Liked:</h2>
         </div>
 
         <div className="container-movie-grid">
-          {watchedMovies.map((movie) => (
+          {recommendedMovies.map((movie) => (
             <div key={movie.id} onClick={() => handleFlip(movie)}>
               <MovieCard movie={movie} />
             </div>
@@ -144,7 +148,7 @@ const ProfilePage = () => {
           <>
             <div onClick={() => handleFlip(null)} className="overlay"></div>
             <div className="container-flipped">
-              {watchedMovies.map((movie) => (
+              {recommendedMovies.map((movie) => (
                 <MovieCardFlipped
                   key={movie.id}
                   movie={flipped}
@@ -160,4 +164,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default RecommendedMovies;
