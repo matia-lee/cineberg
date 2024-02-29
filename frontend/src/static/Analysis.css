@@ -1,0 +1,142 @@
+.analyse-search-button {
+  width: 37%;
+  height: 8px;
+  margin-left: 30%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1.75rem;
+  border-radius: 3rem;
+  background: #1f2123;
+  -webkit-box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
+  box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
+}
+
+.analyse-search-button input {
+  flex: 1;
+  border: none;
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  padding-right: 1rem;
+  outline: none;
+  color: #b6b8b5;
+  background: #1f2123;
+  opacity: 0.7;
+}
+
+.analyse-search-button img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.analysis-movie-card {
+  margin-top: 100px;
+  margin-left: 300px;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 10px;
+  scroll-snap-align: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  position: relative;
+}
+
+.analysis-movie-card::-webkit-scrollbar {
+  display: none;
+}
+
+.analysis-movie {
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 10px;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  margin: 10px;
+  /* width: 248px;
+  height: 368px; */
+  width: 298px;
+  height: 418px;
+  position: relative;
+  border-radius: 3px;
+  overflow: hidden;
+  border: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
+  box-shadow: -8px 7px 10px -10px rgba(0, 0, 0, 0.5);
+}
+
+.analysis-movie:hover {
+  /* box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1); */
+  box-shadow: -8px 8px 10px -6px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05, 1.05);
+}
+
+.analysis-movie .analysis-release-date {
+  font-weight: 550;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  left: 16px;
+  color: #69a8d0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin-left: 10px;
+  margin-top: -3px;
+}
+
+.analysis-movie:hover .analysis-release-date {
+  opacity: 1;
+}
+
+.analysis-movie .analysis-poster {
+  width: 100%;
+  height: 100%;
+}
+
+.analysis-movie .analysis-poster img {
+  height: 100%;
+  width: 100%;
+}
+
+.analysis-movie:hover .analysis-poster {
+  height: 100%;
+  opacity: 0.3;
+}
+
+.analysis-movie .analysis-title {
+  z-index: 2;
+  background-color: #44494b;
+  padding: 16px 24px 24px 24px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.analysis-movie .analysis-title span {
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #b6b8b5;
+}
+
+.analysis-movie .analysis-title h3 {
+  margin: 0;
+  margin-top: 5px;
+  font-family: "Montserrat", sans-serif;
+  color: rgba(112, 181, 230, 1);
+  font-weight: 600;
+}
+
+.analysis-movie:hover .analysis-title {
+  background-color: transparent;
+}

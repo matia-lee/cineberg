@@ -10,11 +10,13 @@ import RecommendedMovies from './components/RecommendedMovies';
 import SignUp from './components/SignUp';
 import SearchPage from './components/SearchPage';
 import MovieRecommender from './components/MovieRecommender';
+import Analysis from './components/Analysis';
 import MovieNews from './components/MovieNews';
 import ArticlePage from './components/ArticlePage';
 import Template from './components/Template';
 import './static/MovieCard.css';
 import './static/MovieCardFlipped.css';
+import './static/AnalysisMovieCard.css';
 import './static/Homepage.css';
 import './static/LoginPage.css';
 import './static/ProfilePage.css';
@@ -25,6 +27,7 @@ import './static/RecommendedMovies.css';
 import './static/SignUp.css';
 import './static/SearchPage.css';
 import './static/MovieRecommender.css';
+import './static/Analysis.css';
 import './static/MovieNews.css';
 import './static/ArticlePage.css';
 import './static/Template.css';
@@ -35,16 +38,17 @@ const App = () => {
       <AuthProvider>
         <div className = "app">
           <Routes>
-            <Route path="/" element={<Homepage />}/>
-            <Route path="/login" element={<LoginPage />}/>
-            <Route path="/profilepage" element={<ProfilePage />}/>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/profilepage" element={<ProfilePage />} />
             <Route path="/profilewatchedmovies" element={<UserWatchedMovies />} />
             <Route path="/profilelikedmovies" element={<UserLikedMovies />} />
             <Route path="/profiledislikedmovies" element={<UserDislikedMovies />} />
             <Route path="/recommendedmovies" element={<RecommendedMovies />} />
-            <Route path="/signup" element={<SignUp />}/>
-            <Route path="/search" element={<SearchPage />}/>
-            <Route path="/recommender" element={<MovieRecommender />}/>
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/recommender" element={<MovieRecommender />} />
+            <Route path="/analysis" element={<Analysis />} />
             <Route path="/news" element={<MovieNews />}/>
             <Route path="/article/:title" element={<ArticlePage />}/>
             <Route path="/toprated" element={<Template endpoint="/movie/top_rated?language=en-US" subtitle="All Time Top Rated Movies: " />} />
