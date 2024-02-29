@@ -15,7 +15,7 @@ const MovieRecommender = () => {
   const [genres, setGenres] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { userEmail, signOut } = useAuth();
+  const { userEmail } = useAuth();
 
   const handleIconClick = () => {
     navigate("/");
@@ -23,10 +23,6 @@ const MovieRecommender = () => {
 
   const handleLoginClick = () => {
     navigate('/login');
-  };
-
-  const handleLogoutClick = () => {
-    signOut();
   };
 
   const handleProfileClick = () => {
@@ -173,7 +169,6 @@ const MovieRecommender = () => {
               alt="logged in icon" 
               onClick={handleProfileClick}
             />
-            <button onClick={handleLogoutClick}>logout</button>
           </div>
         ) : (
           <div className='login' onClick={handleLoginClick}>
