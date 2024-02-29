@@ -131,9 +131,9 @@ const RecommendedMovies = () => {
           <li>Movies For You:</li>
         </ul>
       </div>
-      <div className="movie-search-grid">
+      <div className="movie-recommended-grid">
         <div className="subtitle">
-          <h2>Based on the Movies You've Liked:</h2>
+          <h2>Based on the movies you've liked, you might enjoy:</h2>
         </div>
 
         <div className="container-movie-grid">

@@ -14,6 +14,7 @@ from enum import Enum, unique
 from dotenv import load_dotenv
 from sqlalchemy.exc import IntegrityError
 from celeryconfig import celery_app 
+from datetime import datetime, timedelta
 import os
 
 load_dotenv(".env")
@@ -259,17 +260,27 @@ def get_disliked_movie_ids():
     disliked_movie_ids = [result.movie_id for result in results]
     return jsonify(disliked_movie_ids)
 
+cache = {}
+
+def is_cache_valid(entry_time):
+    return datetime.now() - entry_time < timedelta(hours=24)
+
 @app.route('/recommended_liked_movies', methods=['GET'])
 def recommended_liked_movies():
     username = request.args.get('username')
     if not username:
         return jsonify({"error": "username not found"}), 400
     
+    if username in cache and is_cache_valid(cache[username]['time']):
+        return jsonify(cache[username]['data'])
+    
     try:
         recommend_movie_ids = aggregate_liked_embeddings(username)
+        cache[username] = {'time': datetime.now(), 'data': recommend_movie_ids}
         return jsonify(recommend_movie_ids)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == '__main__':

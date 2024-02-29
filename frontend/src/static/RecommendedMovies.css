@@ -1,0 +1,10 @@
+.movie-recommended-grid {
+    border-top-left-radius: 20px;
+    margin-top: 7rem;
+    background-color: #353634;
+    margin-left: auto;
+    width: 77%;
+    margin-bottom: -20px;
+    min-height: 250vh;
+    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 1);
+  }
