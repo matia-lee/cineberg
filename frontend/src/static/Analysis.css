@@ -142,7 +142,7 @@
   font-weight: 500;
 }
 
-@keyframes dots {
+@keyframes analysis-dots {
   0%, 20% {
     content: '';
   }
@@ -157,12 +157,12 @@
   }
 }
 
-.loading-text::after {
-  animation: dots 2s infinite;
+.loading-analysis::after {
+  animation: analysis-dots 2s infinite;
   content: '';
 }
 
-.loading-text {
+.loading-analysis {
   font-size: 18px;
   color: #8D918D;
   margin-left: 450px;

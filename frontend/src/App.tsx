@@ -16,7 +16,6 @@ import ArticlePage from './components/ArticlePage';
 import Template from './components/Template';
 import './static/MovieCard.css';
 import './static/MovieCardFlipped.css';
-import './static/AnalysisMovieCard.css';
 import './static/Homepage.css';
 import './static/LoginPage.css';
 import './static/ProfilePage.css';

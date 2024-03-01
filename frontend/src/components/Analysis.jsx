@@ -168,7 +168,7 @@ const Analysis = () => {
               handleFlip(analysisMovie);
             }}>
 
-            {loading && <div className="loading-text">Analysing</div>}
+            {loading && <div className="loading-analysis">Analysing</div>}
 
             <AnalysisMovieCard movie={analysisMovie}/>
           </div>
