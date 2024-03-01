@@ -163,6 +163,7 @@
 }
 
 .loading-analysis {
+  position: absolute;
   font-size: 18px;
   color: #8D918D;
   margin-left: 450px;
