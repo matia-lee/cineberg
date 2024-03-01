@@ -95,6 +95,7 @@ const Analysis = () => {
 
   const initiateSearch = () => {
     fetchMovie();
+    handleSearchClick();
   };
 
   useEffect(() => {
@@ -165,11 +166,10 @@ const Analysis = () => {
             key = {analysisMovie.id} 
             onClick={() => {
               handleFlip(analysisMovie);
-              handleSearchClick();
             }}>
 
             {loading && <div className="loading-text">Analysing</div>}
-            
+
             <AnalysisMovieCard movie={analysisMovie}/>
           </div>
 
