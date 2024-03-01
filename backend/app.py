@@ -9,6 +9,7 @@ from database import init_db, db_session
 from main import recommend_movies
 from gather_liked_movies import get_liked_movies
 from embed_liked_movies import aggregate_liked_embeddings
+from movie_analysis import get_movie_analysis
 from models import User, Base, UserMovieInteraction, UserLikedMovies
 from enum import Enum, unique
 from dotenv import load_dotenv
@@ -280,7 +281,21 @@ def recommended_liked_movies():
         return jsonify(recommend_movie_ids)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
 
+
+
+# for movie analysis
+@app.route('/movie_analysis', methods=['POST'])
+def movie_analysis():
+    data = request.get_json()
+    movie_title = data.get('searchTerm')
+
+    if movie_title:
+        analysis = get_movie_analysis(movie_title)
+        return jsonify(analysis)
+    else:
+        return jsonify({"error": "No search term provided"}), 400
 
 
 if __name__ == '__main__':

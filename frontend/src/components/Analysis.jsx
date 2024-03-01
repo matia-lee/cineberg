@@ -10,6 +10,8 @@ const Analysis = () => {
   const [analysisMovie, setAnalysisMovie] = useState(null);
   const [genres, setGenres] = useState([]);
   const [flipped, setFlipped] = useState(false);
+  const [analysis, setAnalysis] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -25,13 +27,10 @@ const Analysis = () => {
     navigate('/profilepage');
   };
 
-  const initiateSearch = () => {
-    fetchMovie();
-  };
-
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       fetchMovie();
+      handleSearchClick();
     }
   };
 
@@ -70,6 +69,33 @@ const Analysis = () => {
         setAnalysisMovie(null);
       });
   }
+
+  const handleSearchClick = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:5000/movie_analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ searchTerm }),
+      });
+      if (response.ok) {
+        const analysis = await response.json();
+        setAnalysis(analysis);
+      } else {
+        console.error("Failed to fetch analysis");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const initiateSearch = () => {
+    fetchMovie();
+  };
 
   useEffect(() => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
@@ -135,8 +161,20 @@ const Analysis = () => {
 
       {analysisMovie && (
         <div className='analysis-movie-card'>
-          <div key = {analysisMovie.id} onClick={() => handleFlip(analysisMovie)}>
+          <div 
+            key = {analysisMovie.id} 
+            onClick={() => {
+              handleFlip(analysisMovie);
+              handleSearchClick();
+            }}>
+
+            {loading && <div className="loading-text">Analysing</div>}
+            
             <AnalysisMovieCard movie={analysisMovie}/>
+          </div>
+
+          <div className="analysis-paragraph">
+            {analysis}
           </div>
         </div>
       )}
