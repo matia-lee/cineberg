@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useAuth } from "./AuthContext"; 
@@ -18,6 +18,10 @@ const SignUp = () => {
   const [viewPassword, setViewPassword] = useState(false);
   const navigate = useNavigate();
   const { signIn } = useAuth();
+
+  useEffect(() => {
+    setSameValidEmail(sameValidUsername);
+  }, [sameValidUsername]);
 
   const signup = async () => {
     const passwordIsValid = signUpPassword.length >= 6;
@@ -95,7 +99,6 @@ const SignUp = () => {
           placeholder="Create Username"
           onChange={(e) => setSignUpUsername(e.target.value)}
         />
-        {!sameValidUsername && sameValidEmail && <div className="error-message"><h6>{sameUsernameError}</h6></div>}
         <input 
           className={`email ${!validEmail || !sameValidEmail ? "password-invalid" : ""}`}
           type="email" 
@@ -133,6 +136,7 @@ const SignUp = () => {
           <p>Email already in use</p>
         </div>
         )}
+        {sameValidEmail && !sameValidUsername && <div className="error-message"><h6>{sameUsernameError}</h6></div>} 
       </div>
 
       <div className="complete-signup" onClick={signup}>
