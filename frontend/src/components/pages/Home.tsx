@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { MovieInfo, MoviesState } from "../../../types/types";
-import MovieCard from "../../movieInfo/MovieCard";
+import { MovieInfo, MoviesState } from "../../types/types";
+import MovieCard from "../movieInfo/MovieCard";
 
 const Homepage = () => {
   const [movies, setMovies] = useState<MoviesState>({

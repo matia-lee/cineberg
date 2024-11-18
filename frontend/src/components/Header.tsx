@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -37,7 +38,11 @@ const Header = () => {
     "Western",
   ];
 
-  const buttons = ["Movie Recommender", "News", "Cinecritic.AI"];
+  const buttons = [
+    { label: "Movie Recommender", path: "/recommender" },
+    { label: "News", path: "/news" },
+    { label: "Cinecritic.AI", path: "/cinecritic" },
+  ];
 
   return (
     <div
@@ -45,17 +50,21 @@ const Header = () => {
         isScrolled ? "bg-background opacity-100 shadow-lg" : "bg-transparent"
       }`}
     >
-      <button className="text-3xl font-semibold text-blue-light font-sans ml-8 mr-6">
+      <Link
+        to="/"
+        className="text-3xl font-semibold text-blue-light font-sans ml-8 mr-6"
+      >
         Cineberg
-      </button>
+      </Link>
 
       {buttons.map((button, index) => (
-        <button
+        <Link
+          to={button.path}
           key={index}
           className="mx-3 text-sm hover:text-gray-light hover:underline transition-colors duration-200"
         >
-          {button}
-        </button>
+          {button.label}
+        </Link>
       ))}
     </div>
   );
