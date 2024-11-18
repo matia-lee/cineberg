@@ -1,28 +1,64 @@
-import { FaSearch, FaHome, FaHeart, FaFilm } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
-const Header = () => (
-  <nav className="flex items-center justify-between px-8 py-4 bg-[#0a1128] text-[#d1d9e6] shadow-lg fixed w-full top-0 z-10">
-    <div className="text-2xl font-semibold text-[#1a75ff]">Cineberg</div>
-    <div className="flex items-center bg-[#1a2b48] rounded-full px-4 py-2">
-      <FaSearch className="mr-2 text-gray-400" />
-      <input
-        type="text"
-        placeholder="Search movies..."
-        className="bg-transparent outline-none text-[#d1d9e6] w-60"
-      />
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", isScroll);
+  }, []);
+
+  const genres = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "History",
+    "Horror",
+    "Music",
+    "Mystery",
+    "Romance",
+    "Science Fiction",
+    "TV Movie",
+    "Thriller",
+    "War",
+    "Western",
+  ];
+
+  const buttons = ["Movie Recommender", "News", "Cinecritic.AI"];
+
+  return (
+    <div
+      className={`flex items-center px-3 py-4 fixed w-full top-0 z-20 text-[#d1d9e6] transition-colors duration-300 ${
+        isScrolled ? "bg-background opacity-100 shadow-lg" : "bg-transparent"
+      }`}
+    >
+      <button className="text-3xl font-semibold text-blue-light font-sans ml-8 mr-6">
+        Cineberg
+      </button>
+
+      {buttons.map((button, index) => (
+        <button
+          key={index}
+          className="mx-3 text-sm hover:text-gray-light hover:underline transition-colors duration-200"
+        >
+          {button}
+        </button>
+      ))}
     </div>
-    <div className="flex gap-6 text-lg">
-      <button className="hover:text-[#1a75ff]">
-        <FaHome />
-      </button>
-      <button className="hover:text-[#1a75ff]">
-        <FaFilm />
-      </button>
-      <button className="hover:text-[#1a75ff]">
-        <FaHeart />
-      </button>
-    </div>
-  </nav>
-);
+  );
+};
 
 export default Header;

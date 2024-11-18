@@ -57,7 +57,7 @@ const Homepage = () => {
 
   return (
     <>
-      {randomMovie ? (
+      {randomMovie && (
         <div className="relative h-screen">
           <img
             src={`https://image.tmdb.org/t/p/original/${randomMovie.backdrop_path}`}
@@ -78,20 +78,7 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-      ) : (
-        <div>Could not load movie</div>
       )}
-      {/* {randomMovie ? (
-        <div>
-          <img
-            src={`https://image.tmdb.org/t/p/original/${randomMovie.backdrop_path}`}
-            alt={randomMovie.title}
-          />
-          <h1>{randomMovie.title}</h1>
-        </div>
-      ) : (
-        <div>Could not load movie</div>
-      )} */}
       {["Trending", "Now Playing", "Upcoming"].map((subtitle) => {
         const typeKey = subtitle
           .toLowerCase()
@@ -105,20 +92,20 @@ const Homepage = () => {
                 : "pl-5 text-left"
             }`}
           >
-            <h2 className="text-white text-2xl font-semibold -mb-2 tracking-wide pl-5">
-              {subtitle} Movies:
-            </h2>
-            <div className="pt-5 pb-5 pl-5 flex space-x-4 overflow-x-auto scrollbar-hide">
-              {movies[typeKey] && movies[typeKey].length > 0 ? (
-                movies[typeKey].map((movie) => (
-                  <div key={movie.id}>
-                    <MovieCard movie={movie} />
-                  </div>
-                ))
-              ) : (
-                <div>Could not load image</div>
-              )}
-            </div>
+            {movies[typeKey] && movies[typeKey].length > 0 && (
+              <>
+                <h2 className="text-white text-2xl font-semibold -mb-2 tracking-wide pl-5">
+                  {subtitle} Movies:
+                </h2>
+                <div className="pt-5 pb-5 pl-5 flex space-x-4 overflow-x-auto scrollbar-hide">
+                  {movies[typeKey].map((movie) => (
+                    <div key={movie.id}>
+                      <MovieCard movie={movie} />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         );
       })}
