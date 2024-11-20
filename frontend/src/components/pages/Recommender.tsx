@@ -10,7 +10,7 @@ const Recommender = () => {
       .catch((error) => `Error grabbing recommendation: ${error}`);
   }, []);
   return (
-    <div>
+    <div className="pt-16">
       <div className="text-white">{test.message}</div>
     </div>
   );

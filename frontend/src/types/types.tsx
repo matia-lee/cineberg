@@ -6,6 +6,7 @@ export interface MovieInfo {
   backdrop_path: string;
   overview: string;
   media_type: string;
+  key: string;
 }
 
 export interface MoviesState {

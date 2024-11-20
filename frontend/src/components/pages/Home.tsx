@@ -12,23 +12,29 @@ const Homepage = () => {
 
   const fetchMovies = (endpointUrl: string, state: string) => {
     const api_key = process.env.REACT_APP_TMDB_KEY;
-    try {
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: "Bearer " + api_key,
-        },
-      };
-      fetch(endpointUrl, options)
-        .then((response) => response.json())
-        .then((data) => {
-          setMovies((prevState) => ({ ...prevState, [state]: data.results }));
-        })
-        .catch((error) => `uh oh spaghetti o's!!! ${error}`);
-    } catch (error) {
-      console.error(`uh oh spaghetti o's!!! ${error}`);
-    }
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + api_key,
+      },
+    };
+    fetch(endpointUrl, options)
+      .then((response) => response.json())
+      .then((data) => {
+        const ids = data.results.map((movie: MovieInfo) => movie.id);
+        return Promise.all(
+          ids.map(async (id: MovieInfo) => {
+            const detailUrl = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+            const response = await fetch(detailUrl, options);
+            return await response.json();
+          })
+        );
+      })
+      .then((data) => {
+        setMovies((prevState) => ({ ...prevState, [state]: data }));
+      })
+      .catch((error) => `uh oh spaghetti o's!!! ${error}`);
   };
 
   const grabRandomMovie = (moviesArray: any[]) => {
